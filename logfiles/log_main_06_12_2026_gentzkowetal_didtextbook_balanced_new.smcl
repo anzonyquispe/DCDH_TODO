@@ -1,0 +1,719 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/logfiles/log_main_06_12_2026_gentzkowetal_didtextbook_balanced_new.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}12 Jun 2026, 11:46:41
+{txt}
+{com}. 
+. run_dyn_test_battery `y' `g' `t' `d', store(store_results_new) ///
+>         n_eff(`n_eff') n_pl(`n_pl') ///
+>         cont(`cont') nonparam(`nonparam') wght(`wght') clust(`clust') ///
+>         b_reps(`b_reps') b_seed(`b_seed') eff_eq(`eff_eq')
+
+{res}--- Spec: Baseline ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0175817}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004908}}}{space 1}{space 1}{ralign 9:{res:{sf: .0079622}}}{space 1}{space 1}{ralign 9:{res:{sf: .0272012}}}{space 1}{space 1}{ralign 9:{res:{sf:     3664}}}{space 1}{space 1}{ralign 9:{res:{sf:      711}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0286082}}}{space 1}{space 1}{ralign 9:{res:{sf: .0064031}}}{space 1}{space 1}{ralign 9:{res:{sf: .0160584}}}{space 1}{space 1}{ralign 9:{res:{sf: .0411581}}}{space 1}{space 1}{ralign 9:{res:{sf:     3016}}}{space 1}{space 1}{ralign 9:{res:{sf:      674}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0354841}}}{space 1}{space 1}{ralign 9:{res:{sf:  .008523}}}{space 1}{space 1}{ralign 9:{res:{sf: .0187794}}}{space 1}{space 1}{ralign 9:{res:{sf: .0521889}}}{space 1}{space 1}{ralign 9:{res:{sf:     2450}}}{space 1}{space 1}{ralign 9:{res:{sf:      645}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0350709}}}{space 1}{space 1}{ralign 9:{res:{sf: .0101026}}}{space 1}{space 1}{ralign 9:{res:{sf: .0152701}}}{space 1}{space 1}{ralign 9:{res:{sf: .0548716}}}{space 1}{space 1}{ralign 9:{res:{sf:     1962}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .00033013
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0211755}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004751}}}{space 1}{space 1}{ralign 9:{res:{sf: .0118637}}}{space 1}{space 1}{ralign 9:{res:{sf: .0304873}}}{space 1}{space 1}{ralign 9:{res:{sf:     5596}}}{space 1}{space 1}{ralign 9:{res:{sf:     2643}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3377815
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Placebos ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0175817}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004908}}}{space 1}{space 1}{ralign 9:{res:{sf: .0079622}}}{space 1}{space 1}{ralign 9:{res:{sf: .0272012}}}{space 1}{space 1}{ralign 9:{res:{sf:     3664}}}{space 1}{space 1}{ralign 9:{res:{sf:      711}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0286082}}}{space 1}{space 1}{ralign 9:{res:{sf: .0064031}}}{space 1}{space 1}{ralign 9:{res:{sf: .0160584}}}{space 1}{space 1}{ralign 9:{res:{sf: .0411581}}}{space 1}{space 1}{ralign 9:{res:{sf:     3016}}}{space 1}{space 1}{ralign 9:{res:{sf:      674}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0354841}}}{space 1}{space 1}{ralign 9:{res:{sf:  .008523}}}{space 1}{space 1}{ralign 9:{res:{sf: .0187794}}}{space 1}{space 1}{ralign 9:{res:{sf: .0521889}}}{space 1}{space 1}{ralign 9:{res:{sf:     2450}}}{space 1}{space 1}{ralign 9:{res:{sf:      645}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0350709}}}{space 1}{space 1}{ralign 9:{res:{sf: .0101026}}}{space 1}{space 1}{ralign 9:{res:{sf: .0152701}}}{space 1}{space 1}{ralign 9:{res:{sf: .0548716}}}{space 1}{space 1}{ralign 9:{res:{sf:     1962}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .00033013
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0211755}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004751}}}{space 1}{space 1}{ralign 9:{res:{sf: .0118637}}}{space 1}{space 1}{ralign 9:{res:{sf: .0304873}}}{space 1}{space 1}{ralign 9:{res:{sf:     5596}}}{space 1}{space 1}{ralign 9:{res:{sf:     2643}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3377815
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0003287}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004646}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0087772}}}{space 1}{space 1}{ralign 9:{res:{sf: .0094346}}}{space 1}{space 1}{ralign 9:{res:{sf:     2939}}}{space 1}{space 1}{ralign 9:{res:{sf:      597}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0012988}}}{space 1}{space 1}{ralign 9:{res:{sf: .0085523}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0154634}}}{space 1}{space 1}{ralign 9:{res:{sf:  .018061}}}{space 1}{space 1}{ralign 9:{res:{sf:     1856}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0006842}}}{space 1}{space 1}{ralign 9:{res:{sf: .0126356}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0254496}}}{space 1}{space 1}{ralign 9:{res:{sf: .0240812}}}{space 1}{space 1}{ralign 9:{res:{sf:     1113}}}{space 1}{space 1}{ralign 9:{res:{sf:      415}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0206449}}}{space 1}{space 1}{ralign 9:{res:{sf: .0197808}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0594145}}}{space 1}{space 1}{ralign 9:{res:{sf: .0181248}}}{space 1}{space 1}{ralign 9:{res:{sf:      643}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .71663495
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Normalized ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0143685}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004011}}}{space 1}{space 1}{ralign 9:{res:{sf: .0065071}}}{space 1}{space 1}{ralign 9:{res:{sf: .0222299}}}{space 1}{space 1}{ralign 9:{res:{sf:     3664}}}{space 1}{space 1}{ralign 9:{res:{sf:      711}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0118731}}}{space 1}{space 1}{ralign 9:{res:{sf: .0026575}}}{space 1}{space 1}{ralign 9:{res:{sf: .0066646}}}{space 1}{space 1}{ralign 9:{res:{sf: .0170816}}}{space 1}{space 1}{ralign 9:{res:{sf:     3016}}}{space 1}{space 1}{ralign 9:{res:{sf:      674}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .009188}}}{space 1}{space 1}{ralign 9:{res:{sf: .0022069}}}{space 1}{space 1}{ralign 9:{res:{sf: .0048626}}}{space 1}{space 1}{ralign 9:{res:{sf: .0135134}}}{space 1}{space 1}{ralign 9:{res:{sf:     2450}}}{space 1}{space 1}{ralign 9:{res:{sf:      645}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .006338}}}{space 1}{space 1}{ralign 9:{res:{sf: .0018257}}}{space 1}{space 1}{ralign 9:{res:{sf: .0027596}}}{space 1}{space 1}{ralign 9:{res:{sf: .0099164}}}{space 1}{space 1}{ralign 9:{res:{sf:     1962}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .00033013
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0211755}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004751}}}{space 1}{space 1}{ralign 9:{res:{sf: .0118637}}}{space 1}{space 1}{ralign 9:{res:{sf: .0304873}}}{space 1}{space 1}{ralign 9:{res:{sf:     5596}}}{space 1}{space 1}{ralign 9:{res:{sf:     2643}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3377815
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0002681}}}{space 1}{space 1}{ralign 9:{res:{sf: .0037891}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0071585}}}{space 1}{space 1}{ralign 9:{res:{sf: .0076946}}}{space 1}{space 1}{ralign 9:{res:{sf:     2939}}}{space 1}{space 1}{ralign 9:{res:{sf:      597}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0005349}}}{space 1}{space 1}{ralign 9:{res:{sf: .0035224}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0063688}}}{space 1}{space 1}{ralign 9:{res:{sf: .0074386}}}{space 1}{space 1}{ralign 9:{res:{sf:     1856}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0001793}}}{space 1}{space 1}{ralign 9:{res:{sf: .0033105}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0066677}}}{space 1}{space 1}{ralign 9:{res:{sf: .0063092}}}{space 1}{space 1}{ralign 9:{res:{sf:     1113}}}{space 1}{space 1}{ralign 9:{res:{sf:      415}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0041371}}}{space 1}{space 1}{ralign 9:{res:{sf:  .003964}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0119064}}}{space 1}{space 1}{ralign 9:{res:{sf: .0036321}}}{space 1}{space 1}{ralign 9:{res:{sf:      643}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .71663495
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Controls ---
+
+--- Spec: Trends_Nonparam ---
+
+--- Spec: Trends_Lin ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0163571}}}{space 1}{space 1}{ralign 9:{res:{sf: .0076284}}}{space 1}{space 1}{ralign 9:{res:{sf: .0014057}}}{space 1}{space 1}{ralign 9:{res:{sf: .0313085}}}{space 1}{space 1}{ralign 9:{res:{sf:     2939}}}{space 1}{space 1}{ralign 9:{res:{sf:      597}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0250568}}}{space 1}{space 1}{ralign 9:{res:{sf: .0135076}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0014176}}}{space 1}{space 1}{ralign 9:{res:{sf: .0515312}}}{space 1}{space 1}{ralign 9:{res:{sf:     2380}}}{space 1}{space 1}{ralign 9:{res:{sf:      575}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0342435}}}{space 1}{space 1}{ralign 9:{res:{sf: .0198716}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0047041}}}{space 1}{space 1}{ralign 9:{res:{sf: .0731911}}}{space 1}{space 1}{ralign 9:{res:{sf:     1907}}}{space 1}{space 1}{ralign 9:{res:{sf:      558}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0331132}}}{space 1}{space 1}{ralign 9:{res:{sf: .0261217}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0180843}}}{space 1}{space 1}{ralign 9:{res:{sf: .0843108}}}{space 1}{space 1}{ralign 9:{res:{sf:     1517}}}{space 1}{space 1}{ralign 9:{res:{sf:      528}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .15769094
+
+
+{hline 80}
+    {bf:When the option {it:trends_lin} is specified no average effects are reported}
+{hline 80}
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0013436}}}{space 1}{space 1}{ralign 9:{res:{sf: .0070207}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0151039}}}{space 1}{space 1}{ralign 9:{res:{sf: .0124167}}}{space 1}{space 1}{ralign 9:{res:{sf:     2331}}}{space 1}{space 1}{ralign 9:{res:{sf:      526}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0020014}}}{space 1}{space 1}{ralign 9:{res:{sf:  .012109}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0217318}}}{space 1}{space 1}{ralign 9:{res:{sf: .0257346}}}{space 1}{space 1}{ralign 9:{res:{sf:     1417}}}{space 1}{space 1}{ralign 9:{res:{sf:      428}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0382658}}}{space 1}{space 1}{ralign 9:{res:{sf: .0216103}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0040897}}}{space 1}{space 1}{ralign 9:{res:{sf: .0806213}}}{space 1}{space 1}{ralign 9:{res:{sf:      809}}}{space 1}{space 1}{ralign 9:{res:{sf:      321}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0427192}}}{space 1}{space 1}{ralign 9:{res:{sf: .0316811}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0193746}}}{space 1}{space 1}{ralign 9:{res:{sf:  .104813}}}{space 1}{space 1}{ralign 9:{res:{sf:      472}}}{space 1}{space 1}{ralign 9:{res:{sf:      239}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .17147004
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Continuous ---
+{err}You specified the continuous option without the bootstrap option. Please be aware that we recommend to compute bootstraped standard errors when you are using the continuous option as the analytical standard errors can be liberal in that case.
+{com}{err}Some control variables are not taken into account for groups with baseline treatment equal to: [0]
+This may occur in the following situations:
+1. For groups with those values of the baseline treatment, the regression of the outcome first difference on the controls' first differences and time fixed effects has fewer observations than variables. Note that for each value of the baseline treatment, those regressions are estimated among (g,t)s such that g has not changed treatment yet at t.
+2. For groups with those values of the baseline treatment, two or more of your control variables are perfectly collinear in the sample where the regression is run, for instance because those control variables do not vary over time.
+{com}
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0174805}}}{space 1}{space 1}{ralign 9:{res:{sf: .0048705}}}{space 1}{space 1}{ralign 9:{res:{sf: .0079344}}}{space 1}{space 1}{ralign 9:{res:{sf: .0270265}}}{space 1}{space 1}{ralign 9:{res:{sf:     3680}}}{space 1}{space 1}{ralign 9:{res:{sf:      726}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0271375}}}{space 1}{space 1}{ralign 9:{res:{sf: .0062224}}}{space 1}{space 1}{ralign 9:{res:{sf: .0149419}}}{space 1}{space 1}{ralign 9:{res:{sf: .0393332}}}{space 1}{space 1}{ralign 9:{res:{sf:     3050}}}{space 1}{space 1}{ralign 9:{res:{sf:      708}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0314103}}}{space 1}{space 1}{ralign 9:{res:{sf: .0079713}}}{space 1}{space 1}{ralign 9:{res:{sf: .0157869}}}{space 1}{space 1}{ralign 9:{res:{sf: .0470337}}}{space 1}{space 1}{ralign 9:{res:{sf:     2495}}}{space 1}{space 1}{ralign 9:{res:{sf:      690}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0313335}}}{space 1}{space 1}{ralign 9:{res:{sf: .0095102}}}{space 1}{space 1}{ralign 9:{res:{sf: .0126938}}}{space 1}{space 1}{ralign 9:{res:{sf: .0499732}}}{space 1}{space 1}{ralign 9:{res:{sf:     2015}}}{space 1}{space 1}{ralign 9:{res:{sf:      666}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .00064834
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0194273}}}{space 1}{space 1}{ralign 9:{res:{sf: .0046053}}}{space 1}{space 1}{ralign 9:{res:{sf: .0104011}}}{space 1}{space 1}{ralign 9:{res:{sf: .0284536}}}{space 1}{space 1}{ralign 9:{res:{sf:     5744}}}{space 1}{space 1}{ralign 9:{res:{sf:     2790}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3773486
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0008398}}}{space 1}{space 1}{ralign 9:{res:{sf: .0045392}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0080568}}}{space 1}{space 1}{ralign 9:{res:{sf: .0097364}}}{space 1}{space 1}{ralign 9:{res:{sf:     2949}}}{space 1}{space 1}{ralign 9:{res:{sf:      607}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0021925}}}{space 1}{space 1}{ralign 9:{res:{sf: .0082306}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0139393}}}{space 1}{space 1}{ralign 9:{res:{sf: .0183242}}}{space 1}{space 1}{ralign 9:{res:{sf:     1869}}}{space 1}{space 1}{ralign 9:{res:{sf:      520}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0007093}}}{space 1}{space 1}{ralign 9:{res:{sf: .0121202}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0244645}}}{space 1}{space 1}{ralign 9:{res:{sf: .0230459}}}{space 1}{space 1}{ralign 9:{res:{sf:     1127}}}{space 1}{space 1}{ralign 9:{res:{sf:      429}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0210795}}}{space 1}{space 1}{ralign 9:{res:{sf: .0194454}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0591919}}}{space 1}{space 1}{ralign 9:{res:{sf: .0170328}}}{space 1}{space 1}{ralign 9:{res:{sf:      655}}}{space 1}{space 1}{ralign 9:{res:{sf:      316}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .64041771
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Cluster ---
+
+--- Spec: Same_Switchers ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0196227}}}{space 1}{space 1}{ralign 9:{res:{sf: .0052296}}}{space 1}{space 1}{ralign 9:{res:{sf: .0093728}}}{space 1}{space 1}{ralign 9:{res:{sf: .0298725}}}{space 1}{space 1}{ralign 9:{res:{sf:     3475}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0276518}}}{space 1}{space 1}{ralign 9:{res:{sf: .0065693}}}{space 1}{space 1}{ralign 9:{res:{sf: .0147762}}}{space 1}{space 1}{ralign 9:{res:{sf: .0405273}}}{space 1}{space 1}{ralign 9:{res:{sf:     2916}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0308605}}}{space 1}{space 1}{ralign 9:{res:{sf: .0082422}}}{space 1}{space 1}{ralign 9:{res:{sf:  .014706}}}{space 1}{space 1}{ralign 9:{res:{sf:  .047015}}}{space 1}{space 1}{ralign 9:{res:{sf:     2409}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0350709}}}{space 1}{space 1}{ralign 9:{res:{sf: .0101026}}}{space 1}{space 1}{ralign 9:{res:{sf: .0152701}}}{space 1}{space 1}{ralign 9:{res:{sf: .0548716}}}{space 1}{space 1}{ralign 9:{res:{sf:     1962}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .00063742
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0204585}}}{space 1}{space 1}{ralign 9:{res:{sf: .0048132}}}{space 1}{space 1}{ralign 9:{res:{sf: .0110248}}}{space 1}{space 1}{ralign 9:{res:{sf: .0298921}}}{space 1}{space 1}{ralign 9:{res:{sf:     5396}}}{space 1}{space 1}{ralign 9:{res:{sf:     2452}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3699882
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0022508}}}{space 1}{space 1}{ralign 9:{res:{sf: .0050256}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0075992}}}{space 1}{space 1}{ralign 9:{res:{sf: .0121008}}}{space 1}{space 1}{ralign 9:{res:{sf:     2786}}}{space 1}{space 1}{ralign 9:{res:{sf:      528}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   .00075}}}{space 1}{space 1}{ralign 9:{res:{sf: .0089869}}}{space 1}{space 1}{ralign 9:{res:{sf: -.016864}}}{space 1}{space 1}{ralign 9:{res:{sf:  .018364}}}{space 1}{space 1}{ralign 9:{res:{sf:     1779}}}{space 1}{space 1}{ralign 9:{res:{sf:      464}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0028181}}}{space 1}{space 1}{ralign 9:{res:{sf: .0127161}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0277412}}}{space 1}{space 1}{ralign 9:{res:{sf:  .022105}}}{space 1}{space 1}{ralign 9:{res:{sf:     1079}}}{space 1}{space 1}{ralign 9:{res:{sf:      389}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0206449}}}{space 1}{space 1}{ralign 9:{res:{sf: .0197808}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0594145}}}{space 1}{space 1}{ralign 9:{res:{sf: .0181248}}}{space 1}{space 1}{ralign 9:{res:{sf:      643}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .70108342
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Same_Switchers_Placebo ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0196227}}}{space 1}{space 1}{ralign 9:{res:{sf: .0052296}}}{space 1}{space 1}{ralign 9:{res:{sf: .0093728}}}{space 1}{space 1}{ralign 9:{res:{sf: .0298725}}}{space 1}{space 1}{ralign 9:{res:{sf:     3475}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0276518}}}{space 1}{space 1}{ralign 9:{res:{sf: .0065693}}}{space 1}{space 1}{ralign 9:{res:{sf: .0147762}}}{space 1}{space 1}{ralign 9:{res:{sf: .0405273}}}{space 1}{space 1}{ralign 9:{res:{sf:     2916}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0308605}}}{space 1}{space 1}{ralign 9:{res:{sf: .0082422}}}{space 1}{space 1}{ralign 9:{res:{sf:  .014706}}}{space 1}{space 1}{ralign 9:{res:{sf:  .047015}}}{space 1}{space 1}{ralign 9:{res:{sf:     2409}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0350709}}}{space 1}{space 1}{ralign 9:{res:{sf: .0101026}}}{space 1}{space 1}{ralign 9:{res:{sf: .0152701}}}{space 1}{space 1}{ralign 9:{res:{sf: .0548716}}}{space 1}{space 1}{ralign 9:{res:{sf:     1962}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .00063742
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0204585}}}{space 1}{space 1}{ralign 9:{res:{sf: .0048132}}}{space 1}{space 1}{ralign 9:{res:{sf: .0110248}}}{space 1}{space 1}{ralign 9:{res:{sf: .0298921}}}{space 1}{space 1}{ralign 9:{res:{sf:     5396}}}{space 1}{space 1}{ralign 9:{res:{sf:     2452}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3699882
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0053951}}}{space 1}{space 1}{ralign 9:{res:{sf:  .006383}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0071152}}}{space 1}{space 1}{ralign 9:{res:{sf: .0179055}}}{space 1}{space 1}{ralign 9:{res:{sf:     1233}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0000719}}}{space 1}{space 1}{ralign 9:{res:{sf: .0108751}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0212429}}}{space 1}{space 1}{ralign 9:{res:{sf: .0213868}}}{space 1}{space 1}{ralign 9:{res:{sf:      977}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0045983}}}{space 1}{space 1}{ralign 9:{res:{sf: .0143494}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0327226}}}{space 1}{space 1}{ralign 9:{res:{sf:  .023526}}}{space 1}{space 1}{ralign 9:{res:{sf:      787}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0206449}}}{space 1}{space 1}{ralign 9:{res:{sf: .0197808}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0594145}}}{space 1}{space 1}{ralign 9:{res:{sf: .0181248}}}{space 1}{space 1}{ralign 9:{res:{sf:      643}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .50183139
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Switchers_In ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0187474}}}{space 1}{space 1}{ralign 9:{res:{sf: .0051011}}}{space 1}{space 1}{ralign 9:{res:{sf: .0087495}}}{space 1}{space 1}{ralign 9:{res:{sf: .0287453}}}{space 1}{space 1}{ralign 9:{res:{sf:     3628}}}{space 1}{space 1}{ralign 9:{res:{sf:      675}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0285186}}}{space 1}{space 1}{ralign 9:{res:{sf: .0067568}}}{space 1}{space 1}{ralign 9:{res:{sf: .0152754}}}{space 1}{space 1}{ralign 9:{res:{sf: .0417618}}}{space 1}{space 1}{ralign 9:{res:{sf:     2987}}}{space 1}{space 1}{ralign 9:{res:{sf:      645}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0352802}}}{space 1}{space 1}{ralign 9:{res:{sf: .0089153}}}{space 1}{space 1}{ralign 9:{res:{sf: .0178065}}}{space 1}{space 1}{ralign 9:{res:{sf: .0527539}}}{space 1}{space 1}{ralign 9:{res:{sf:     2429}}}{space 1}{space 1}{ralign 9:{res:{sf:      624}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0338919}}}{space 1}{space 1}{ralign 9:{res:{sf:  .010426}}}{space 1}{space 1}{ralign 9:{res:{sf: .0134573}}}{space 1}{space 1}{ralign 9:{res:{sf: .0543265}}}{space 1}{space 1}{ralign 9:{res:{sf:     1946}}}{space 1}{space 1}{ralign 9:{res:{sf:      597}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .0007417
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0208705}}}{space 1}{space 1}{ralign 9:{res:{sf: .0049198}}}{space 1}{space 1}{ralign 9:{res:{sf: .0112279}}}{space 1}{space 1}{ralign 9:{res:{sf: .0305132}}}{space 1}{space 1}{ralign 9:{res:{sf:     5494}}}{space 1}{space 1}{ralign 9:{res:{sf:     2541}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3371298
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0014406}}}{space 1}{space 1}{ralign 9:{res:{sf: .0047063}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0077836}}}{space 1}{space 1}{ralign 9:{res:{sf: .0106648}}}{space 1}{space 1}{ralign 9:{res:{sf:     2929}}}{space 1}{space 1}{ralign 9:{res:{sf:      587}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0011406}}}{space 1}{space 1}{ralign 9:{res:{sf: .0085989}}}{space 1}{space 1}{ralign 9:{res:{sf: -.015713}}}{space 1}{space 1}{ralign 9:{res:{sf: .0179942}}}{space 1}{space 1}{ralign 9:{res:{sf:     1854}}}{space 1}{space 1}{ralign 9:{res:{sf:      505}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0014962}}}{space 1}{space 1}{ralign 9:{res:{sf: .0127872}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0265586}}}{space 1}{space 1}{ralign 9:{res:{sf: .0235662}}}{space 1}{space 1}{ralign 9:{res:{sf:     1112}}}{space 1}{space 1}{ralign 9:{res:{sf:      414}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0206449}}}{space 1}{space 1}{ralign 9:{res:{sf: .0197808}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0594145}}}{space 1}{space 1}{ralign 9:{res:{sf: .0181248}}}{space 1}{space 1}{ralign 9:{res:{sf:      643}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .73631945
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Switchers_Out ---
+{err}
+The number of placebos which can be estimated is at most 3. The command will therefore try to estimate 3 placebo(s).
+{com}
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0042752}}}{space 1}{space 1}{ralign 9:{res:{sf: .0232762}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0498958}}}{space 1}{space 1}{ralign 9:{res:{sf: .0413453}}}{space 1}{space 1}{ralign 9:{res:{sf:      155}}}{space 1}{space 1}{ralign 9:{res:{sf:       36}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0306019}}}{space 1}{space 1}{ralign 9:{res:{sf: .0348237}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0376512}}}{space 1}{space 1}{ralign 9:{res:{sf: .0988551}}}{space 1}{space 1}{ralign 9:{res:{sf:       99}}}{space 1}{space 1}{ralign 9:{res:{sf:       29}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0415427}}}{space 1}{space 1}{ralign 9:{res:{sf: .0624563}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0808694}}}{space 1}{space 1}{ralign 9:{res:{sf: .1639548}}}{space 1}{space 1}{ralign 9:{res:{sf:       58}}}{space 1}{space 1}{ralign 9:{res:{sf:       21}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0790604}}}{space 1}{space 1}{ralign 9:{res:{sf: .1236068}}}{space 1}{space 1}{ralign 9:{res:{sf:-.1632045}}}{space 1}{space 1}{ralign 9:{res:{sf: .3213253}}}{space 1}{space 1}{ralign 9:{res:{sf:       36}}}{space 1}{space 1}{ralign 9:{res:{sf:       16}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .74119462
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0337754}}}{space 1}{space 1}{ralign 9:{res:{sf:  .050063}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0643462}}}{space 1}{space 1}{ralign 9:{res:{sf:  .131897}}}{space 1}{space 1}{ralign 9:{res:{sf:      257}}}{space 1}{space 1}{ralign 9:{res:{sf:      102}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3647059
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0649429}}}{space 1}{space 1}{ralign 9:{res:{sf: .0387106}}}{space 1}{space 1}{ralign 9:{res:{sf:-.1408143}}}{space 1}{space 1}{ralign 9:{res:{sf: .0109285}}}{space 1}{space 1}{ralign 9:{res:{sf:       61}}}{space 1}{space 1}{ralign 9:{res:{sf:       10}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   .04125}}}{space 1}{space 1}{ralign 9:{res:{sf: .0474234}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0516983}}}{space 1}{space 1}{ralign 9:{res:{sf: .1341982}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf:        2}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .3354999}}}{space 1}{space 1}{ralign 9:{res:{sf: .4014753}}}{space 1}{space 1}{ralign 9:{res:{sf:-.4513772}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.122377}}}{space 1}{space 1}{ralign 9:{res:{sf:        3}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .2754281
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Only_Never_Switchers ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0020124}}}{space 1}{space 1}{ralign 9:{res:{sf: .0099488}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0174868}}}{space 1}{space 1}{ralign 9:{res:{sf: .0215117}}}{space 1}{space 1}{ralign 9:{res:{sf:      645}}}{space 1}{space 1}{ralign 9:{res:{sf:      575}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0027909}}}{space 1}{space 1}{ralign 9:{res:{sf: .0146322}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0314695}}}{space 1}{space 1}{ralign 9:{res:{sf: .0258877}}}{space 1}{space 1}{ralign 9:{res:{sf:      628}}}{space 1}{space 1}{ralign 9:{res:{sf:      563}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: -.008412}}}{space 1}{space 1}{ralign 9:{res:{sf: .0211299}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0498257}}}{space 1}{space 1}{ralign 9:{res:{sf: .0330018}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}{space 1}{ralign 9:{res:{sf:      553}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0147496}}}{space 1}{space 1}{ralign 9:{res:{sf:  .023694}}}{space 1}{space 1}{ralign 9:{res:{sf: -.061189}}}{space 1}{space 1}{ralign 9:{res:{sf: .0316898}}}{space 1}{space 1}{ralign 9:{res:{sf:      591}}}{space 1}{space 1}{ralign 9:{res:{sf:      536}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .67032384
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0041953}}}{space 1}{space 1}{ralign 9:{res:{sf: .0120158}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0277459}}}{space 1}{space 1}{ralign 9:{res:{sf: .0193554}}}{space 1}{space 1}{ralign 9:{res:{sf:     2297}}}{space 1}{space 1}{ralign 9:{res:{sf:     2227}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3544631
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0286113}}}{space 1}{space 1}{ralign 9:{res:{sf: .0110993}}}{space 1}{space 1}{ralign 9:{res:{sf: .0068572}}}{space 1}{space 1}{ralign 9:{res:{sf: .0503655}}}{space 1}{space 1}{ralign 9:{res:{sf:      603}}}{space 1}{space 1}{ralign 9:{res:{sf:      538}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .040741}}}{space 1}{space 1}{ralign 9:{res:{sf: .0180273}}}{space 1}{space 1}{ralign 9:{res:{sf:  .005408}}}{space 1}{space 1}{ralign 9:{res:{sf: .0760739}}}{space 1}{space 1}{ralign 9:{res:{sf:      533}}}{space 1}{space 1}{ralign 9:{res:{sf:      478}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0816113}}}{space 1}{space 1}{ralign 9:{res:{sf: .0328326}}}{space 1}{space 1}{ralign 9:{res:{sf: .0172605}}}{space 1}{space 1}{ralign 9:{res:{sf: .1459621}}}{space 1}{space 1}{ralign 9:{res:{sf:      451}}}{space 1}{space 1}{ralign 9:{res:{sf:      406}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0650112}}}{space 1}{space 1}{ralign 9:{res:{sf: .0447719}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0227402}}}{space 1}{space 1}{ralign 9:{res:{sf: .1527626}}}{space 1}{space 1}{ralign 9:{res:{sf:      339}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .03957515
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: CI_Level_90 ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0175817}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004908}}}{space 1}{space 1}{ralign 9:{res:{sf: .0095088}}}{space 1}{space 1}{ralign 9:{res:{sf: .0256546}}}{space 1}{space 1}{ralign 9:{res:{sf:     3664}}}{space 1}{space 1}{ralign 9:{res:{sf:      711}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0286082}}}{space 1}{space 1}{ralign 9:{res:{sf: .0064031}}}{space 1}{space 1}{ralign 9:{res:{sf:  .018076}}}{space 1}{space 1}{ralign 9:{res:{sf: .0391404}}}{space 1}{space 1}{ralign 9:{res:{sf:     3016}}}{space 1}{space 1}{ralign 9:{res:{sf:      674}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0354841}}}{space 1}{space 1}{ralign 9:{res:{sf:  .008523}}}{space 1}{space 1}{ralign 9:{res:{sf:  .021465}}}{space 1}{space 1}{ralign 9:{res:{sf: .0495032}}}{space 1}{space 1}{ralign 9:{res:{sf:     2450}}}{space 1}{space 1}{ralign 9:{res:{sf:      645}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0350709}}}{space 1}{space 1}{ralign 9:{res:{sf: .0101026}}}{space 1}{space 1}{ralign 9:{res:{sf: .0184535}}}{space 1}{space 1}{ralign 9:{res:{sf: .0516882}}}{space 1}{space 1}{ralign 9:{res:{sf:     1962}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .00033013
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0211755}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004751}}}{space 1}{space 1}{ralign 9:{res:{sf: .0133608}}}{space 1}{space 1}{ralign 9:{res:{sf: .0289902}}}{space 1}{space 1}{ralign 9:{res:{sf:     5596}}}{space 1}{space 1}{ralign 9:{res:{sf:     2643}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3377815
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0003287}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004646}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0073132}}}{space 1}{space 1}{ralign 9:{res:{sf: .0079706}}}{space 1}{space 1}{ralign 9:{res:{sf:     2939}}}{space 1}{space 1}{ralign 9:{res:{sf:      597}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0012988}}}{space 1}{space 1}{ralign 9:{res:{sf: .0085523}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0127685}}}{space 1}{space 1}{ralign 9:{res:{sf: .0153661}}}{space 1}{space 1}{ralign 9:{res:{sf:     1856}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0006842}}}{space 1}{space 1}{ralign 9:{res:{sf: .0126356}}}{space 1}{space 1}{ralign 9:{res:{sf: -.021468}}}{space 1}{space 1}{ralign 9:{res:{sf: .0200996}}}{space 1}{space 1}{ralign 9:{res:{sf:     1113}}}{space 1}{space 1}{ralign 9:{res:{sf:      415}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0206449}}}{space 1}{space 1}{ralign 9:{res:{sf: .0197808}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0531814}}}{space 1}{space 1}{ralign 9:{res:{sf: .0118916}}}{space 1}{space 1}{ralign 9:{res:{sf:      643}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .71663495
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: CI_Level_99 ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0175817}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004908}}}{space 1}{space 1}{ralign 9:{res:{sf: .0049396}}}{space 1}{space 1}{ralign 9:{res:{sf: .0302239}}}{space 1}{space 1}{ralign 9:{res:{sf:     3664}}}{space 1}{space 1}{ralign 9:{res:{sf:      711}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0286082}}}{space 1}{space 1}{ralign 9:{res:{sf: .0064031}}}{space 1}{space 1}{ralign 9:{res:{sf: .0121149}}}{space 1}{space 1}{ralign 9:{res:{sf: .0451016}}}{space 1}{space 1}{ralign 9:{res:{sf:     3016}}}{space 1}{space 1}{ralign 9:{res:{sf:      674}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0354841}}}{space 1}{space 1}{ralign 9:{res:{sf:  .008523}}}{space 1}{space 1}{ralign 9:{res:{sf: .0135303}}}{space 1}{space 1}{ralign 9:{res:{sf: .0574379}}}{space 1}{space 1}{ralign 9:{res:{sf:     2450}}}{space 1}{space 1}{ralign 9:{res:{sf:      645}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0350709}}}{space 1}{space 1}{ralign 9:{res:{sf: .0101026}}}{space 1}{space 1}{ralign 9:{res:{sf: .0090483}}}{space 1}{space 1}{ralign 9:{res:{sf: .0610935}}}{space 1}{space 1}{ralign 9:{res:{sf:     1962}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .00033013
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0211755}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004751}}}{space 1}{space 1}{ralign 9:{res:{sf: .0089377}}}{space 1}{space 1}{ralign 9:{res:{sf: .0334133}}}{space 1}{space 1}{ralign 9:{res:{sf:     5596}}}{space 1}{space 1}{ralign 9:{res:{sf:     2643}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3377815
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0003287}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004646}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0116385}}}{space 1}{space 1}{ralign 9:{res:{sf: .0122959}}}{space 1}{space 1}{ralign 9:{res:{sf:     2939}}}{space 1}{space 1}{ralign 9:{res:{sf:      597}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0012988}}}{space 1}{space 1}{ralign 9:{res:{sf: .0085523}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0207304}}}{space 1}{space 1}{ralign 9:{res:{sf: .0233281}}}{space 1}{space 1}{ralign 9:{res:{sf:     1856}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0006842}}}{space 1}{space 1}{ralign 9:{res:{sf: .0126356}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0332314}}}{space 1}{space 1}{ralign 9:{res:{sf: .0318631}}}{space 1}{space 1}{ralign 9:{res:{sf:     1113}}}{space 1}{space 1}{ralign 9:{res:{sf:      415}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0206449}}}{space 1}{space 1}{ralign 9:{res:{sf: .0197808}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0715968}}}{space 1}{space 1}{ralign 9:{res:{sf: .0303071}}}{space 1}{space 1}{ralign 9:{res:{sf:      643}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .71663495
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Less_Conservative_SE ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0175817}}}{space 1}{space 1}{ralign 9:{res:{sf: .0049102}}}{space 1}{space 1}{ralign 9:{res:{sf: .0079579}}}{space 1}{space 1}{ralign 9:{res:{sf: .0272056}}}{space 1}{space 1}{ralign 9:{res:{sf:     3664}}}{space 1}{space 1}{ralign 9:{res:{sf:      711}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0286082}}}{space 1}{space 1}{ralign 9:{res:{sf:  .006325}}}{space 1}{space 1}{ralign 9:{res:{sf: .0162114}}}{space 1}{space 1}{ralign 9:{res:{sf: .0410051}}}{space 1}{space 1}{ralign 9:{res:{sf:     3016}}}{space 1}{space 1}{ralign 9:{res:{sf:      674}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0354841}}}{space 1}{space 1}{ralign 9:{res:{sf: .0084053}}}{space 1}{space 1}{ralign 9:{res:{sf: .0190101}}}{space 1}{space 1}{ralign 9:{res:{sf: .0519581}}}{space 1}{space 1}{ralign 9:{res:{sf:     2450}}}{space 1}{space 1}{ralign 9:{res:{sf:      645}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0350709}}}{space 1}{space 1}{ralign 9:{res:{sf: .0100079}}}{space 1}{space 1}{ralign 9:{res:{sf: .0154557}}}{space 1}{space 1}{ralign 9:{res:{sf:  .054686}}}{space 1}{space 1}{ralign 9:{res:{sf:     1962}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .00021117
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0211755}}}{space 1}{space 1}{ralign 9:{res:{sf: .0046389}}}{space 1}{space 1}{ralign 9:{res:{sf: .0120833}}}{space 1}{space 1}{ralign 9:{res:{sf: .0302676}}}{space 1}{space 1}{ralign 9:{res:{sf:     5596}}}{space 1}{space 1}{ralign 9:{res:{sf:     2643}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3377815
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0003287}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004646}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0087772}}}{space 1}{space 1}{ralign 9:{res:{sf: .0094346}}}{space 1}{space 1}{ralign 9:{res:{sf:     2939}}}{space 1}{space 1}{ralign 9:{res:{sf:      597}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0012988}}}{space 1}{space 1}{ralign 9:{res:{sf: .0085523}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0154634}}}{space 1}{space 1}{ralign 9:{res:{sf:  .018061}}}{space 1}{space 1}{ralign 9:{res:{sf:     1856}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0006842}}}{space 1}{space 1}{ralign 9:{res:{sf: .0126356}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0254496}}}{space 1}{space 1}{ralign 9:{res:{sf: .0240812}}}{space 1}{space 1}{ralign 9:{res:{sf:     1113}}}{space 1}{space 1}{ralign 9:{res:{sf:      415}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0206449}}}{space 1}{space 1}{ralign 9:{res:{sf: .0197808}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0594145}}}{space 1}{space 1}{ralign 9:{res:{sf: .0181248}}}{space 1}{space 1}{ralign 9:{res:{sf:      643}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .71663495
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Bootstrap ---
+{err}You specified the bootstrap option without the continuous option. Please be aware that we strongly recommend to only compute bootstraped standard errors when you want to use the continuous option. Otherwise you can rely on the (much faster) computation of analytical standard errors.
+{com}
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0175817}}}{space 1}{space 1}{ralign 9:{res:{sf: .0064642}}}{space 1}{space 1}{ralign 9:{res:{sf: .0049121}}}{space 1}{space 1}{ralign 9:{res:{sf: .0302514}}}{space 1}{space 1}{ralign 9:{res:{sf:     3664}}}{space 1}{space 1}{ralign 9:{res:{sf:      711}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0286082}}}{space 1}{space 1}{ralign 9:{res:{sf: .0079012}}}{space 1}{space 1}{ralign 9:{res:{sf: .0131222}}}{space 1}{space 1}{ralign 9:{res:{sf: .0440943}}}{space 1}{space 1}{ralign 9:{res:{sf:     3016}}}{space 1}{space 1}{ralign 9:{res:{sf:      674}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0354841}}}{space 1}{space 1}{ralign 9:{res:{sf: .0077893}}}{space 1}{space 1}{ralign 9:{res:{sf: .0202173}}}{space 1}{space 1}{ralign 9:{res:{sf: .0507509}}}{space 1}{space 1}{ralign 9:{res:{sf:     2450}}}{space 1}{space 1}{ralign 9:{res:{sf:      645}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0350709}}}{space 1}{space 1}{ralign 9:{res:{sf: .0083839}}}{space 1}{space 1}{ralign 9:{res:{sf: .0186388}}}{space 1}{space 1}{ralign 9:{res:{sf: .0515029}}}{space 1}{space 1}{ralign 9:{res:{sf:     1962}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .0005799
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0211755}}}{space 1}{space 1}{ralign 9:{res:{sf: .0050423}}}{space 1}{space 1}{ralign 9:{res:{sf: .0112928}}}{space 1}{space 1}{ralign 9:{res:{sf: .0310582}}}{space 1}{space 1}{ralign 9:{res:{sf:     5596}}}{space 1}{space 1}{ralign 9:{res:{sf:     2643}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3377815
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0003287}}}{space 1}{space 1}{ralign 9:{res:{sf: .0054857}}}{space 1}{space 1}{ralign 9:{res:{sf: -.010423}}}{space 1}{space 1}{ralign 9:{res:{sf: .0110804}}}{space 1}{space 1}{ralign 9:{res:{sf:     2939}}}{space 1}{space 1}{ralign 9:{res:{sf:      597}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0012988}}}{space 1}{space 1}{ralign 9:{res:{sf: .0098036}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0179158}}}{space 1}{space 1}{ralign 9:{res:{sf: .0205135}}}{space 1}{space 1}{ralign 9:{res:{sf:     1856}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0006842}}}{space 1}{space 1}{ralign 9:{res:{sf: .0148929}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0298738}}}{space 1}{space 1}{ralign 9:{res:{sf: .0285054}}}{space 1}{space 1}{ralign 9:{res:{sf:     1113}}}{space 1}{space 1}{ralign 9:{res:{sf:      415}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0206449}}}{space 1}{space 1}{ralign 9:{res:{sf: .0224673}}}{space 1}{space 1}{ralign 9:{res:{sf:  -.06468}}}{space 1}{space 1}{ralign 9:{res:{sf: .0233903}}}{space 1}{space 1}{ralign 9:{res:{sf:      643}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .7868451
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Dont_Drop_Larger_Lower ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0178072}}}{space 1}{space 1}{ralign 9:{res:{sf: .0049186}}}{space 1}{space 1}{ralign 9:{res:{sf:  .008167}}}{space 1}{space 1}{ralign 9:{res:{sf: .0274474}}}{space 1}{space 1}{ralign 9:{res:{sf:     3661}}}{space 1}{space 1}{ralign 9:{res:{sf:      708}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0289724}}}{space 1}{space 1}{ralign 9:{res:{sf: .0063992}}}{space 1}{space 1}{ralign 9:{res:{sf: .0164302}}}{space 1}{space 1}{ralign 9:{res:{sf: .0415146}}}{space 1}{space 1}{ralign 9:{res:{sf:     3017}}}{space 1}{space 1}{ralign 9:{res:{sf:      675}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0357443}}}{space 1}{space 1}{ralign 9:{res:{sf: .0085111}}}{space 1}{space 1}{ralign 9:{res:{sf: .0190628}}}{space 1}{space 1}{ralign 9:{res:{sf: .0524258}}}{space 1}{space 1}{ralign 9:{res:{sf:     2455}}}{space 1}{space 1}{ralign 9:{res:{sf:      650}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0341518}}}{space 1}{space 1}{ralign 9:{res:{sf: .0103011}}}{space 1}{space 1}{ralign 9:{res:{sf: .0139621}}}{space 1}{space 1}{ralign 9:{res:{sf: .0543415}}}{space 1}{space 1}{ralign 9:{res:{sf:     1970}}}{space 1}{space 1}{ralign 9:{res:{sf:      621}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .00028681
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .021309}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004813}}}{space 1}{space 1}{ralign 9:{res:{sf: .0118757}}}{space 1}{space 1}{ralign 9:{res:{sf: .0307424}}}{space 1}{space 1}{ralign 9:{res:{sf:     5607}}}{space 1}{space 1}{ralign 9:{res:{sf:     2654}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3276773
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0005069}}}{space 1}{space 1}{ralign 9:{res:{sf: .0046597}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0086259}}}{space 1}{space 1}{ralign 9:{res:{sf: .0096397}}}{space 1}{space 1}{ralign 9:{res:{sf:     2939}}}{space 1}{space 1}{ralign 9:{res:{sf:      597}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0012988}}}{space 1}{space 1}{ralign 9:{res:{sf: .0085523}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0154634}}}{space 1}{space 1}{ralign 9:{res:{sf:  .018061}}}{space 1}{space 1}{ralign 9:{res:{sf:     1856}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0006842}}}{space 1}{space 1}{ralign 9:{res:{sf: .0126356}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0254496}}}{space 1}{space 1}{ralign 9:{res:{sf: .0240812}}}{space 1}{space 1}{ralign 9:{res:{sf:     1113}}}{space 1}{space 1}{ralign 9:{res:{sf:      415}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0206449}}}{space 1}{space 1}{ralign 9:{res:{sf: .0197808}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0594145}}}{space 1}{space 1}{ralign 9:{res:{sf: .0181248}}}{space 1}{space 1}{ralign 9:{res:{sf:      643}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .71635817
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{res}--- Spec: Effects_Equal ---
+
+
+{hline 80}
+             {bf:Estimation of treatment effects: Event-study effects}
+{hline 80}
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Effect_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0175817}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004908}}}{space 1}{space 1}{ralign 9:{res:{sf: .0079622}}}{space 1}{space 1}{ralign 9:{res:{sf: .0272012}}}{space 1}{space 1}{ralign 9:{res:{sf:     3664}}}{space 1}{space 1}{ralign 9:{res:{sf:      711}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0286082}}}{space 1}{space 1}{ralign 9:{res:{sf: .0064031}}}{space 1}{space 1}{ralign 9:{res:{sf: .0160584}}}{space 1}{space 1}{ralign 9:{res:{sf: .0411581}}}{space 1}{space 1}{ralign 9:{res:{sf:     3016}}}{space 1}{space 1}{ralign 9:{res:{sf:      674}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0354841}}}{space 1}{space 1}{ralign 9:{res:{sf:  .008523}}}{space 1}{space 1}{ralign 9:{res:{sf: .0187794}}}{space 1}{space 1}{ralign 9:{res:{sf: .0521889}}}{space 1}{space 1}{ralign 9:{res:{sf:     2450}}}{space 1}{space 1}{ralign 9:{res:{sf:      645}}}{space 1}
+{space 0}{space 0}{ralign 12:Effect_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0350709}}}{space 1}{space 1}{ralign 9:{res:{sf: .0101026}}}{space 1}{space 1}{ralign 9:{res:{sf: .0152701}}}{space 1}{space 1}{ralign 9:{res:{sf: .0548716}}}{space 1}{space 1}{ralign 9:{res:{sf:     1962}}}{space 1}{space 1}{ralign 9:{res:{sf:      613}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the effects : p-value =} .00033013
+
+
+{hline 80}
+               {bf:Average cumulative (total) effect per treatment unit}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switch}{space 1}{space 1}{ralign 9:x Periods}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Av_tot_eff}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0211755}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004751}}}{space 1}{space 1}{ralign 9:{res:{sf: .0118637}}}{space 1}{space 1}{ralign 9:{res:{sf: .0304873}}}{space 1}{space 1}{ralign 9:{res:{sf:     5596}}}{space 1}{space 1}{ralign 9:{res:{sf:     2643}}}{space 1}{space 1}{ralign 9:{res:{sf:{space 9}}}}{space 1}
+{hline 80}
+{it:Average number of time periods over which a treatment's effect is accumulated = }2.3377815
+
+
+{hline 80}
+          {bf:Testing the parallel trends and no anticipation assumptions}
+{hline 80}
+{res}
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:Estimate}{space 1}{space 1}{ralign 9:SE}{space 1}{space 1}{ralign 9:LB CI}{space 1}{space 1}{ralign 9:UB CI}{space 1}{space 1}{ralign 9:N}{space 1}{space 1}{ralign 9:Switchers}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 10}
+{space 0}{space 0}{ralign 12:Placebo_1}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0003287}}}{space 1}{space 1}{ralign 9:{res:{sf:  .004646}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0087772}}}{space 1}{space 1}{ralign 9:{res:{sf: .0094346}}}{space 1}{space 1}{ralign 9:{res:{sf:     2939}}}{space 1}{space 1}{ralign 9:{res:{sf:      597}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_2}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0012988}}}{space 1}{space 1}{ralign 9:{res:{sf: .0085523}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0154634}}}{space 1}{space 1}{ralign 9:{res:{sf:  .018061}}}{space 1}{space 1}{ralign 9:{res:{sf:     1856}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0006842}}}{space 1}{space 1}{ralign 9:{res:{sf: .0126356}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0254496}}}{space 1}{space 1}{ralign 9:{res:{sf: .0240812}}}{space 1}{space 1}{ralign 9:{res:{sf:     1113}}}{space 1}{space 1}{ralign 9:{res:{sf:      415}}}{space 1}
+{space 0}{space 0}{ralign 12:Placebo_4}{space 1}{c |}{space 1}{ralign 9:{res:{sf:-.0206449}}}{space 1}{space 1}{ralign 9:{res:{sf: .0197808}}}{space 1}{space 1}{ralign 9:{res:{sf:-.0594145}}}{space 1}{space 1}{ralign 9:{res:{sf: .0181248}}}{space 1}{space 1}{ralign 9:{res:{sf:      643}}}{space 1}{space 1}{ralign 9:{res:{sf:      304}}}{space 1}
+{hline 80}
+{it:Test of joint nullity of the placebos : p-value =} .71663495
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/logfiles/log_main_06_12_2026_gentzkowetal_didtextbook_balanced_new.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}12 Jun 2026, 11:48:37
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

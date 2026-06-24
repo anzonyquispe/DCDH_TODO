@@ -1,0 +1,15 @@
+dataset,spec,reset,effect_num,N_did,N_avg,diff,pass
+gentzkow,noreset,0,1,711,711,0,PASS
+gentzkow,noreset,0,2,674,674,0,PASS
+gentzkow,noreset,0,3,645,645,0,PASS
+gentzkow,noreset,0,4,613,613,0,PASS
+gentzkow,noreset,0,5,574,574,0,PASS
+gentzkow,noreset,0,6,537,537,0,PASS
+gentzkow,noreset,0,7,474,474,0,PASS
+gentzkow,noreset,0,8,431,431,0,PASS
+gentzkow,noreset,0,9,373,373,0,PASS
+gentzkow,noreset,0,10,297,297,0,PASS
+gentzkow,noreset,0,11,232,232,0,PASS
+gentzkow,noreset,0,12,147,147,0,PASS
+gentzkow,noreset,0,13,85,85,0,PASS
+gentzkow,noreset,0,14,37,37,0,PASS

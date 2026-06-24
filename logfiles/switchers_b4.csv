@@ -1,0 +1,8 @@
+dataset,spec,reset,effect_num,N_did,N_avg,diff,pass
+wagepan,reset4,4,1,260,260,0,PASS
+wagepan,reset4,4,2,227,227,0,PASS
+wagepan,reset4,4,3,212,212,0,PASS
+wagepan,reset4,4,4,195,195,0,PASS
+wagepan,reset4,4,5,113,113,0,PASS
+wagepan,reset4,4,6,61,61,0,PASS
+wagepan,reset4,4,7,28,28,0,PASS

@@ -1,0 +1,931 @@
+
+  ___  ____  ____  ____  ____ ®
+ /__    /   ____/   /   ____/      StataNow 19.5
+___/   /   /___/   /   /___/       SE—Standard Edition
+
+ Statistics and Data Science       Copyright 1985-2025 StataCorp LLC
+                                   StataCorp
+                                   4905 Lakeway Drive
+                                   College Station, Texas 77845 USA
+                                   800-782-8272        https://www.stata.com
+                                   979-696-4600        service@stata.com
+
+Stata license: Unlimited-user network, expiring  8 Jun 2027
+Serial number: 501909302568
+  Licensed to: Anzony QUISPE ROJAS
+               
+
+Notes:
+      1. Stata is running in batch mode.
+      2. Unicode is supported; see help unicode_advice.
+      3. Maximum number of variables is set to 5,000 but can be increased;
+          see help set_maxvar.
+
+. do code/test_switchers_b5.do 
+
+. ***** Batch 5: favara_imbs — binary treatment, no reset, effects(600)      **
+> ***
+. ***** Compare N_switchers from SSC did_multiplegt_dyn vs avg_cumul_periods **
+> ***
+. ***** Run in parallel with b1, b2, b3, b4, b6                              **
+> ***
+. *
+. * favara_imbs: outcome=Dl_hpi  group=county  time=year  treatment=inter_bra
+. * inter_bra is the interstate-branching deregulation indicator (binary).
+. 
+. clear all
+
+. set more off
+
+. cd "/Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO"
+/Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO
+
+. capture log close
+
+. log using "logfiles/test_switchers_b5.log", replace text
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/logfiles/test
+> _switchers_b5.log
+  log type:  text
+ opened on:  24 Jun 2026, 18:23:25
+
+. di as text "=== test_switchers_b5  started: $S_DATE $S_TIME ==="
+=== test_switchers_b5  started: 24 Jun 2026 18:23:25 ===
+
+. 
+. qui do "code/avg_cumul_periods_func.do"
+
+. 
+. local csvfile "logfiles/switchers_b5.csv"
+
+. capture erase "`csvfile'"
+
+. file open _fh using "`csvfile'", write replace
+(file logfiles/switchers_b5.csv not found)
+
+. file write _fh "dataset,spec,reset,effect_num,N_did,N_avg,diff,pass" _n
+
+. file close _fh
+
+. 
+. capture program drop _swrow
+
+. program _swrow
+  1.     syntax, dataset(string) spec(string) reset(integer) ///
+>         effnum(integer) ndid(string) navg(string) csvfile(string)
+  2.     if missing(real("`ndid'")) | missing(real("`navg'")) {
+  3.         local diff .
+  4.         local pass "MISS"
+  5.     }
+  6.     else {
+  7.         local diff = real("`ndid'") - real("`navg'")
+  8.         local pass = cond(`diff' == 0, "PASS", "FAIL")
+  9.     }
+ 10.     file open _fh using "`csvfile'", write append
+ 11.     file write _fh "`dataset',`spec',`reset',`effnum',`ndid',`navg',`diff'
+> ,`pass'" _n
+ 12.     file close _fh
+ 13.     if "`pass'" == "FAIL" di as error "  FAIL  `dataset' `spec' k=`effnum'
+>   did=`ndid'  avg=`navg'"
+ 14.     else if "`pass'" == "MISS" di as error "  MISS  `dataset' `spec' k=`ef
+> fnum'  did=`ndid'  avg=`navg'"
+ 15.     else                       di as text  "  PASS  `dataset' `spec' k=`ef
+> fnum'  did=`ndid'  avg=`navg'"
+ 16. end
+
+. 
+. capture program drop _diagrow
+
+. program _diagrow
+  1.     syntax, dataset(string) spec(string) reset(integer) msg(string) csvfil
+> e(string)
+  2.     file open _fh using "`csvfile'", write append
+  3.     file write _fh "`dataset',`spec',`reset',-1,.,.,.,ERROR:`msg'" _n
+  4.     file close _fh
+  5. end
+
+. 
+. *****************************************************************************
+> ***
+. * FAVARA-IMBS — continuous treatment, no reset, effects(600) → all effects
+. *****************************************************************************
+> ***
+. local ds    "favara_imbs"
+
+. local data  "_data/favara_imbs.dta"
+
+. local y     Dl_hpi
+
+. local g     county
+
+. local t     year
+
+. local d     inter_bra
+
+. local spec  "noreset"
+
+. local rst   0
+
+. local neff  600
+
+. 
+. di as text _newline "{hline 60}"
+
+------------------------------------------------------------
+
+. di as text "`ds'  effects(`neff')  no_reset  (binary treatment inter_bra)"
+favara_imbs  effects(600)  no_reset  (binary treatment inter_bra)
+
+. di as text "{hline 60}"
+------------------------------------------------------------
+
+. 
+. use "`data'", clear
+
+. 
+. * --- SSC did_multiplegt_dyn ---
+. cap program drop did_multiplegt_dyn
+
+. local n_did 0
+
+. local did_failed 0
+
+. capture noisily did_multiplegt_dyn `y' `g' `t' `d', effects(`neff') graph_off
+
+The number of effects requested is too large. The number of effects which can b
+> e estimated is at most 11. The command will therefore try to estimate 11 effe
+> ct(s).
+
+
+-------------------------------------------------------------------------------
+> -
+             Estimation of treatment effects: Event-study effects
+-------------------------------------------------------------------------------
+> -
+
+             |  Estimate         SE      LB CI      UB CI          N 
+-------------+-------------------------------------------------------
+    Effect_1 |  .0024103   .0014998  -.0005293   .0053498       3948 
+    Effect_2 |  .0055268   .0015778   .0024345   .0086192       3137 
+    Effect_3 |  .0081492   .0019922   .0042445   .0120539       2524 
+    Effect_4 |  .0116607   .0021792   .0073895   .0159318       1976 
+    Effect_5 |  .0173245   .0021812   .0130494   .0215996       1844 
+    Effect_6 |  .0266229   .0023771    .021964   .0312818       1529 
+    Effect_7 |   .034879   .0029724   .0290533   .0407048       1269 
+    Effect_8 |  .0434068   .0035446   .0364595   .0503541       1269 
+    Effect_9 |  .0720858   .0053219    .061655   .0825165        724 
+   Effect_10 |  .0780568   .0071046   .0641321   .0919815        477 
+   Effect_11 |   .002221    .022183  -.0412569    .045699        130 
+
+             | Switchers 
+-------------+----------
+    Effect_1 |       890 
+    Effect_2 |       889 
+    Effect_3 |       889 
+    Effect_4 |       889 
+    Effect_5 |       889 
+    Effect_6 |       834 
+    Effect_7 |       757 
+    Effect_8 |       757 
+    Effect_9 |       340 
+   Effect_10 |       221 
+   Effect_11 |         2 
+-------------------------------------------------------------------------------
+> -
+Test of joint nullity of the effects : p-value = 0
+
+
+-------------------------------------------------------------------------------
+> -
+               Average cumulative (total) effect per treatment unit
+-------------------------------------------------------------------------------
+> -
+
+             |  Estimate         SE      LB CI      UB CI          N 
+-------------+-------------------------------------------------------
+  Av_tot_eff |  .0098392     .00078   .0083104    .011368      11187 
+
+             |    Switch  x Periods 
+-------------+---------------------
+  Av_tot_eff |      7357            
+-------------------------------------------------------------------------------
+> -
+Average number of time periods over which a treatment's effect is accumulated =
+>  4.8232813
+
+
+The development of this package was funded by the European Union (ERC, REALLYCR
+> EDIBLE,GA N°101043899).
+
+. if _rc {
+.     local did_rc = _rc
+.     di as error "  ERROR did_multiplegt_dyn failed rc=`did_rc'"
+.     local did_failed 1
+.     _diagrow, dataset("`ds'") spec("`spec'") reset(`rst') ///
+>         msg("did_multiplegt_dyn_rc_`did_rc'") csvfile("`csvfile'")
+. }
+
+. * Try to read e() scalars regardless of _rc
+. local stop_did = 0
+
+. forvalues i = 1/`neff' {
+  2.     if `stop_did' == 0 {
+  3.         local chk = e(N_switchers_effect_`i')
+  4.         if missing(real("`chk'")) | real("`chk'") == 0 {
+  5.             local stop_did = 1
+  6.         }
+  7.         else {
+  8.             local did_`i' = real("`chk'")
+  9.             local n_did = `i'
+ 10.         }
+ 11.     }
+ 12. }
+
+. di as text "  -> N_did effects found: `n_did'"
+  -> N_did effects found: 11
+
+. 
+. * --- avg_cumul_periods ---
+. local n_avg 0
+
+. local avg_failed 0
+
+. capture noisily avg_cumul_periods `g' `t' `d', effects(`neff') outcome(`y')
+Average number of time periods over which a treatment's effect is accumulated =
+>  4.8220763
+Number of switchers per effect:
+   Effect_1 : 890
+   Effect_2 : 889
+   Effect_3 : 889
+   Effect_4 : 889
+   Effect_5 : 889
+   Effect_6 : 834
+   Effect_7 : 757
+   Effect_8 : 757
+   Effect_9 : 340
+   Effect_10 : 221
+   Effect_11 : 2
+   Effect_12 : 0
+   Effect_13 : 0
+   Effect_14 : 0
+   Effect_15 : 0
+   Effect_16 : 0
+   Effect_17 : 0
+   Effect_18 : 0
+   Effect_19 : 0
+   Effect_20 : 0
+   Effect_21 : 0
+   Effect_22 : 0
+   Effect_23 : 0
+   Effect_24 : 0
+   Effect_25 : 0
+   Effect_26 : 0
+   Effect_27 : 0
+   Effect_28 : 0
+   Effect_29 : 0
+   Effect_30 : 0
+   Effect_31 : 0
+   Effect_32 : 0
+   Effect_33 : 0
+   Effect_34 : 0
+   Effect_35 : 0
+   Effect_36 : 0
+   Effect_37 : 0
+   Effect_38 : 0
+   Effect_39 : 0
+   Effect_40 : 0
+   Effect_41 : 0
+   Effect_42 : 0
+   Effect_43 : 0
+   Effect_44 : 0
+   Effect_45 : 0
+   Effect_46 : 0
+   Effect_47 : 0
+   Effect_48 : 0
+   Effect_49 : 0
+   Effect_50 : 0
+   Effect_51 : 0
+   Effect_52 : 0
+   Effect_53 : 0
+   Effect_54 : 0
+   Effect_55 : 0
+   Effect_56 : 0
+   Effect_57 : 0
+   Effect_58 : 0
+   Effect_59 : 0
+   Effect_60 : 0
+   Effect_61 : 0
+   Effect_62 : 0
+   Effect_63 : 0
+   Effect_64 : 0
+   Effect_65 : 0
+   Effect_66 : 0
+   Effect_67 : 0
+   Effect_68 : 0
+   Effect_69 : 0
+   Effect_70 : 0
+   Effect_71 : 0
+   Effect_72 : 0
+   Effect_73 : 0
+   Effect_74 : 0
+   Effect_75 : 0
+   Effect_76 : 0
+   Effect_77 : 0
+   Effect_78 : 0
+   Effect_79 : 0
+   Effect_80 : 0
+   Effect_81 : 0
+   Effect_82 : 0
+   Effect_83 : 0
+   Effect_84 : 0
+   Effect_85 : 0
+   Effect_86 : 0
+   Effect_87 : 0
+   Effect_88 : 0
+   Effect_89 : 0
+   Effect_90 : 0
+   Effect_91 : 0
+   Effect_92 : 0
+   Effect_93 : 0
+   Effect_94 : 0
+   Effect_95 : 0
+   Effect_96 : 0
+   Effect_97 : 0
+   Effect_98 : 0
+   Effect_99 : 0
+   Effect_100 : 0
+   Effect_101 : 0
+   Effect_102 : 0
+   Effect_103 : 0
+   Effect_104 : 0
+   Effect_105 : 0
+   Effect_106 : 0
+   Effect_107 : 0
+   Effect_108 : 0
+   Effect_109 : 0
+   Effect_110 : 0
+   Effect_111 : 0
+   Effect_112 : 0
+   Effect_113 : 0
+   Effect_114 : 0
+   Effect_115 : 0
+   Effect_116 : 0
+   Effect_117 : 0
+   Effect_118 : 0
+   Effect_119 : 0
+   Effect_120 : 0
+   Effect_121 : 0
+   Effect_122 : 0
+   Effect_123 : 0
+   Effect_124 : 0
+   Effect_125 : 0
+   Effect_126 : 0
+   Effect_127 : 0
+   Effect_128 : 0
+   Effect_129 : 0
+   Effect_130 : 0
+   Effect_131 : 0
+   Effect_132 : 0
+   Effect_133 : 0
+   Effect_134 : 0
+   Effect_135 : 0
+   Effect_136 : 0
+   Effect_137 : 0
+   Effect_138 : 0
+   Effect_139 : 0
+   Effect_140 : 0
+   Effect_141 : 0
+   Effect_142 : 0
+   Effect_143 : 0
+   Effect_144 : 0
+   Effect_145 : 0
+   Effect_146 : 0
+   Effect_147 : 0
+   Effect_148 : 0
+   Effect_149 : 0
+   Effect_150 : 0
+   Effect_151 : 0
+   Effect_152 : 0
+   Effect_153 : 0
+   Effect_154 : 0
+   Effect_155 : 0
+   Effect_156 : 0
+   Effect_157 : 0
+   Effect_158 : 0
+   Effect_159 : 0
+   Effect_160 : 0
+   Effect_161 : 0
+   Effect_162 : 0
+   Effect_163 : 0
+   Effect_164 : 0
+   Effect_165 : 0
+   Effect_166 : 0
+   Effect_167 : 0
+   Effect_168 : 0
+   Effect_169 : 0
+   Effect_170 : 0
+   Effect_171 : 0
+   Effect_172 : 0
+   Effect_173 : 0
+   Effect_174 : 0
+   Effect_175 : 0
+   Effect_176 : 0
+   Effect_177 : 0
+   Effect_178 : 0
+   Effect_179 : 0
+   Effect_180 : 0
+   Effect_181 : 0
+   Effect_182 : 0
+   Effect_183 : 0
+   Effect_184 : 0
+   Effect_185 : 0
+   Effect_186 : 0
+   Effect_187 : 0
+   Effect_188 : 0
+   Effect_189 : 0
+   Effect_190 : 0
+   Effect_191 : 0
+   Effect_192 : 0
+   Effect_193 : 0
+   Effect_194 : 0
+   Effect_195 : 0
+   Effect_196 : 0
+   Effect_197 : 0
+   Effect_198 : 0
+   Effect_199 : 0
+   Effect_200 : 0
+   Effect_201 : 0
+   Effect_202 : 0
+   Effect_203 : 0
+   Effect_204 : 0
+   Effect_205 : 0
+   Effect_206 : 0
+   Effect_207 : 0
+   Effect_208 : 0
+   Effect_209 : 0
+   Effect_210 : 0
+   Effect_211 : 0
+   Effect_212 : 0
+   Effect_213 : 0
+   Effect_214 : 0
+   Effect_215 : 0
+   Effect_216 : 0
+   Effect_217 : 0
+   Effect_218 : 0
+   Effect_219 : 0
+   Effect_220 : 0
+   Effect_221 : 0
+   Effect_222 : 0
+   Effect_223 : 0
+   Effect_224 : 0
+   Effect_225 : 0
+   Effect_226 : 0
+   Effect_227 : 0
+   Effect_228 : 0
+   Effect_229 : 0
+   Effect_230 : 0
+   Effect_231 : 0
+   Effect_232 : 0
+   Effect_233 : 0
+   Effect_234 : 0
+   Effect_235 : 0
+   Effect_236 : 0
+   Effect_237 : 0
+   Effect_238 : 0
+   Effect_239 : 0
+   Effect_240 : 0
+   Effect_241 : 0
+   Effect_242 : 0
+   Effect_243 : 0
+   Effect_244 : 0
+   Effect_245 : 0
+   Effect_246 : 0
+   Effect_247 : 0
+   Effect_248 : 0
+   Effect_249 : 0
+   Effect_250 : 0
+   Effect_251 : 0
+   Effect_252 : 0
+   Effect_253 : 0
+   Effect_254 : 0
+   Effect_255 : 0
+   Effect_256 : 0
+   Effect_257 : 0
+   Effect_258 : 0
+   Effect_259 : 0
+   Effect_260 : 0
+   Effect_261 : 0
+   Effect_262 : 0
+   Effect_263 : 0
+   Effect_264 : 0
+   Effect_265 : 0
+   Effect_266 : 0
+   Effect_267 : 0
+   Effect_268 : 0
+   Effect_269 : 0
+   Effect_270 : 0
+   Effect_271 : 0
+   Effect_272 : 0
+   Effect_273 : 0
+   Effect_274 : 0
+   Effect_275 : 0
+   Effect_276 : 0
+   Effect_277 : 0
+   Effect_278 : 0
+   Effect_279 : 0
+   Effect_280 : 0
+   Effect_281 : 0
+   Effect_282 : 0
+   Effect_283 : 0
+   Effect_284 : 0
+   Effect_285 : 0
+   Effect_286 : 0
+   Effect_287 : 0
+   Effect_288 : 0
+   Effect_289 : 0
+   Effect_290 : 0
+   Effect_291 : 0
+   Effect_292 : 0
+   Effect_293 : 0
+   Effect_294 : 0
+   Effect_295 : 0
+   Effect_296 : 0
+   Effect_297 : 0
+   Effect_298 : 0
+   Effect_299 : 0
+   Effect_300 : 0
+   Effect_301 : 0
+   Effect_302 : 0
+   Effect_303 : 0
+   Effect_304 : 0
+   Effect_305 : 0
+   Effect_306 : 0
+   Effect_307 : 0
+   Effect_308 : 0
+   Effect_309 : 0
+   Effect_310 : 0
+   Effect_311 : 0
+   Effect_312 : 0
+   Effect_313 : 0
+   Effect_314 : 0
+   Effect_315 : 0
+   Effect_316 : 0
+   Effect_317 : 0
+   Effect_318 : 0
+   Effect_319 : 0
+   Effect_320 : 0
+   Effect_321 : 0
+   Effect_322 : 0
+   Effect_323 : 0
+   Effect_324 : 0
+   Effect_325 : 0
+   Effect_326 : 0
+   Effect_327 : 0
+   Effect_328 : 0
+   Effect_329 : 0
+   Effect_330 : 0
+   Effect_331 : 0
+   Effect_332 : 0
+   Effect_333 : 0
+   Effect_334 : 0
+   Effect_335 : 0
+   Effect_336 : 0
+   Effect_337 : 0
+   Effect_338 : 0
+   Effect_339 : 0
+   Effect_340 : 0
+   Effect_341 : 0
+   Effect_342 : 0
+   Effect_343 : 0
+   Effect_344 : 0
+   Effect_345 : 0
+   Effect_346 : 0
+   Effect_347 : 0
+   Effect_348 : 0
+   Effect_349 : 0
+   Effect_350 : 0
+   Effect_351 : 0
+   Effect_352 : 0
+   Effect_353 : 0
+   Effect_354 : 0
+   Effect_355 : 0
+   Effect_356 : 0
+   Effect_357 : 0
+   Effect_358 : 0
+   Effect_359 : 0
+   Effect_360 : 0
+   Effect_361 : 0
+   Effect_362 : 0
+   Effect_363 : 0
+   Effect_364 : 0
+   Effect_365 : 0
+   Effect_366 : 0
+   Effect_367 : 0
+   Effect_368 : 0
+   Effect_369 : 0
+   Effect_370 : 0
+   Effect_371 : 0
+   Effect_372 : 0
+   Effect_373 : 0
+   Effect_374 : 0
+   Effect_375 : 0
+   Effect_376 : 0
+   Effect_377 : 0
+   Effect_378 : 0
+   Effect_379 : 0
+   Effect_380 : 0
+   Effect_381 : 0
+   Effect_382 : 0
+   Effect_383 : 0
+   Effect_384 : 0
+   Effect_385 : 0
+   Effect_386 : 0
+   Effect_387 : 0
+   Effect_388 : 0
+   Effect_389 : 0
+   Effect_390 : 0
+   Effect_391 : 0
+   Effect_392 : 0
+   Effect_393 : 0
+   Effect_394 : 0
+   Effect_395 : 0
+   Effect_396 : 0
+   Effect_397 : 0
+   Effect_398 : 0
+   Effect_399 : 0
+   Effect_400 : 0
+   Effect_401 : 0
+   Effect_402 : 0
+   Effect_403 : 0
+   Effect_404 : 0
+   Effect_405 : 0
+   Effect_406 : 0
+   Effect_407 : 0
+   Effect_408 : 0
+   Effect_409 : 0
+   Effect_410 : 0
+   Effect_411 : 0
+   Effect_412 : 0
+   Effect_413 : 0
+   Effect_414 : 0
+   Effect_415 : 0
+   Effect_416 : 0
+   Effect_417 : 0
+   Effect_418 : 0
+   Effect_419 : 0
+   Effect_420 : 0
+   Effect_421 : 0
+   Effect_422 : 0
+   Effect_423 : 0
+   Effect_424 : 0
+   Effect_425 : 0
+   Effect_426 : 0
+   Effect_427 : 0
+   Effect_428 : 0
+   Effect_429 : 0
+   Effect_430 : 0
+   Effect_431 : 0
+   Effect_432 : 0
+   Effect_433 : 0
+   Effect_434 : 0
+   Effect_435 : 0
+   Effect_436 : 0
+   Effect_437 : 0
+   Effect_438 : 0
+   Effect_439 : 0
+   Effect_440 : 0
+   Effect_441 : 0
+   Effect_442 : 0
+   Effect_443 : 0
+   Effect_444 : 0
+   Effect_445 : 0
+   Effect_446 : 0
+   Effect_447 : 0
+   Effect_448 : 0
+   Effect_449 : 0
+   Effect_450 : 0
+   Effect_451 : 0
+   Effect_452 : 0
+   Effect_453 : 0
+   Effect_454 : 0
+   Effect_455 : 0
+   Effect_456 : 0
+   Effect_457 : 0
+   Effect_458 : 0
+   Effect_459 : 0
+   Effect_460 : 0
+   Effect_461 : 0
+   Effect_462 : 0
+   Effect_463 : 0
+   Effect_464 : 0
+   Effect_465 : 0
+   Effect_466 : 0
+   Effect_467 : 0
+   Effect_468 : 0
+   Effect_469 : 0
+   Effect_470 : 0
+   Effect_471 : 0
+   Effect_472 : 0
+   Effect_473 : 0
+   Effect_474 : 0
+   Effect_475 : 0
+   Effect_476 : 0
+   Effect_477 : 0
+   Effect_478 : 0
+   Effect_479 : 0
+   Effect_480 : 0
+   Effect_481 : 0
+   Effect_482 : 0
+   Effect_483 : 0
+   Effect_484 : 0
+   Effect_485 : 0
+   Effect_486 : 0
+   Effect_487 : 0
+   Effect_488 : 0
+   Effect_489 : 0
+   Effect_490 : 0
+   Effect_491 : 0
+   Effect_492 : 0
+   Effect_493 : 0
+   Effect_494 : 0
+   Effect_495 : 0
+   Effect_496 : 0
+   Effect_497 : 0
+   Effect_498 : 0
+   Effect_499 : 0
+   Effect_500 : 0
+   Effect_501 : 0
+   Effect_502 : 0
+   Effect_503 : 0
+   Effect_504 : 0
+   Effect_505 : 0
+   Effect_506 : 0
+   Effect_507 : 0
+   Effect_508 : 0
+   Effect_509 : 0
+   Effect_510 : 0
+   Effect_511 : 0
+   Effect_512 : 0
+   Effect_513 : 0
+   Effect_514 : 0
+   Effect_515 : 0
+   Effect_516 : 0
+   Effect_517 : 0
+   Effect_518 : 0
+   Effect_519 : 0
+   Effect_520 : 0
+   Effect_521 : 0
+   Effect_522 : 0
+   Effect_523 : 0
+   Effect_524 : 0
+   Effect_525 : 0
+   Effect_526 : 0
+   Effect_527 : 0
+   Effect_528 : 0
+   Effect_529 : 0
+   Effect_530 : 0
+   Effect_531 : 0
+   Effect_532 : 0
+   Effect_533 : 0
+   Effect_534 : 0
+   Effect_535 : 0
+   Effect_536 : 0
+   Effect_537 : 0
+   Effect_538 : 0
+   Effect_539 : 0
+   Effect_540 : 0
+   Effect_541 : 0
+   Effect_542 : 0
+   Effect_543 : 0
+   Effect_544 : 0
+   Effect_545 : 0
+   Effect_546 : 0
+   Effect_547 : 0
+   Effect_548 : 0
+   Effect_549 : 0
+   Effect_550 : 0
+   Effect_551 : 0
+   Effect_552 : 0
+   Effect_553 : 0
+   Effect_554 : 0
+   Effect_555 : 0
+   Effect_556 : 0
+   Effect_557 : 0
+   Effect_558 : 0
+   Effect_559 : 0
+   Effect_560 : 0
+   Effect_561 : 0
+   Effect_562 : 0
+   Effect_563 : 0
+   Effect_564 : 0
+   Effect_565 : 0
+   Effect_566 : 0
+   Effect_567 : 0
+   Effect_568 : 0
+   Effect_569 : 0
+   Effect_570 : 0
+   Effect_571 : 0
+   Effect_572 : 0
+   Effect_573 : 0
+   Effect_574 : 0
+   Effect_575 : 0
+   Effect_576 : 0
+   Effect_577 : 0
+   Effect_578 : 0
+   Effect_579 : 0
+   Effect_580 : 0
+   Effect_581 : 0
+   Effect_582 : 0
+   Effect_583 : 0
+   Effect_584 : 0
+   Effect_585 : 0
+   Effect_586 : 0
+   Effect_587 : 0
+   Effect_588 : 0
+   Effect_589 : 0
+   Effect_590 : 0
+   Effect_591 : 0
+   Effect_592 : 0
+   Effect_593 : 0
+   Effect_594 : 0
+   Effect_595 : 0
+   Effect_596 : 0
+   Effect_597 : 0
+   Effect_598 : 0
+   Effect_599 : 0
+   Effect_600 : 0
+
+. if _rc {
+.     local avg_rc = _rc
+.     di as error "  ERROR avg_cumul_periods failed rc=`avg_rc'"
+.     local avg_failed 1
+.     _diagrow, dataset("`ds'") spec("`spec'") reset(`rst') ///
+>         msg("avg_cumul_periods_rc_`avg_rc'") csvfile("`csvfile'")
+. }
+
+. * Try to read r() scalars regardless of _rc
+. local stop_avg = 0
+
+. forvalues i = 1/`neff' {
+  2.     if `stop_avg' == 0 {
+  3.         local chk = r(N_switch_`i')
+  4.         if missing(real("`chk'")) | real("`chk'") == 0 {
+  5.             local stop_avg = 1
+  6.         }
+  7.         else {
+  8.             local avg_`i' = real("`chk'")
+  9.             local n_avg = `i'
+ 10.         }
+ 11.     }
+ 12. }
+
+. di as text "  -> N_avg effects found: `n_avg'"
+  -> N_avg effects found: 11
+
+. 
+. * --- Write CSV rows ---
+. local n_max = max(`n_did', `n_avg')
+
+. if `n_max' == 0 {
+.     di as error "  No effects from either side — diagnostic rows written."
+. }
+
+. else {
+.     forvalues i = 1/`n_max' {
+  2.         local did_i = cond(`i' <= `n_did', "`did_`i''", ".")
+  3.         local avg_i = cond(`i' <= `n_avg', "`avg_`i''", ".")
+  4.         _swrow, dataset("`ds'") spec("`spec'") reset(`rst') ///
+>             effnum(`i') ndid(`did_i') navg(`avg_i') csvfile("`csvfile'")
+  5.     }
+  PASS  favara_imbs noreset k=1  did=890  avg=890
+  PASS  favara_imbs noreset k=2  did=889  avg=889
+  PASS  favara_imbs noreset k=3  did=889  avg=889
+  PASS  favara_imbs noreset k=4  did=889  avg=889
+  PASS  favara_imbs noreset k=5  did=889  avg=889
+  PASS  favara_imbs noreset k=6  did=834  avg=834
+  PASS  favara_imbs noreset k=7  did=757  avg=757
+  PASS  favara_imbs noreset k=8  did=757  avg=757
+  PASS  favara_imbs noreset k=9  did=340  avg=340
+  PASS  favara_imbs noreset k=10  did=221  avg=221
+  PASS  favara_imbs noreset k=11  did=2  avg=2
+. }
+
+. 
+. di as text _newline "CSV written to: `csvfile'"
+
+CSV written to: logfiles/switchers_b5.csv
+
+. di as text "=== test_switchers_b5  finished: $S_DATE $S_TIME ==="
+=== test_switchers_b5  finished: 24 Jun 2026 18:23:27 ===
+
+. log close
+      name:  <unnamed>
+       log:  /Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/logfiles/test
+> _switchers_b5.log
+  log type:  text
+ closed on:  24 Jun 2026, 18:23:27
+-------------------------------------------------------------------------------
+
+. 
+end of do-file

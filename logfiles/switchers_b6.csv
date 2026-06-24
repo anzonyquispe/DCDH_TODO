@@ -1,0 +1,10 @@
+dataset,spec,reset,effect_num,N_did,N_avg,diff,pass
+favara_imbs,reset4,4,-1,.,.,.,ERROR:did_multiplegt_dyn_rc_111
+favara_imbs,reset4,4,1,.,946,.,MISS
+favara_imbs,reset4,4,2,.,911,.,MISS
+favara_imbs,reset4,4,3,.,907,.,MISS
+favara_imbs,reset4,4,4,.,907,.,MISS
+favara_imbs,reset4,4,5,.,88,.,MISS
+favara_imbs,reset4,4,6,.,39,.,MISS
+favara_imbs,reset4,4,7,.,39,.,MISS
+favara_imbs,reset4,4,8,.,38,.,MISS

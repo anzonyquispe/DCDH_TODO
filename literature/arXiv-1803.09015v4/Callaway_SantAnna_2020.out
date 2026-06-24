@@ -1,0 +1,18 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Identification}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Setup}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{The Group-Time Average Treatment Effect Parameter}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Identifying Assumptions}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Nonparametric Identification of the Group-Time Average Treatment Effects}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{Summarizing Group-Time Average Treatment Effects \040}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Aggregations to Highlight Treatment Effect Heterogeneity}{section.3}% 8
+\BOOKMARK [3][-]{subsubsection.3.1.1}{How do average treatment effects vary with length of exposure to the treatment?}{subsection.3.1}% 9
+\BOOKMARK [3][-]{subsubsection.3.1.2}{How do average treatment effects vary across groups?}{subsection.3.1}% 10
+\BOOKMARK [3][-]{subsubsection.3.1.3}{What is the cumulative average treatment effect of the policy across all groups until time ?}{subsection.3.1}% 11
+\BOOKMARK [2][-]{subsection.3.2}{Aggregations into Overall Treatment Effect Parameters}{section.3}% 12
+\BOOKMARK [1][-]{section.4}{Estimation and Inference}{}% 13
+\BOOKMARK [2][-]{subsection.4.1}{Asymptotic Theory for Group-Time Average Treatment Effects}{section.4}% 14
+\BOOKMARK [2][-]{subsection.4.2}{Asymptotic Theory for Summary Parameters}{section.4}% 15
+\BOOKMARK [1][-]{section.5}{The Effect of Minimum Wage Policy on Teen Employment}{}% 16
+\BOOKMARK [2][-]{subsection.5.1}{Results}{section.5}% 17
+\BOOKMARK [1][-]{section.6}{Conclusion}{}% 18

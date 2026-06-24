@@ -1,0 +1,6 @@
+scenario,integrated,standalone,diff,pass
+gentzkowetal_eff4_noreset,2.328885182096191,2.328885182096191,0,PASS
+gentzkowetal_eff4_dropmiss,2.328885182096191,2.328885182096191,0,PASS
+gentzkowetal_eff4_reset1,1.626764539808018,1.6262341325811,.0005304072269179,FAIL
+fakedata_eff4,1.384615384615385,1.384615384615385,0,PASS
+fakedata_eff1,1,1,0,PASS
