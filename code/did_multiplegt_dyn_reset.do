@@ -60,16 +60,16 @@ void _compute_Tg(string scalar gv, string scalar tv, string scalar yv,
                  string scalar tgoutv)
 {
     real colvector G, T, Y, F, TGC, EV, FE, CLS, NGT, TGOUT
-    st_view(G,    ., gv)
-    st_view(T,    ., tv)
-    st_view(Y,    ., yv)
-    st_view(F,    ., fv)
-    st_view(TGC,  ., tgcv)
-    st_view(EV,   ., evv)
-    st_view(FE,   ., fev)
-    st_view(CLS,  ., clsv)
-    st_view(NGT,  ., ngtv)
-    st_view(TGOUT,., tgoutv)
+    st_view(G,      ., gv)
+    st_view(T,      ., tv)
+    st_view(Y,      ., yv)
+    st_view(F,      ., fv)
+    st_view(TGC,    ., tgcv)
+    st_view(EV,     ., evv)
+    st_view(FE,     ., fev)
+    st_view(CLS,    ., clsv)
+    st_view(NGT,    ., ngtv)
+    st_view(TGOUT,  ., tgoutv)
 
     real scalar N, i, j, r, s, e, u, P, refp, Fg_, Tgc_, ever, cls_, last_P
     real scalar own_ref, own_P, has_ctrl, cg, c_fe, c_yref, c_yP, g_id
@@ -167,9 +167,11 @@ void _avg_cumul(string scalar gv,  string scalar tv,  string scalar dv,
                 string scalar yv,
                 string scalar d1v, string scalar fv,  string scalar tgv,
                 string scalar evv, string scalar fev, string scalar clsv,
-                string scalar mgv, string scalar ngtv, string scalar sgv, real scalar ell)
+                string scalar mgv, string scalar ngtv, string scalar sgv,
+                string scalar wv,
+                real scalar ell, real scalar ssw_flag, string scalar sw_dir)
 {
-    real colvector G, T, D, Y, D1, F, TG, EV, FE, CLS, MG, NGT, SG
+    real colvector G, T, D, Y, D1, F, TG, EV, FE, CLS, MG, NGT, SG, W
     st_view(G,   ., gv)
     st_view(T,   ., tv)
     st_view(D,   ., dv)
@@ -183,9 +185,10 @@ void _avg_cumul(string scalar gv,  string scalar tv,  string scalar dv,
     st_view(MG,  ., mgv)
     st_view(NGT, ., ngtv)
     st_view(SG,  ., sgv)
+    st_view(W,   ., wv)
 
     real scalar N, i, j, r, s, e, u, k, kmax, period, refp
-    real scalar d1, Fg_, Tg_, ever, Mg_, cls_, dval, y_ref, y_hor
+    real scalar d1, Fg_, Tg_, ever, Mg_, cls_, dval, y_ref, y_hor, sg_val
     real scalar d_ref_real, hor_ok, has_ctrl, cg, c_fe, c_yref, c_yhor
     real scalar incr, weight, num, den, avg, g_id
     real rowvector nswitch
@@ -204,17 +207,20 @@ void _avg_cumul(string scalar gv,  string scalar tv,  string scalar dv,
             j++
         }
 
-        d1   = D1[i]
-        Fg_  = F[i]
-        Tg_  = TG[i]
-        ever = EV[i]
-        Mg_  = MG[i]
-        cls_ = CLS[i]
+        d1     = D1[i]
+        Fg_    = F[i]
+        Tg_    = TG[i]
+        ever   = EV[i]
+        Mg_    = MG[i]
+        cls_   = CLS[i]
+        sg_val = SG[i]
 
-        if (ever == 1 & Fg_ < . & Fg_ <= Tg_) {
+        if (ever == 1 & Fg_ < . & Fg_ <= Tg_ &
+            (ssw_flag == 0 | Mg_ >= ell) &
+            (sw_dir != "in"  | sg_val == 1) &
+            (sw_dir != "out" | sg_val == 0)) {
 
             refp = Fg_ - 1
-
             y_ref = .
             d_ref_real = 0
             r = i
@@ -284,7 +290,7 @@ void _avg_cumul(string scalar gv,  string scalar tv,  string scalar dv,
                         weight = Mg_ - k
                         num = num + incr * weight
                         den = den + incr
-                        nswitch[1, k+1] = nswitch[1, k+1] + 1
+                        nswitch[1, k+1] = nswitch[1, k+1] + W[r]
                     }
                 }
             }
@@ -1129,29 +1135,29 @@ scalar heterogeneity_scalar_XX=1
 ///// and adding time_FEs interacted with D_{g,1} as controls
 if `continuous'>0{
 
-//Binarizing and staggerizing treatment
-capture drop treatment_XX_temp
-gen treatment_XX_temp = (F_g_XX<=time_XX)*S_g_het_XX if S_g_het_XX!=.
-capture drop treatment_XX_orig
-gen treatment_XX_orig=treatment_XX
-replace treatment_XX = treatment_XX_temp 
+	//Binarizing and staggerizing treatment
+	capture drop treatment_XX_temp
+	gen treatment_XX_temp = (F_g_XX<=time_XX)*S_g_het_XX if S_g_het_XX!=.
+	capture drop treatment_XX_orig
+	gen treatment_XX_orig=treatment_XX
+	replace treatment_XX = treatment_XX_temp 
 
-//Enriching controls
-tab time_XX, gen(time_fe_XX_)
-local max_time_XX=r(r)
-// Modif Clément: actually, to compute the estimator with the continuous option we need to control for polynomial in D_{g,1} interacted with \sum_{k=1}^t'1\{t=k}, sum of period FEs up to t'.
-forvalue i=2/`max_time_XX'{
-replace time_fe_XX_`i'=(time_XX>=`i')
-}
-// End modif Clément
-foreach var of varlist time_fe_XX_2-time_fe_XX_`max_time_XX'{
-	forvalues pol_level = 1/`=degree_pol'{
-		gen `var'_bt`pol_level'_XX = `var'*d_sq_`pol_level'_XX
-		local controls "`controls' `var'_bt`pol_level'_XX"
+	//Enriching controls
+	tab time_XX, gen(time_fe_XX_)
+	local max_time_XX=r(r)
+	// Modif Clément: actually, to compute the estimator with the continuous option we need to control for polynomial in D_{g,1} interacted with \sum_{k=1}^t'1\{t=k}, sum of period FEs up to t'.
+	forvalue i=2/`max_time_XX'{
+	replace time_fe_XX_`i'=(time_XX>=`i')
 	}
-	capture drop `var'
-}
-capture drop time_fe_XX_1
+	// End modif Clément
+	foreach var of varlist time_fe_XX_2-time_fe_XX_`max_time_XX'{
+		forvalues pol_level = 1/`=degree_pol'{
+			gen `var'_bt`pol_level'_XX = `var'*d_sq_`pol_level'_XX
+			local controls "`controls' `var'_bt`pol_level'_XX"
+		}
+		capture drop `var'
+	}
+	capture drop time_fe_XX_1
 }
 
 ///// Creating treatment at F_g: D_{g,F_g}
@@ -3264,47 +3270,59 @@ di "{hline 80}"
 
 ///// avg_time_periods option: per-horizon T_g via Mata, reusing existing variables
 if "`avg_time_periods'" != "" {
-	if `continuous' != 0 {
-		di as text "Note: avg_time_periods is not yet supported with the continuous() option and will be skipped."
+	// For continuous(p): d1 and distinct-D1_orig check use d_sq_XX_orig
+	// (d_sq_XX is set to 0 for all groups when continuous>0).
+	// For binary: d_sq_XX holds the actual baseline treatment.
+	local d1_avg_XX "d_sq_XX"
+	if `continuous' > 0 local d1_avg_XX "d_sq_XX_orig"
+
+	qui {
+		// ever-switcher indicator (group constant: F_g_XX < T_max+1)
+		tempvar ever_sw_XX
+		gen byte `ever_sw_XX' = (F_g_XX < T_max_XX + 1)
+
+		// unweighted 0/1 cell-validity indicator (N_gt_XX includes weights)
+		tempvar ngt_bin_XX
+		gen byte `ngt_bin_XX' = (outcome_XX != .)
+
+		// per-horizon T_g from Mata _compute_Tg
+		// T_g_XX = bys d_sq_XX [trends_nonparam]: max(F_g_trunc_XX)-1  = Tg_class
+		// F_g_XX = Fg_eff  (already T_max+1 for never-switchers)
+		// d_sq_int_XX = dsq_cls
+		tempvar Tg_ph_XX
+		gen double `Tg_ph_XX' = .
+		sort group_XX time_XX
+		mata: _compute_Tg("group_XX","time_XX","outcome_XX","F_g_XX","T_g_XX", ///
+			"`ever_sw_XX'","F_g_XX","d_sq_int_XX","`ngt_bin_XX'", ///
+			"`Tg_ph_XX'")
+
+		// per-horizon M_g
+		tempvar Mg_ph_XX
+		gen double `Mg_ph_XX' = min(`=l_XX', `Tg_ph_XX' - F_g_XX + 1)
+
+		// compute avg + per-effect switcher counts
+		local ssw_flag_XX = cond("`same_switchers'"!="", 1, 0)
+		mata: _avg_cumul("group_XX","time_XX","treatment_XX","outcome_XX","`d1_avg_XX'", ///
+			"F_g_XX","`Tg_ph_XX'","`ever_sw_XX'","F_g_XX","d_sq_int_XX", ///
+			"`Mg_ph_XX'","`ngt_bin_XX'","S_g_XX","N_gt_XX",`=l_XX', ///
+			`ssw_flag_XX', "`switchers'")
 	}
-	else {
-		qui {
-			// ever-switcher indicator (group constant: F_g_XX < T_max+1)
-			tempvar ever_sw_XX
-			gen byte `ever_sw_XX' = (F_g_XX < T_max_XX + 1)
 
-			// unweighted 0/1 cell-validity indicator (N_gt_XX includes weights)
-			tempvar ngt_bin_XX
-			gen byte `ngt_bin_XX' = (outcome_XX != . & treatment_XX != .)
-
-			// per-horizon T_g from Mata _compute_Tg
-			// T_g_XX = bys d_sq_XX [trends_nonparam]: max(F_g_trunc_XX)-1  = Tg_class
-			// F_g_XX = Fg_eff  (already T_max+1 for never-switchers)
-			// d_sq_int_XX = dsq_cls
-			tempvar Tg_ph_XX
-			gen double `Tg_ph_XX' = .
-			sort group_XX time_XX
-			mata: _compute_Tg("group_XX","time_XX","outcome_XX","F_g_XX","T_g_XX", ///
-				"`ever_sw_XX'","F_g_XX","d_sq_int_XX","`ngt_bin_XX'","`Tg_ph_XX'")
-
-			// per-horizon M_g
-			tempvar Mg_ph_XX
-			gen double `Mg_ph_XX' = min(`=l_XX', `Tg_ph_XX' - F_g_XX + 1)
-
-			// compute avg + per-effect switcher counts
-			mata: _avg_cumul("group_XX","time_XX","treatment_XX","outcome_XX","d_sq_XX", ///
-				"F_g_XX","`Tg_ph_XX'","`ever_sw_XX'","F_g_XX","d_sq_int_XX", ///
-				"`Mg_ph_XX'","`ngt_bin_XX'","S_g_XX",`=l_XX')
-		}
-
-		di as text "Average number of time periods over which a treatment's effect is accumulated = " ///
-			as result scalar(avg_cumul_XX)
-		di as text "Number of switchers per effect:"
-		forvalues k = 1/`=l_XX' {
-			di as text "   Effect_`k' : " as result nswitch_mata_XX[1,`k']
-		}
-		capture matrix drop nswitch_mata_XX
+	di as text "Average number of time periods over which a treatment's effect is accumulated = " ///
+		as result scalar(avg_cumul_XX)
+	di as text "Number of switchers per effect:"
+	forvalues k = 1/`=l_XX' {
+		di as text "   Effect_`k' : " as result nswitch_mata_XX[1,`k']
 	}
+
+	// Persist per-effect counts as Stata scalars so they survive the
+	// ereturn clear / ereturn post that happens later in the program.
+	// The actual ereturn scalar N_switch_avg_* / avg_cumul calls are
+	// emitted further down, alongside the standard N_switchers_effect_*.
+	forvalues k = 1/`=l_XX' {
+		scalar N_switch_avg_`k'_XX = nswitch_mata_XX[1, `k']
+	}
+	capture matrix drop nswitch_mata_XX
 }
 
 }
@@ -3825,6 +3843,15 @@ capture ereturn scalar N_switchers_effect_`i' = N_switchers_effect_`i'_XX
 capture ereturn scalar se_effect_`i'=scalar(se_`i'_XX)
 }
 ereturn local effects `"`str_effects'"'
+
+// avg_time_periods cross-check scalars: posted here so they survive ereturn clear/post.
+if "`avg_time_periods'" != "" {
+	capture ereturn scalar avg_cumul = scalar(avg_cumul_XX)
+	forvalue i = 1/`=l_XX' {
+		capture ereturn scalar N_switch_avg_`i' = scalar(N_switch_avg_`i'_XX)
+		capture scalar drop N_switch_avg_`i'_XX
+	}
+}
 
 // Modif Felix 12.05.25
 if (l_XX>1&all_Ns_not_zero==l_XX&all_delta_not_zero==l_XX&"`normalized'"!="")|(l_XX>1&all_Ns_not_zero==l_XX&"`normalized'"==""){
