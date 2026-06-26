@@ -333,3 +333,25 @@ end of do-file
 
 . help did_multiplegt_dyn
 
+. do "/var/folders/gb/56xms55d53n734tnp7xq55bh0000gq/T//SD39892.000000"
+
+. ***** test_wagepan_specs.do                                                    *
+. ***** Cross-check: e(N_switchers_effect_k) == e(N_switch_avg_k)                *
+. ***** across every Bookmark #1 option combination on the wagepan dataset.      *
+. *                                                                              *
+. * For each spec we call the DEV did_multiplegt_dyn (loaded from                 *
+. * did_multiplegt_dyn_reset.do) with that spec's options PLUS avg_time_periods. *
+. * After each call we capture both sets of switcher counts and emit one CSV     *
+. * row per (spec, effect_num). The Python script then surfaces any divergence.  *
+. *                                                                              *
+. * Output: logfiles/wagepan_specs.csv                                           *
+. * Log   : logfiles/test_wagepan_specs.log                                      *
+. 
+. clear all
+
+. set more off
+
+. cd "/Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO"
+/Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO
+
+. capture log close

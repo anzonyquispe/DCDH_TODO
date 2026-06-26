@@ -1,0 +1,233 @@
+----------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/code/did_multiplegt_avgtime.log
+  log type:  text
+ opened on:  17 Jun 2026, 15:32:50
+
+. 
+. //testing with _stat
+. qui do "code/did_multiplegt_stat-working-version.ado"
+
+. qui do "code/reset_groups_function.do"
+
+. qui do "code/avg_cumul_periods_func.do"
+
+. 
+. // ssc install did_multiplegt_stat
+. 
+. use "_data/gentzkowetal_didtextbook.dta", clear
+
+. xtset cnty90 year
+
+Panel variable: cnty90 (unbalanced)
+ Time variable: year, 1868 to 1928, but with gaps
+         Delta: 1 unit
+
+. gen treatment_XX = numdailies
+
+. gen group_XX = cnty90
+
+. gen count_d_non_miss_temp_XX=(treatment_XX!=.)
+
+. tab count_d_non_miss_temp_XX
+
+count_d_non |
+_miss_temp_ |
+         XX |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |     16,872      100.00      100.00
+------------+-----------------------------------
+      Total |     16,872      100.00
+
+. bys group_XX: gegen count_d_non_miss_XX=sum(count_d_non_miss_temp_XX)
+performance warning: -by- prefix may be slower than -by()-
+
+. sum count_d_non_miss_XX
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+count_d~s_XX |     16,872    14.90576    2.388999          3         16
+
+. drop if count_d_non_miss_XX<r(max)
+(5,176 observations deleted)
+
+. xtset cnty90 year
+
+Panel variable: cnty90 (strongly balanced)
+ Time variable: year, 1868 to 1928, but with gaps
+         Delta: 1 unit
+
+. gen fd_treat = numdailies - L4.numdailies
+(731 missing values generated)
+
+. gen lag_fd = L4.fd_treat
+(1,462 missing values generated)
+
+. save "_data/gentzkowetal_didtextbook_balanced.dta", replace
+file _data/gentzkowetal_didtextbook_balanced.dta saved
+
+. 
+. 
+. use "_data/gentzkowetal_didtextbook_balanced.dta", clear
+
+. did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) placebo(4)  cluster(cnty90)  graph_off
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0175817    .004908   .0079622   .0272012       3664        711 
+    Effect_2 |  .0286082   .0064031   .0160584   .0411581       3016        674 
+    Effect_3 |  .0354841    .008523   .0187794   .0521889       2450        645 
+    Effect_4 |  .0350709   .0101026   .0152701   .0548716       1962        613 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .00033013
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0211755    .004751   .0118637   .0304873       5596       2643            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 2.3377815
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 |  .0003287    .004646  -.0087772   .0094346       2939        597 
+   Placebo_2 |  .0012988   .0085523  -.0154634    .018061       1856        507 
+   Placebo_3 | -.0006842   .0126356  -.0254496   .0240812       1113        415 
+   Placebo_4 | -.0206449   .0197808  -.0594145   .0181248        643        304 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .71663495
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+. avg_cumul_periods cnty90 year numdailies, effects(4)
+Average number of time periods over which a treatment's effect is accumulated = 2.3288852
+Cells dropped by Design Restriction 2: 469
+Number of switchers per effect:
+   Effect_1 : 711
+   Effect_2 : 674
+   Effect_3 : 645
+   Effect_4 : 613
+
+. reset_groups cnty90 year numdailies , reset(1) replace_group
+Reset option applied (reset = 1).
+  Observations dropped by balancing : 0
+  Pseudo-groups created             : 2394
+  New pseudo-group variable         : new_group
+  Cluster variable                  : old_group
+  cnty90 has been REPLACED with the new pseudo-group ids.
+
+. avg_cumul_periods cnty90 year numdailies, effects(4)  outcome(prestout) ///
+>     drop_if_d_miss_before_first_switch
+Average number of time periods over which a treatment's effect is accumulated = 1.6262341
+Cells dropped by Design Restriction 2: 149
+Number of switchers per effect:
+   Effect_1 : 1775
+   Effect_2 : 737
+   Effect_3 : 253
+   Effect_4 : 121
+
+. did_multiplegt_dyn prestout cnty90 year numdailies, effects(4)   cluster(cnty90)  graph_off
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0100037   .0025854   .0049364   .0150711       7707       1772 
+    Effect_2 |  .0128317   .0046718   .0036751   .0219883       5036        737 
+    Effect_3 |  .0244969   .0099105   .0050727   .0439211       2965        253 
+    Effect_4 |  .0303667   .0157289  -.0004613   .0611947       1789        121 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .00208703
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0104618   .0026926   .0051844   .0157392       8820       2883            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0909091
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+. 
+. 
+. use "_data/gentzkowetal_didtextbook_balanced.dta", clear
+
+. qui do "code/did_multiplegt_dyn_reset.do"
+
+. did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) placebo(4) effects_equal(all) cluster(cnt
+> y90) save_results("_data/gentzkow_reset1_norm_option.dta") reset(1) normalized graph_off
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0086052   .0021551   .0043812   .0128292       7707       1772 
+    Effect_2 |  .0058125   .0020697    .001756   .0098691       5036        737 
+    Effect_3 |  .0053063   .0021491   .0010941   .0095184       2965        253 
+    Effect_4 |  .0040511   .0020925  -.0000501   .0081524       1789        121 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .00120427
+Test of equality of the effects : p-value = .38648513
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0104618   .0026081     .00535   .0155736       8820       2883            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0909091
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0000853   .0025276  -.0050393   .0048688       5458       1166 
+   Placebo_2 | -.0037359    .003727  -.0110407   .0035688       2511        355 
+   Placebo_3 |  .0022893   .0044352  -.0064035    .010982        770         83 
+   Placebo_4 |  .0026073   .0054676  -.0081091   .0133236        310         19 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .72698391
+file _data/gentzkow_reset1_norm_option.dta saved
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+. 
+. log close
+      name:  <unnamed>
+       log:  /Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/code/did_multiplegt_avgtime.log
+  log type:  text
+ closed on:  17 Jun 2026, 15:33:01
+----------------------------------------------------------------------------------------------------------

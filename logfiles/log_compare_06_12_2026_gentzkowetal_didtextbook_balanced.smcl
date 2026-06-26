@@ -1,0 +1,23 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/logfiles/log_compare_06_12_2026_gentzkowetal_didtextbook_balanced.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}12 Jun 2026, 11:50:41
+{com}.         compare_dyn_matrices, new(store_results_new) ssc(store_results_ssc) tol(`diff_tol')
+
+{res}=== Comparison: NEW vs SSC ===
+{txt}Rows in NEW matrix: 609
+Rows in SSC matrix: 609
+{res}Rows with |diff| > 1.00000000000e-08: 0
+Maximum absolute difference: 0
+
+{txt}Differing rows:
+{com}.         log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/logfiles/log_compare_06_12_2026_gentzkowetal_didtextbook_balanced.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}12 Jun 2026, 11:50:41
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

@@ -1,0 +1,1276 @@
+---------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/logfiles/test_wagepan_specs.log
+  log type:  text
+ opened on:  24 Jun 2026, 22:30:21
+
+. di as text "=== test_wagepan_specs  started: $S_DATE $S_TIME ==="
+=== test_wagepan_specs  started: 24 Jun 2026 22:30:21 ===
+
+. 
+. * Load the DEV version (overrides any SSC version of did_multiplegt_dyn)
+. qui do "code/did_multiplegt_dyn_reset.do"
+
+. 
+. ********************************************************************************
+. * Dataset & spec configuration
+. ********************************************************************************
+. local data    "_data/wagepan.dta"
+
+. local y       lwage
+
+. local g       nr
+
+. local t       year
+
+. local d       union
+
+. local cont    hours
+
+. local nonparam black
+
+. local wght    educ
+
+. local clust   hisp
+
+. local n_eff   5
+
+. local n_pl    2
+
+. local b_reps  20
+
+. local b_seed  1234
+
+. local eff_eq  all
+
+. 
+. ********************************************************************************
+. * CSV setup
+. ********************************************************************************
+. local csvfile "logfiles/wagepan_specs.csv"
+
+. capture erase "`csvfile'"
+
+. file open _fh using "`csvfile'", write replace
+(file logfiles/wagepan_specs.csv not found)
+
+. file write _fh "spec,effect_num,N_std,N_avg,diff,pass" _n
+
+. file close _fh
+
+. 
+. capture program drop _wrow
+
+. program _wrow
+  1.     syntax, spec(string) effnum(integer) nstd(string) navg(string) csvfile(string)
+  2.     if missing(real("`nstd'")) | missing(real("`navg'")) {
+  3.         local diff .
+  4.         local pass "MISS"
+  5.     }
+  6.     else {
+  7.         local diff = real("`nstd'") - real("`navg'")
+  8.         local pass = cond(`diff' == 0, "PASS", "FAIL")
+  9.     }
+ 10.     file open _fh using "`csvfile'", write append
+ 11.     file write _fh "`spec',`effnum',`nstd',`navg',`diff',`pass'" _n
+ 12.     file close _fh
+ 13.     if "`pass'" == "FAIL" di as error "    FAIL `spec' eff=`effnum'  std=`nstd'  avg=`navg'"
+ 14.     else if "`pass'" == "MISS" di as error "    MISS `spec' eff=`effnum'  std=`nstd'  avg=`navg'"
+ 15.     else                       di as text  "    PASS `spec' eff=`effnum'  std=`nstd'  avg=`navg'"
+ 16. end
+
+. 
+. capture program drop _err
+
+. program _err
+  1.     syntax, spec(string) msg(string) csvfile(string)
+  2.     file open _fh using "`csvfile'", write append
+  3.     file write _fh "`spec',-1,.,.,.,ERROR:`msg'" _n
+  4.     file close _fh
+  5. end
+
+. 
+. ********************************************************************************
+. * Helper macro: run one spec, capture, write rows
+. *   Usage: _run_spec "spec_label" "did options without leading comma"
+. *   Always appends avg_time_periods to the options.
+. ********************************************************************************
+. capture program drop _run_spec
+
+. program _run_spec
+  1.     args spec opts
+  2.     di as text _newline "{hline 78}"
+  3.     di as text "SPEC: `spec'    options: `opts'"
+  4.     di as text "{hline 78}"
+  5. 
+.     use "$data_path_int", clear
+  6.     capture noisily did_multiplegt_dyn $y_int $g_int $t_int $d_int, ///
+>         `opts' avg_time_periods graph_off
+  7.     local rc = _rc
+  8.     di as text "  rc = `rc'"
+  9. 
+.     if `rc' != 0 & `rc' != 111 {
+ 10.         _err, spec("`spec'") msg("rc_`rc'") csvfile("$csvfile_int")
+ 11.         exit
+ 12.     }
+ 13. 
+.     forvalues k = 1/$n_eff_int {
+ 14.         local nstd = e(N_switchers_effect_`k')
+ 15.         local navg = e(N_switch_avg_`k')
+ 16.         if missing(real("`nstd'")) & missing(real("`navg'")) {
+ 17.             continue, break
+ 18.         }
+ 19.         _wrow, spec("`spec'") effnum(`k') ///
+>             nstd("`nstd'") navg("`navg'") csvfile("$csvfile_int")
+ 20.     }
+ 21. end
+
+. 
+. * Export config via globals so _run_spec can see them
+. global data_path_int   "`data'"
+
+. global y_int           "`y'"
+
+. global g_int           "`g'"
+
+. global t_int           "`t'"
+
+. global d_int           "`d'"
+
+. global n_eff_int       "`n_eff'"
+
+. global csvfile_int     "`csvfile'"
+
+. 
+. ********************************************************************************
+. * Spec list (Bookmark #1) — only specs where avg_time_periods is meaningful
+. * (continuous() is skipped by the avg_time_periods block per the dev file).
+. ********************************************************************************
+. 
+. _run_spec "Baseline"               "effects(`n_eff')"
+
+------------------------------------------------------------------------------
+SPEC: Baseline    options: effects(5)
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0409508   .0339709   -.025631   .1075325       2767        246 
+    Effect_2 |  .0218878   .0393388  -.0552148   .0989904       2292        225 
+    Effect_3 |  .0311019   .0425976  -.0523878   .1145917       1885        212 
+    Effect_4 |  .0181627     .04721  -.0743672   .1106925       1497        195 
+    Effect_5 | -.0499658   .0546254  -.1570297   .0570981       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .38019916
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0235192   .0551657  -.0846036    .131642       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Baseline eff=1  std=246  avg=246
+    PASS Baseline eff=2  std=225  avg=225
+    PASS Baseline eff=3  std=212  avg=212
+    PASS Baseline eff=4  std=195  avg=195
+    PASS Baseline eff=5  std=174  avg=174
+
+. _run_spec "Placebos"               "effects(`n_eff') placebo(`n_pl')"
+
+------------------------------------------------------------------------------
+SPEC: Placebos    options: effects(5) placebo(2)
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0409508   .0339709   -.025631   .1075325       2767        246 
+    Effect_2 |  .0218878   .0393388  -.0552148   .0989904       2292        225 
+    Effect_3 |  .0311019   .0425976  -.0523878   .1145917       1885        212 
+    Effect_4 |  .0181627     .04721  -.0743672   .1106925       1497        195 
+    Effect_5 | -.0499658   .0546254  -.1570297   .0570981       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .38019916
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0235192   .0551657  -.0846036    .131642       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0883946   .0422582   -.171219  -.0055701       2222        155 
+   Placebo_2 |  .0370908   .0581037  -.0767902   .1509719       1376         74 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .07047431
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Placebos eff=1  std=246  avg=246
+    PASS Placebos eff=2  std=225  avg=225
+    PASS Placebos eff=3  std=212  avg=212
+    PASS Placebos eff=4  std=195  avg=195
+    PASS Placebos eff=5  std=174  avg=174
+
+. _run_spec "Normalized"             "effects(`n_eff') placebo(`n_pl') normalized"
+
+------------------------------------------------------------------------------
+SPEC: Normalized    options: effects(5) placebo(2) normalized
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0409508   .0339709   -.025631   .1075325       2767        246 
+    Effect_2 |  .0140707   .0252892  -.0354952   .0636367       2292        225 
+    Effect_3 |  .0144914   .0198477  -.0244093   .0533922       1885        212 
+    Effect_4 |   .006759   .0175686  -.0276748   .0411928       1497        195 
+    Effect_5 | -.0152795   .0167044  -.0480196   .0174606       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .38019917
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0235192   .0551657  -.0846036    .131642       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0883946   .0422582   -.171219  -.0055701       2222        155 
+   Placebo_2 |  .0247272   .0387358  -.0511935   .1006479       1376         74 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .07047431
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Normalized eff=1  std=246  avg=246
+    PASS Normalized eff=2  std=225  avg=225
+    PASS Normalized eff=3  std=212  avg=212
+    PASS Normalized eff=4  std=195  avg=195
+    PASS Normalized eff=5  std=174  avg=174
+
+. _run_spec "Controls"               "effects(`n_eff') placebo(`n_pl') controls(`cont')"
+
+------------------------------------------------------------------------------
+SPEC: Controls    options: effects(5) placebo(2) controls(hours)
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0400048   .0320587  -.0228292   .1028388       2767        246 
+    Effect_2 |  .0109445   .0369062  -.0613904   .0832795       2292        225 
+    Effect_3 | -.0000808   .0413425  -.0811107   .0809491       1885        212 
+    Effect_4 | -.0046852   .0477967   -.098365   .0889945       1497        195 
+    Effect_5 | -.0704548   .0547629   -.177788   .0368784       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .21468667
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff | -.0012678   .0542882  -.1076708   .1051352       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0675098   .0417436  -.1493258   .0143061       2222        155 
+   Placebo_2 |   .058502   .0586136  -.0563785   .1733825       1376         74 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .11289825
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Controls eff=1  std=246  avg=246
+    PASS Controls eff=2  std=225  avg=225
+    PASS Controls eff=3  std=212  avg=212
+    PASS Controls eff=4  std=195  avg=195
+    PASS Controls eff=5  std=174  avg=174
+
+. _run_spec "Trends_Nonparam"        "effects(`n_eff') placebo(`n_pl') trends_nonparam(`nonparam')"
+
+------------------------------------------------------------------------------
+SPEC: Trends_Nonparam    options: effects(5) placebo(2) trends_nonparam(black)
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0397498   .0337262  -.0263524   .1058519       2709        246 
+    Effect_2 |  .0258606   .0390807  -.0507362   .1024574       2237        225 
+    Effect_3 |   .033437   .0424415  -.0497468   .1166208       1840        212 
+    Effect_4 |  .0209026   .0466453  -.0705205   .1123257       1478        195 
+    Effect_5 | -.0436952    .054711  -.1509268   .0635363       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .43524816
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0274088   .0548727  -.0801397   .1349573       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0931635   .0419019  -.1752898  -.0110372       2164        155 
+   Placebo_2 |  .0269629   .0587614  -.0882072   .1421331       1321         74 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .06105643
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Trends_Nonparam eff=1  std=246  avg=246
+    PASS Trends_Nonparam eff=2  std=225  avg=225
+    PASS Trends_Nonparam eff=3  std=212  avg=212
+    PASS Trends_Nonparam eff=4  std=195  avg=195
+    PASS Trends_Nonparam eff=5  std=174  avg=174
+
+. * trends_lin is excluded: avg_time_periods cannot be computed under trends_lin
+. _run_spec "Weight"                 "effects(`n_eff') placebo(`n_pl') weight(`wght')"
+
+------------------------------------------------------------------------------
+SPEC: Weight    options: effects(5) placebo(2) weight(educ)
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0504641   .0339455   -.016068   .1169961       2767        246 
+    Effect_2 |  .0249798   .0399114  -.0532452   .1032047       2292        225 
+    Effect_3 |  .0418596   .0426164   -.041667   .1253863       1885        212 
+    Effect_4 |  .0208928   .0487201  -.0745969   .1163824       1497        195 
+    Effect_5 | -.0575852   .0565596    -.16844   .0532697       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .18797171
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0300054   .0560513  -.0798531   .1398639       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 2839
+   Effect_2 : 2596
+   Effect_3 : 2440
+   Effect_4 : 2242
+   Effect_5 : 2004
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0811646   .0424709  -.1644059   .0020767       2222        155 
+   Placebo_2 |  .0408665   .0611291  -.0789443   .1606774       1376         74 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .09744326
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Weight eff=1  std=2839  avg=2839
+    PASS Weight eff=2  std=2596  avg=2596
+    PASS Weight eff=3  std=2440  avg=2440
+    PASS Weight eff=4  std=2242  avg=2242
+    PASS Weight eff=5  std=2004  avg=2004
+
+. _run_spec "Cluster"                "effects(`n_eff') placebo(`n_pl') cluster(`clust')"
+
+------------------------------------------------------------------------------
+SPEC: Cluster    options: effects(5) placebo(2) cluster(hisp)
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0409508   .0285618  -.0150294    .096931       2767        246 
+    Effect_2 |  .0218878   .0255912    -.02827   .0720456       2292        225 
+    Effect_3 |  .0311019   .0278902  -.0235619   .0857657       1885        212 
+    Effect_4 |  .0181627   .0100765  -.0015869   .0379123       1497        195 
+    Effect_5 | -.0499658   .0275674  -.1039969   .0040654       1126        174 
+--------------------------------------------------------------------------------
+The F-test that all effects are equal to zero may not be reliable, because the variance of the effects is close to not being inve
+> rtible (the ratio of its largest and smallest eigenvalues is larger than 1000). This can for instance happen when you compute m
+> any effects estimators, or when your effects are very strongly correlated. We recommend that you complement the F-test with a s
+> up t-test, see FAQ section of the help file for more details.
+
+Test of joint nullity of the effects : p-value = 0
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0235192   .0172027  -.0101974   .0572358       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0883946   .1009126  -.2861796   .1093905       2222        155 
+   Placebo_2 |  .0370908   .0958357  -.1507437   .2249253       1376         74 
+--------------------------------------------------------------------------------
+The F-test that all pre-trends are equal to zero may not be reliable, because the variance of the placebos is close to not being 
+> invertible (the ratio of its largest and smallest eigenvalues is larger than 1000). This can for instance happen when you compu
+> te many placebos estimators, or when your placebos are very strongly correlated. We recommend that you complement the F-test wi
+> th a sup t-test, see FAQ section of the help file for more details.
+
+Test of joint nullity of the placebos : p-value = 0
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Cluster eff=1  std=246  avg=246
+    PASS Cluster eff=2  std=225  avg=225
+    PASS Cluster eff=3  std=212  avg=212
+    PASS Cluster eff=4  std=195  avg=195
+    PASS Cluster eff=5  std=174  avg=174
+
+. _run_spec "Same_Switchers"         "effects(`n_eff') placebo(`n_pl') same_switchers"
+
+------------------------------------------------------------------------------
+SPEC: Same_Switchers    options: effects(5) placebo(2) same_switchers
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0465925   .0409018  -.0335735   .1267586       1393        174 
+    Effect_2 |  .0338583   .0469162  -.0580958   .1258124       1289        174 
+    Effect_3 |  .0485449   .0492839  -.0480498   .1451395       1228        174 
+    Effect_4 |   .037483   .0510271  -.0625282   .1374943       1177        174 
+    Effect_5 | -.0499658   .0546254  -.1570297   .0570981       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .26409028
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0356296   .0646072  -.0909981   .1622574       3391        870            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.2794376
+Number of switchers per effect:
+   Effect_1 : 174
+   Effect_2 : 174
+   Effect_3 : 174
+   Effect_4 : 174
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0869864   .0678572  -.2199841   .0460113        848         83 
+   Placebo_2 |  .0782255   .0978922  -.1136396   .2700907        373         23 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .25878134
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Same_Switchers eff=1  std=174  avg=174
+    PASS Same_Switchers eff=2  std=174  avg=174
+    PASS Same_Switchers eff=3  std=174  avg=174
+    PASS Same_Switchers eff=4  std=174  avg=174
+    PASS Same_Switchers eff=5  std=174  avg=174
+
+. _run_spec "Same_Switchers_Pl"      "effects(`n_eff') placebo(`n_pl') same_switchers same_switchers_pl"
+
+------------------------------------------------------------------------------
+SPEC: Same_Switchers_Pl    options: effects(5) placebo(2) same_switchers same_switchers_pl
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0465925   .0409018  -.0335735   .1267586       1393        174 
+    Effect_2 |  .0338583   .0469162  -.0580958   .1258124       1289        174 
+    Effect_3 |  .0485449   .0492839  -.0480498   .1451395       1228        174 
+    Effect_4 |   .037483   .0510271  -.0625282   .1374943       1177        174 
+    Effect_5 | -.0499658   .0546254  -.1570297   .0570981       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .26409028
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0356296   .0646072  -.0909981   .1622574       3391        870            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.2794376
+Number of switchers per effect:
+   Effect_1 : 174
+   Effect_2 : 174
+   Effect_3 : 174
+   Effect_4 : 174
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 |  -.049688   .1407299  -.3255135   .2261375        394         23 
+   Placebo_2 |  .0782255   .0978922  -.1136396   .2700907        373         23 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .63344822
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Same_Switchers_Pl eff=1  std=174  avg=174
+    PASS Same_Switchers_Pl eff=2  std=174  avg=174
+    PASS Same_Switchers_Pl eff=3  std=174  avg=174
+    PASS Same_Switchers_Pl eff=4  std=174  avg=174
+    PASS Same_Switchers_Pl eff=5  std=174  avg=174
+
+. _run_spec "Switchers_In"           "effects(`n_eff') placebo(`n_pl') switchers(in)"
+
+------------------------------------------------------------------------------
+SPEC: Switchers_In    options: effects(5) placebo(2) switchers(in)
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0693367   .0504151  -.0294751   .1681486       2264        143 
+    Effect_2 |  .0392463   .0506126  -.0599527   .1384452       1886        128 
+    Effect_3 |   .044619   .0584116  -.0698655   .1591036       1555        121 
+    Effect_4 |  .0244555   .0656956  -.1043056   .1532166       1240        114 
+    Effect_5 | -.0379472   .0765453  -.1879732   .1120789        932        100 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .56843431
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0561942   .0892194  -.1186727   .2310611       2727        606            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.1773256
+Number of switchers per effect:
+   Effect_1 : 143
+   Effect_2 : 128
+   Effect_3 : 121
+   Effect_4 : 114
+   Effect_5 : 100
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0920766   .0498937  -.1898663   .0057132       1856         98 
+   Placebo_2 |  .0362437   .0687048  -.0984153   .1709026       1170         44 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .14238189
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Switchers_In eff=1  std=143  avg=143
+    PASS Switchers_In eff=2  std=128  avg=128
+    PASS Switchers_In eff=3  std=121  avg=121
+    PASS Switchers_In eff=4  std=114  avg=114
+    PASS Switchers_In eff=5  std=100  avg=100
+
+. _run_spec "Switchers_Out"          "effects(`n_eff') placebo(`n_pl') switchers(out)"
+
+------------------------------------------------------------------------------
+SPEC: Switchers_Out    options: effects(5) placebo(2) switchers(out)
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0015411   .0410324   -.078881   .0819632        503        103 
+    Effect_2 | -.0010182   .0621764  -.1228817   .1208453        406         97 
+    Effect_3 |  .0131286   .0617731  -.1079443   .1342016        330         91 
+    Effect_4 |  .0093061   .0660924  -.1202325   .1388448        257         81 
+    Effect_5 | -.0662072   .0761447   -.215448   .0830336        194         74 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .7143538
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff | -.0081433   .0657594  -.1370294   .1207428        846        446            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 2.9605634
+Number of switchers per effect:
+   Effect_1 : 103
+   Effect_2 : 97
+   Effect_3 : 91
+   Effect_4 : 81
+   Effect_5 : 74
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0820641   .0764613  -.2319255   .0677973        366         57 
+   Placebo_2 |  .0383334   .1019181  -.1614224   .2380892        206         30 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .46346276
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Switchers_Out eff=1  std=103  avg=103
+    PASS Switchers_Out eff=2  std=97  avg=97
+    PASS Switchers_Out eff=3  std=91  avg=91
+    PASS Switchers_Out eff=4  std=81  avg=81
+    PASS Switchers_Out eff=5  std=74  avg=74
+
+. _run_spec "Only_Never_Switchers"   "effects(`n_eff') placebo(`n_pl') only_never_switchers"
+
+------------------------------------------------------------------------------
+SPEC: Only_Never_Switchers    options: effects(5) placebo(2) only_never_switchers
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0370228   .0332715  -.0281882   .1022338       2339        246 
+    Effect_2 |  .0013781   .0402667  -.0775431   .0802993       2019        225 
+    Effect_3 |  .0223836   .0413722  -.0587044   .1034716       1707        212 
+    Effect_4 |  -.001715   .0462794  -.0924208   .0889909       1391        195 
+    Effect_5 | -.0608602   .0544282  -.1675376   .0458172       1071        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .29396237
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0046336   .0540293  -.1012619   .1105292       3145       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0757911   .0392231   -.152667   .0010847       1949        155 
+   Placebo_2 |  .0437175   .0556018    -.06526    .152695       1270         74 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .07704473
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Only_Never_Switchers eff=1  std=246  avg=246
+    PASS Only_Never_Switchers eff=2  std=225  avg=225
+    PASS Only_Never_Switchers eff=3  std=212  avg=212
+    PASS Only_Never_Switchers eff=4  std=195  avg=195
+    PASS Only_Never_Switchers eff=5  std=174  avg=174
+
+. _run_spec "CI_Level_90"            "effects(`n_eff') placebo(`n_pl') ci_level(90)"
+
+------------------------------------------------------------------------------
+SPEC: CI_Level_90    options: effects(5) placebo(2) ci_level(90)
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0409508   .0339709  -.0149264   .0968279       2767        246 
+    Effect_2 |  .0218878   .0393388  -.0428187   .0865944       2292        225 
+    Effect_3 |  .0311019   .0425976  -.0389649   .1011687       1885        212 
+    Effect_4 |  .0181627     .04721  -.0594908   .0958162       1497        195 
+    Effect_5 | -.0499658   .0546254  -.1398166   .0398851       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .38019916
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0235192   .0551657  -.0672203   .1142587       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0883946   .0422582  -.1579031  -.0188861       2222        155 
+   Placebo_2 |  .0370908   .0581037  -.0584812   .1326628       1376         74 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .07047431
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS CI_Level_90 eff=1  std=246  avg=246
+    PASS CI_Level_90 eff=2  std=225  avg=225
+    PASS CI_Level_90 eff=3  std=212  avg=212
+    PASS CI_Level_90 eff=4  std=195  avg=195
+    PASS CI_Level_90 eff=5  std=174  avg=174
+
+. _run_spec "CI_Level_99"            "effects(`n_eff') placebo(`n_pl') ci_level(99)"
+
+------------------------------------------------------------------------------
+SPEC: CI_Level_99    options: effects(5) placebo(2) ci_level(99)
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0409508   .0339709  -.0465525    .128454       2767        246 
+    Effect_2 |  .0218878   .0393388  -.0794422   .1232178       2292        225 
+    Effect_3 |  .0311019   .0425976  -.0786222    .140826       1885        212 
+    Effect_4 |  .0181627     .04721  -.1034421   .1397675       1497        195 
+    Effect_5 | -.0499658   .0546254  -.1906716     .09074       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .38019916
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0235192   .0551657  -.1185782   .1656167       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0883946   .0422582  -.1972444   .0204552       2222        155 
+   Placebo_2 |  .0370908   .0581037  -.1125743   .1867559       1376         74 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .07047431
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS CI_Level_99 eff=1  std=246  avg=246
+    PASS CI_Level_99 eff=2  std=225  avg=225
+    PASS CI_Level_99 eff=3  std=212  avg=212
+    PASS CI_Level_99 eff=4  std=195  avg=195
+    PASS CI_Level_99 eff=5  std=174  avg=174
+
+. _run_spec "Less_Conservative_SE"   "effects(`n_eff') placebo(`n_pl') less_conservative_se"
+
+------------------------------------------------------------------------------
+SPEC: Less_Conservative_SE    options: effects(5) placebo(2) less_conservative_se
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0409508   .0339709   -.025631   .1075325       2767        246 
+    Effect_2 |  .0218878   .0385287   -.053627   .0974027       2292        225 
+    Effect_3 |  .0311019   .0429979  -.0531724   .1153763       1885        212 
+    Effect_4 |  .0181627   .0469453  -.0738484   .1101738       1497        195 
+    Effect_5 | -.0499658    .053397   -.154622   .0546904       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .45355396
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0235192   .0537006  -.0817321   .1287705       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0883946   .0422582   -.171219  -.0055701       2222        155 
+   Placebo_2 |  .0370908   .0581037  -.0767902   .1509719       1376         74 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .07047431
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Less_Conservative_SE eff=1  std=246  avg=246
+    PASS Less_Conservative_SE eff=2  std=225  avg=225
+    PASS Less_Conservative_SE eff=3  std=212  avg=212
+    PASS Less_Conservative_SE eff=4  std=195  avg=195
+    PASS Less_Conservative_SE eff=5  std=174  avg=174
+
+. _run_spec "Dont_Drop_Larger_Lower" "effects(`n_eff') placebo(`n_pl') dont_drop_larger_lower"
+
+------------------------------------------------------------------------------
+SPEC: Dont_Drop_Larger_Lower    options: effects(5) placebo(2) dont_drop_larger_lower
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0409508   .0339709   -.025631   .1075325       2767        246 
+    Effect_2 |  .0218878   .0393388  -.0552148   .0989904       2292        225 
+    Effect_3 |  .0311019   .0425976  -.0523878   .1145917       1885        212 
+    Effect_4 |  .0181627     .04721  -.0743672   .1106925       1497        195 
+    Effect_5 | -.0499658   .0546254  -.1570297   .0570981       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .38019916
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0235192   .0551657  -.0846036    .131642       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0883946   .0422582   -.171219  -.0055701       2222        155 
+   Placebo_2 |  .0370908   .0581037  -.0767902   .1509719       1376         74 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .07047431
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Dont_Drop_Larger_Lower eff=1  std=246  avg=246
+    PASS Dont_Drop_Larger_Lower eff=2  std=225  avg=225
+    PASS Dont_Drop_Larger_Lower eff=3  std=212  avg=212
+    PASS Dont_Drop_Larger_Lower eff=4  std=195  avg=195
+    PASS Dont_Drop_Larger_Lower eff=5  std=174  avg=174
+
+. _run_spec "Effects_Equal"          "effects(`n_eff') placebo(`n_pl') effects_equal(`eff_eq')"
+
+------------------------------------------------------------------------------
+SPEC: Effects_Equal    options: effects(5) placebo(2) effects_equal(all)
+------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0409508   .0339709   -.025631   .1075325       2767        246 
+    Effect_2 |  .0218878   .0393388  -.0552148   .0989904       2292        225 
+    Effect_3 |  .0311019   .0425976  -.0523878   .1145917       1885        212 
+    Effect_4 |  .0181627     .04721  -.0743672   .1106925       1497        195 
+    Effect_5 | -.0499658   .0546254  -.1570297   .0570981       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .38019916
+Test of equality of the effects : p-value = .36909744
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0235192   .0551657  -.0846036    .131642       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0672389
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0883946   .0422582   -.171219  -.0055701       2222        155 
+   Placebo_2 |  .0370908   .0581037  -.0767902   .1509719       1376         74 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .07047431
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Effects_Equal eff=1  std=246  avg=246
+    PASS Effects_Equal eff=2  std=225  avg=225
+    PASS Effects_Equal eff=3  std=212  avg=212
+    PASS Effects_Equal eff=4  std=195  avg=195
+    PASS Effects_Equal eff=5  std=174  avg=174
+
+. 
+. * continuous() specs: avg_time_periods uses the binary control-existence check
+. * (same as N_switchers_effect_k), so counts match across all polynomial degrees.
+. * Continuous_8 is omitted: wagepan hits Stata's variable limit (rc=900) when
+. * the standard pipeline tries to generate degree-8 polynomial controls.
+. _run_spec "Continuous_1"           "effects(`n_eff') continuous(1)"
+
+------------------------------------------------------------------------------
+SPEC: Continuous_1    options: effects(5) continuous(1)
+------------------------------------------------------------------------------
+You specified the continuous option without the bootstrap option. Please be aware that we recommend to compute bootstraped standa
+> rd errors when you are using the continuous option as the analytical standard errors can be liberal in that case.
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0409508   .0339723  -.0256338   .1075353       2767        246 
+    Effect_2 |   .013184   .0403668  -.0659335   .0923014       2292        225 
+    Effect_3 |  .0228334   .0430415  -.0615265   .1071932       1885        212 
+    Effect_4 |  .0057285   .0484573  -.0892461    .100703       1497        195 
+    Effect_5 | -.0579701   .0558354  -.1674056   .0514653       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .31889565
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0127485   .0564189  -.0978306   .1233276       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 2.8344459
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Continuous_1 eff=1  std=246  avg=246
+    PASS Continuous_1 eff=2  std=225  avg=225
+    PASS Continuous_1 eff=3  std=212  avg=212
+    PASS Continuous_1 eff=4  std=195  avg=195
+    PASS Continuous_1 eff=5  std=174  avg=174
+
+. _run_spec "Continuous_4"           "effects(`n_eff') continuous(4)"
+
+------------------------------------------------------------------------------
+SPEC: Continuous_4    options: effects(5) continuous(4)
+------------------------------------------------------------------------------
+You specified the continuous option without the bootstrap option. Please be aware that we recommend to compute bootstraped standa
+> rd errors when you are using the continuous option as the analytical standard errors can be liberal in that case.
+Some control variables are not taken into account for groups with baseline treatment equal to: [0]
+This may occur in the following situations:
+1. For groups with those values of the baseline treatment, the regression of the outcome first difference on the controls' first 
+> differences and time fixed effects has fewer observations than variables. Note that for each value of the baseline treatment, t
+> hose regressions are estimated among (g,t)s such that g has not changed treatment yet at t.
+2. For groups with those values of the baseline treatment, two or more of your control variables are perfectly collinear in the s
+> ample where the regression is run, for instance because those control variables do not vary over time.
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0409508   .0339723  -.0256338   .1075353       2767        246 
+    Effect_2 |   .013184   .0403668  -.0659335   .0923014       2292        225 
+    Effect_3 |  .0228334   .0430415  -.0615265   .1071932       1885        212 
+    Effect_4 |  .0057285   .0484573  -.0892461    .100703       1497        195 
+    Effect_5 | -.0579701   .0558354  -.1674056   .0514653       1126        174 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .31889565
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0127485   .0564189  -.0978306   .1233276       3573       1052            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 2.8344459
+Number of switchers per effect:
+   Effect_1 : 246
+   Effect_2 : 225
+   Effect_3 : 212
+   Effect_4 : 195
+   Effect_5 : 174
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+  rc = 0
+    PASS Continuous_4 eff=1  std=246  avg=246
+    PASS Continuous_4 eff=2  std=225  avg=225
+    PASS Continuous_4 eff=3  std=212  avg=212
+    PASS Continuous_4 eff=4  std=195  avg=195
+    PASS Continuous_4 eff=5  std=174  avg=174
+
+. 
+. di as text _newline "CSV written to: `csvfile'"
+
+CSV written to: logfiles/wagepan_specs.csv
+
+. di as text "=== test_wagepan_specs  finished: $S_DATE $S_TIME ==="
+=== test_wagepan_specs  finished: 24 Jun 2026 22:31:14 ===
+
+. log close
+      name:  <unnamed>
+       log:  /Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/logfiles/test_wagepan_specs.log
+  log type:  text
+ closed on:  24 Jun 2026, 22:31:14
+---------------------------------------------------------------------------------------------------------------------------------

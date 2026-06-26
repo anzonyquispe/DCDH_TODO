@@ -1,0 +1,171 @@
+
+  ___  ____  ____  ____  ____ ®
+ /__    /   ____/   /   ____/      StataNow 19.5
+___/   /   /___/   /   /___/       MP—Parallel Edition
+
+ Statistics and Data Science       Copyright 1985-2025 StataCorp LLC
+                                   StataCorp
+                                   4905 Lakeway Drive
+                                   College Station, Texas 77845 USA
+                                   800-782-8272        https://www.stata.com
+                                   979-696-4600        service@stata.com
+
+Stata license: Unlimited-user 2-core network, expiring  8 Jun 2026
+Serial number: 501909302568
+  Licensed to: Anzony QUISPE ROJAS
+               
+
+Notes:
+      1. Stata is running in batch mode.
+      2. Unicode is supported; see help unicode_advice.
+      3. More than 2 billion observations are allowed; see help obs_advice.
+      4. Maximum number of variables is set to 5,000 but can be increased;
+          see help set_maxvar.
+
+. do code/varcov_detect.do 
+
+. ***** File to run standardized tests for "did_multiplegt_dyn" before updating
+>  versions*****
+. 
+.                                         *** Version: 22.05.25 ***
+. 
+. 
+.                                                 *** Preamble ***
+. *****************************************************************************
+> ***
+. // Set the directory to load the datasets and to store the resulting log file
+> s
+. 
+. 
+. 
+. cd "/Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO"
+/Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO
+
+. 
+. use "_data/wagepan.dta",clear
+
+. 
+. * Base variables
+. local y = "lwage"
+
+. local g = "nr"
+
+. local t = "year"
+
+. local d = "union"
+
+. 
+. * Number of effects/placebos
+. local n_eff = 5
+
+. local n_pl = 2
+
+. 
+. * Bootstrap options
+. local b_reps = 20
+
+. local b_seed = 1234
+
+. 
+. * Controls
+. local cont = "hours"
+
+. 
+. * Nonparametric trends by
+. local nonparam = "black"
+
+. 
+. * Weighting variable 
+. local wght = "educ"
+
+. 
+. * Cluster variables
+. local clust = "hisp"
+
+. 
+. * by variable
+. local by_var = "black"
+
+. 
+. * predict_het variable 
+. local het_var = "black"
+
+. 
+. * effects to test in effects-equal
+. local eff_eq="all"
+
+. 
+. did_multiplegt_dyn `y' `g' `t' `d', graph_off effects(`n_eff') placebo(`n_pl'
+> ) cluster(`clust')
+
+
+-------------------------------------------------------------------------------
+> -
+             Estimation of treatment effects: Event-study effects
+-------------------------------------------------------------------------------
+> -
+
+             |  Estimate         SE      LB CI      UB CI          N 
+-------------+-------------------------------------------------------
+    Effect_1 |  .0409508   .0285618  -.0150294    .096931       2767 
+    Effect_2 |  .0218878   .0255912    -.02827   .0720456       2292 
+    Effect_3 |  .0311019   .0278902  -.0235619   .0857657       1885 
+    Effect_4 |  .0181627   .0100765  -.0015869   .0379123       1497 
+    Effect_5 | -.0499658   .0275674  -.1039969   .0040654       1126 
+
+             | Switchers 
+-------------+----------
+    Effect_1 |       246 
+    Effect_2 |       225 
+    Effect_3 |       212 
+    Effect_4 |       195 
+    Effect_5 |       174 
+-------------------------------------------------------------------------------
+> -
+Test of joint nullity of the effects : p-value = 0
+
+
+-------------------------------------------------------------------------------
+> -
+               Average cumulative (total) effect per treatment unit
+-------------------------------------------------------------------------------
+> -
+
+             |  Estimate         SE      LB CI      UB CI          N 
+-------------+-------------------------------------------------------
+  Av_tot_eff |  .0235192   .0172027  -.0101974   .0572358       3573 
+
+             |    Switch  x Periods 
+-------------+---------------------
+  Av_tot_eff |      1052            
+-------------------------------------------------------------------------------
+> -
+Average number of time periods over which a treatment's effect is accumulated =
+>  3.0672389
+
+
+-------------------------------------------------------------------------------
+> -
+          Testing the parallel trends and no anticipation assumptions
+-------------------------------------------------------------------------------
+> -
+
+             |  Estimate         SE      LB CI      UB CI          N 
+-------------+-------------------------------------------------------
+   Placebo_1 | -.0883946   .1009126  -.2861796   .1093905       2222 
+   Placebo_2 |  .0370908   .0958357  -.1507437   .2249253       1376 
+
+             | Switchers 
+-------------+----------
+   Placebo_1 |       155 
+   Placebo_2 |        74 
+-------------------------------------------------------------------------------
+> -
+Test of joint nullity of the placebos : p-value = 0
+
+
+The development of this package was funded by the European Union (ERC, REALLYCR
+> EDIBLE,GA N°101043899).
+
+. 
+end of do-file
