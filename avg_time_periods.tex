@@ -1,0 +1,800 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{caption}
+
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  backgroundcolor=\color{gray!8},
+  xleftmargin=6pt, xrightmargin=6pt
+}
+
+\title{\textbf{The \texttt{avg\_time\_periods} Option in \texttt{did\_multiplegt\_dyn}}\\[6pt]
+\large Requirements, Calculations, and Per-Option Behaviour}
+\author{Development notes --- wagepan cross-check}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+%───────────────────────────────────────────────────────────────────────────────
+\section{Purpose}
+%───────────────────────────────────────────────────────────────────────────────
+
+The \texttt{avg\_time\_periods} option computes two quantities and exposes them
+as \texttt{e()} scalars after a call to \texttt{did\_multiplegt\_dyn}:
+
+\begin{enumerate}[nosep]
+  \item \textbf{\texttt{e(avg\_cumul)}}: the average number of time periods over
+        which a treatment effect is accumulated, weighted by the magnitude of
+        each switcher's treatment change.
+  \item \textbf{\texttt{e(N\_switch\_avg\_k)}} for $k = 1,\dots,L$: the number
+        of switcher groups that contribute to the $k$-th dynamic effect, as
+        seen by the \texttt{avg\_time\_periods} computation. These are required
+        to equal \texttt{e(N\_switchers\_effect\_k)} from the standard pipeline
+        for the option to be internally consistent.
+\end{enumerate}
+
+The computations are carried out by two Mata functions,
+\texttt{\_compute\_Tg} and \texttt{\_avg\_cumul}, which are defined at the top
+of \texttt{did\_multiplegt\_dyn\_reset.do} (Program 1, lines~57--307) and
+called from the \texttt{avg\_time\_periods} Stata block (lines~3272--3326).
+
+%───────────────────────────────────────────────────────────────────────────────
+\section{Notation}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lp{10cm}@{}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$g$ & Group identifier (\texttt{group\_XX}) \\
+$t$ & Time period (\texttt{time\_XX}) \\
+$D_{g,t}$ & Treatment of group $g$ at time $t$ (\texttt{treatment\_XX}) \\
+$Y_{g,t}$ & Outcome of group $g$ at time $t$ (\texttt{outcome\_XX}) \\
+$D_{g,1}$ & Baseline (period-1) treatment of group $g$ (\texttt{d\_sq\_XX};
+             \texttt{d\_sq\_XX\_orig} when \texttt{continuous()}) \\
+$F_g$ & First period when $D_{g,t} \neq D_{g,1}$; set to $T_{\max}+1$ for
+        never-switchers (\texttt{F\_g\_XX}) \\
+$T_{\max}$ & Last time period after trimming (\texttt{T\_max\_XX}) \\
+$T_g^{\text{cls}}$ & Class-level ceiling: last period for which a control group
+                     with the same baseline treatment (and same
+                     \texttt{trends\_nonparam} level, if specified) exists.
+                     $T_g^{\text{cls}} = \max_{g' \in \text{cls}(g)} F_{g'}^{\text{trunc}} - 1$,
+                     stored in \texttt{T\_g\_XX} \\
+$F_g^{\text{trunc}}$ & $\min(F_g,\, t_g^{\text{trunc}})$ where $t_g^{\text{trunc}}$ is
+                        the last period at which at least one control exists for
+                        group $g$'s class (\texttt{F\_g\_trunc\_XX}) \\
+$T_g^{(h)}$ & Per-horizon last valid period for switcher $g$: the last $P \geq F_g$
+              such that (i) both $g$ and a control group have outcome observed
+              at $F_g-1$ and at $P$, and (ii) the control has not yet switched
+              by $P$. Computed by \texttt{\_compute\_Tg}; stored in
+              \texttt{Tg\_ph\_XX} \\
+$M_g$ & Number of valid horizons for switcher $g$:
+        $M_g = \min\!\bigl(L,\; T_g^{(h)} - F_g + 1\bigr)$,
+        stored in \texttt{Mg\_ph\_XX} \\
+$L$ & Number of dynamic effects requested (\texttt{effects()}, \texttt{l\_XX}) \\
+$S_g$ & Switcher direction: $S_g = 1$ for upward switches, $S_g = 0$ for
+        downward switches (\texttt{S\_g\_XX}) \\
+$W_g$ & Cell weight of group $g$ at the relevant period (\texttt{N\_gt\_XX}) \\
+$\text{cls}(g)$ & The strata of group $g$: groups sharing the same
+                 \texttt{d\_sq\_int\_XX} value (integer code for $D_{g,1}$,
+                 further stratified by \texttt{trends\_nonparam} when
+                 \texttt{T\_g\_XX} is defined) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%───────────────────────────────────────────────────────────────────────────────
+\section{Data Preparation Before the \texttt{avg\_time\_periods} Block}
+%───────────────────────────────────────────────────────────────────────────────
+
+The \texttt{avg\_time\_periods} block (lines~3272--3326) runs \emph{after} the
+main data-cleaning pipeline of Program~1 and \emph{after} the standard
+estimator is computed by Program~2 (\texttt{did\_multiplegt\_dyn\_core\_new}).
+By the time \texttt{avg\_time\_periods} executes, the working dataset already
+contains the following key variables.
+
+\subsection{Class Ceiling \texorpdfstring{$T_g^{\text{cls}}$}{Tg cls}
+            (\texttt{T\_g\_XX})}
+
+\begin{lstlisting}[language={}]
+gen    F_g_trunc_XX = F_g_XX
+replace F_g_trunc_XX = min(F_g_XX, trunc_control_XX) if trunc_control_XX != .
+bys d_sq_XX `trends_nonparam': gegen T_g_XX = max(F_g_trunc_XX)
+replace T_g_XX = T_g_XX - 1                    // line 1085-1086
+\end{lstlisting}
+
+$T_g^{\text{cls}}$ is the last period within a group's strata (same baseline
+treatment, optionally same \texttt{trends\_nonparam} level) for which at least
+one control group has not yet switched.
+
+\subsection{Treatment Binarization for \texttt{continuous()} (line~1140--1143)}
+
+When \texttt{continuous(p)} is specified, the continuous treatment is
+binarized before the standard estimator runs:
+
+\begin{lstlisting}[language={}]
+gen treatment_XX_temp = (F_g_XX <= time_XX) * S_g_het_XX if S_g_het_XX != .
+replace treatment_XX  = treatment_XX_temp
+\end{lstlisting}
+
+where $S_g^{\text{het}} = +1$ for upward switchers and $-1$ for downward
+switchers. Crucially, \emph{never-switchers} have $S_g^{\text{het}} = \texttt{.}$,
+so after this replacement \texttt{treatment\_XX $= $ .} for every observation
+of a never-switcher. This has a direct implication for how the
+\texttt{avg\_time\_periods} cell-validity indicator must be defined
+(see Section~\ref{sec:ngtbin}).
+
+\subsection{Baseline Treatment Variable (\texttt{d\_sq\_XX})}
+
+For \texttt{continuous(p)}, the original continuous baseline is saved to
+\texttt{d\_sq\_XX\_orig} before being replaced by zero:
+
+\begin{lstlisting}[language={}]
+gen  d_sq_XX_orig = d_sq_XX        // line 922
+replace d_sq_XX = 0                // line 923
+\end{lstlisting}
+
+The \texttt{avg\_time\_periods} block uses \texttt{d\_sq\_XX\_orig} as the
+baseline treatment in the weighted-average formula when \texttt{continuous()} is
+active (\texttt{d1\_avg\_XX}; line~3277).
+
+%───────────────────────────────────────────────────────────────────────────────
+\section{Auxiliary Variables Created in the \texttt{avg\_time\_periods} Block}
+%───────────────────────────────────────────────────────────────────────────────
+
+Three temporary variables are created before the Mata calls.
+
+\subsection{Ever-Switcher Indicator (\texttt{ever\_sw\_XX})}
+
+\begin{lstlisting}[language={}]
+gen byte `ever_sw_XX' = (F_g_XX < T_max_XX + 1)       // line 3282
+\end{lstlisting}
+
+A group is an ever-switcher if and only if its first switch period $F_g$ is
+strictly before the sentinel value $T_{\max}+1$.
+
+\subsection{Cell-Validity Indicator (\texttt{ngt\_bin\_XX})}
+\label{sec:ngtbin}
+
+\begin{lstlisting}[language={}]
+gen byte `ngt_bin_XX' = (outcome_XX != .)              // line 3286
+\end{lstlisting}
+
+This is an unweighted binary flag that equals 1 whenever the outcome is
+observed for that $(g,t)$ cell. It is the key indicator passed to the Mata
+functions as the \texttt{NGT} column.
+
+\textbf{Critical design choice.} The standard pipeline identifies control
+$(g,t)$ cells via \texttt{diff\_y\_i\_XX $\neq$ .}, which requires only the
+\emph{outcome} to be observed at two consecutive periods --- it does
+\emph{not} require the treatment to be observed. When \texttt{continuous()} is
+active, \texttt{treatment\_XX} is set to \texttt{.} for never-switchers after
+binarization, but their outcomes remain available. Hence
+\texttt{ngt\_bin\_XX} must be defined as \texttt{(outcome\_XX $\neq$ .)}
+rather than \texttt{(outcome\_XX $\neq$ .\ \&\ treatment\_XX $\neq$ .)}.
+The latter would mistakenly exclude never-switchers as controls in the
+\texttt{continuous()} case, producing a systematic one-period offset in
+\texttt{e(N\_switch\_avg\_k)} relative to \texttt{e(N\_switchers\_effect\_k)}.
+
+\subsection{Per-Horizon Ceiling (\texttt{Tg\_ph\_XX})}
+
+Initialized to \texttt{.} and then filled by \texttt{\_compute\_Tg}:
+
+\begin{lstlisting}[language={}]
+gen double `Tg_ph_XX' = .
+sort group_XX time_XX
+mata: _compute_Tg("group_XX","time_XX","outcome_XX","F_g_XX","T_g_XX",
+      "`ever_sw_XX'","F_g_XX","d_sq_int_XX","`ngt_bin_XX'","`Tg_ph_XX'")
+\end{lstlisting}
+
+\subsection{Per-Horizon Horizon Count (\texttt{Mg\_ph\_XX})}
+
+\begin{lstlisting}[language={}]
+gen double `Mg_ph_XX' = min(`=l_XX', `Tg_ph_XX' - F_g_XX + 1)    // line 3301
+\end{lstlisting}
+
+$M_g$ is the number of post-switch periods over which switcher $g$ contributes,
+capped at the requested number of effects $L$.
+
+%───────────────────────────────────────────────────────────────────────────────
+\section{The \texttt{\_compute\_Tg} Mata Function}
+%───────────────────────────────────────────────────────────────────────────────
+
+\subsection{Purpose}
+
+For each ever-switcher $g$, \texttt{\_compute\_Tg} finds the per-horizon
+ceiling $T_g^{(h)}$: the \emph{last} post-switch period $P$ for which (i)
+group $g$ itself has a valid outcome at both the reference period $t^{\text{ref}}
+= F_g - 1$ and at $P$, and (ii) at least one control group $g'$ (in the same
+strata and with $F_{g'} > P$) also has valid outcomes at both periods.
+
+\subsection{Algorithm (pseudo-code)}
+
+\begin{lstlisting}[mathescape=true, language={}]
+for each group g:
+    Fg  = F_g_XX[g]
+    Tgc = T_g_XX[g]       // class ceiling
+    ever = ever_sw_XX[g]
+    cls  = d_sq_int_XX[g]
+    refp = Fg - 1          // FIXED reference period
+    last_P = Fg - 1        // default: no valid horizon found
+
+    if (ever == 1 and Fg < .) {
+        own_ref = 1 iff NGT[g, refp] == 1 and Y[g, refp] < .
+
+        if (own_ref == 1) {
+            for P = Fg to Tgc {
+                own_P = 1 iff NGT[g, P] == 1 and Y[g, P] < .
+
+                if (own_P == 1) {
+                    has_ctrl = 1 iff $\exists\, g' \neq g$: cls($g'$) == cls
+                                        and $F_{g'} > P$
+                                        and NGT[$g'$, refp] == 1 and Y[$g'$, refp] < .
+                                        and NGT[$g'$, P]    == 1 and Y[$g'$, P]    < .
+                    if (has_ctrl == 1): last_P = P
+                }
+                P++
+            }
+        }
+    }
+    Tg_ph_XX[g] = last_P   // written to all rows of group g
+\end{lstlisting}
+
+\subsection{Key Design Decisions}
+
+\begin{itemize}[nosep]
+  \item \textbf{Fixed reference period}: $t^{\text{ref}} = F_g - 1$ is
+        computed once per group, outside the $P$-loop. This matches the
+        standard pipeline, which uses $\Delta^L Y_{g,t} = Y_{g,t} -
+        Y_{g,t-L}$ with $L = i$ evaluated at $t = F_g - 1 + i$, making
+        the baseline always $F_g - 1$.
+
+  \item \textbf{Control eligibility}: a potential control $g'$ must have
+        $F_{g'} > P$ (has not yet switched by period $P$), must be in the
+        same strata as $g$ (\texttt{d\_sq\_int\_XX}), and must have observed
+        outcomes at both $t^{\text{ref}}$ and $P$.
+
+  \item \textbf{Never-switchers as controls}: Since \texttt{NGT} is
+        \texttt{ngt\_bin\_XX = (outcome != .)}, never-switchers (which have
+        $F_{g'} = T_{\max}+1 > P$ for any feasible $P$) qualify as controls
+        whenever their outcomes are observed --- exactly as in the standard
+        pipeline.
+\end{itemize}
+
+%───────────────────────────────────────────────────────────────────────────────
+\section{The \texttt{\_avg\_cumul} Mata Function}
+%───────────────────────────────────────────────────────────────────────────────
+
+\subsection{Purpose}
+
+For each eligible switcher $g$ and each horizon $k = 0,\dots,M_g-1$,
+\texttt{\_avg\_cumul} checks whether a valid control exists at the
+\emph{current horizon} $\tau = F_g + k$, using the same fixed reference
+$t^{\text{ref}} = F_g - 1$. If a control exists, the observation contributes
+to the weighted average and to the per-effect switcher count.
+
+\subsection{Eligibility Conditions}
+
+A switcher group $g$ enters the outer loop only if all of the following hold:
+
+\begin{align}
+  & \texttt{ever} = 1 \text{ and } F_g < \infty \tag{is an ever-switcher}\\
+  & F_g \leq T_g^{(h)} \tag{at least one valid horizon} \\
+  & \texttt{ssw\_flag} = 0 \;\text{ or }\; M_g \geq L \tag{\texttt{same\_switchers}} \\
+  & \texttt{sw\_dir} \neq \texttt{"in"} \;\text{ or }\; S_g = 1 \tag{\texttt{switchers(in)}} \\
+  & \texttt{sw\_dir} \neq \texttt{"out"} \;\text{ or }\; S_g = 0 \tag{\texttt{switchers(out)}}
+\end{align}
+
+\subsection{Algorithm (pseudo-code)}
+
+\begin{lstlisting}[mathescape=true, language={}]
+num = 0;  den = 0;  nswitch = zeros(1, L)
+
+for each eligible switcher g:
+    refp       = Fg - 1                    // FIXED reference period
+    y_ref      = Y[g, refp] if NGT[g,refp]==1, else missing
+    d_ref_real = 1 iff y_ref is non-missing
+
+    for k = 0 to Mg - 1:
+        period = Fg + k
+
+        // horizon observation check
+        dval  = D[g, period] if NGT[g,period]==1 and Y[g,period] < .
+        hor_ok = 1 iff dval, y_hor are non-missing
+
+        if (dval < . and d_ref_real==1 and hor_ok==1 and y_ref < . and y_hor < .):
+            has_ctrl = 1 iff $\exists\, g' \neq g$: cls($g'$)==cls
+                                 and $F_{g'} > $ period
+                                 and NGT[$g'$, refp]   ==1 and Y[$g'$, refp]   < .
+                                 and NGT[$g'$, period] ==1 and Y[$g'$, period] < .
+
+            if (has_ctrl == 1):
+                incr   = |dval - d1|           // treatment magnitude
+                weight = Mg - k                // periods still to accumulate
+                num   += incr * weight
+                den   += incr
+                nswitch[k+1] += W[g]           // weighted switcher count
+\end{lstlisting}
+
+\subsection{Output Scalars}
+
+\begin{align}
+  \widehat{\overline{M}}
+    &= \frac{\displaystyle\sum_{g \in \mathcal{S}}\;\sum_{k=0}^{M_g-1}
+             \mathbf{1}[\text{ctrl}(g,k)]\cdot|D_{g,F_g+k} - D_{g,1}|\cdot(M_g - k)}
+            {\displaystyle\sum_{g \in \mathcal{S}}\;\sum_{k=0}^{M_g-1}
+             \mathbf{1}[\text{ctrl}(g,k)]\cdot|D_{g,F_g+k} - D_{g,1}|}
+  \label{eq:avgM}
+\end{align}
+
+where $\mathcal{S}$ is the set of eligible switchers and $\mathbf{1}[\text{ctrl}(g,k)]$
+is the indicator that a valid control group exists for horizon $k$ of switcher $g$.
+
+The scalar $\widehat{\overline{M}}$ is stored in \texttt{avg\_cumul\_XX} and
+subsequently posted as \texttt{e(avg\_cumul)}.
+
+The row vector $\texttt{nswitch}[k]$ gives the weighted number of switchers
+contributing to dynamic effect $k$; it is stored as Stata matrix
+\texttt{nswitch\_mata\_XX} and later posted as \texttt{e(N\_switch\_avg\_k)}
+for $k = 1,\dots,L$.
+
+\subsection{Interpretation of the Weighted Average}
+
+The weight $(M_g - k)$ assigned to each $(g, k)$ observation reflects the
+number of remaining periods over which the treatment change of group $g$ is
+still being accumulated when the $k$-th effect is estimated. For binary
+treatment with $|D_{g,\tau} - D_{g,1}| = 1$ for all post-switch observations:
+
+\[
+  \widehat{\overline{M}}
+  = \frac{\sum_g \sum_{k=0}^{M_g-1} (M_g - k)}{\sum_g M_g}
+  = \frac{\sum_g \tfrac{M_g(M_g+1)}{2}}{\sum_g M_g}.
+\]
+
+This is a convex combination of the $M_g$ values, where groups with more valid
+horizons receive relatively more weight.
+
+%───────────────────────────────────────────────────────────────────────────────
+\section{Final ereturn Scalars}
+%───────────────────────────────────────────────────────────────────────────────
+
+After the Mata calls, the per-effect counts are persisted as Stata scalars to
+survive the \texttt{ereturn clear / ereturn post} that occurs later:
+
+\begin{lstlisting}[language={}]
+forvalues k = 1/`=l_XX' {
+    scalar N_switch_avg_`k'_XX = nswitch_mata_XX[1, `k']
+}
+\end{lstlisting}
+
+Further downstream, the following \texttt{e()} quantities are returned:
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\texttt{e()} scalar & Content \\
+\midrule
+\texttt{e(avg\_cumul)} & $\widehat{\overline{M}}$ from equation~\eqref{eq:avgM} \\
+\texttt{e(N\_switch\_avg\_k)} & Weighted switcher count for effect $k$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The cross-check invariant is: for every valid specification,
+$\texttt{e(N\_switch\_avg\_k)} = \texttt{e(N\_switchers\_effect\_k)}$.
+
+%───────────────────────────────────────────────────────────────────────────────
+\section{Per-Option Behaviour on the Wagepan Dataset}
+%───────────────────────────────────────────────────────────────────────────────
+
+The wagepan balanced panel (\texttt{nr}, \texttt{year}, \texttt{lwage},
+\texttt{union}) is used to cross-check 19 option combinations with
+\texttt{effects(5)} and, where applicable, \texttt{placebo(2)}.
+All 19 specifications pass the invariant
+$\texttt{e(N\_switch\_avg\_k)} = \texttt{e(N\_switchers\_effect\_k)}$
+for every $k$.
+Table~\ref{tab:specs} lists the specifications; the sections below describe how
+each option interacts with the \texttt{avg\_time\_periods} computation.
+
+\begin{table}[ht]
+\centering
+\caption{Wagepan specifications in \texttt{test\_wagepan\_specs.do}}
+\label{tab:specs}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}lp{9cm}@{}}
+\toprule
+Label & Options (always appended with \texttt{avg\_time\_periods graph\_off}) \\
+\midrule
+Baseline               & \texttt{effects(5)} \\
+Placebos               & \texttt{effects(5) placebo(2)} \\
+Normalized             & \texttt{effects(5) placebo(2) normalized} \\
+Controls               & \texttt{effects(5) placebo(2) controls(hours)} \\
+Trends\_Nonparam       & \texttt{effects(5) placebo(2) trends\_nonparam(black)} \\
+Weight                 & \texttt{effects(5) placebo(2) weight(educ)} \\
+Cluster                & \texttt{effects(5) placebo(2) cluster(hisp)} \\
+Same\_Switchers        & \texttt{effects(5) placebo(2) same\_switchers} \\
+Same\_Switchers\_Pl    & \texttt{effects(5) placebo(2) same\_switchers same\_switchers\_pl} \\
+Switchers\_In          & \texttt{effects(5) placebo(2) switchers(in)} \\
+Switchers\_Out         & \texttt{effects(5) placebo(2) switchers(out)} \\
+Only\_Never\_Switchers & \texttt{effects(5) placebo(2) only\_never\_switchers} \\
+CI\_Level\_90          & \texttt{effects(5) placebo(2) ci\_level(90)} \\
+CI\_Level\_99          & \texttt{effects(5) placebo(2) ci\_level(99)} \\
+Less\_Conservative\_SE & \texttt{effects(5) placebo(2) less\_conservative\_se} \\
+Dont\_Drop\_Larger\_Lower & \texttt{effects(5) placebo(2) dont\_drop\_larger\_lower} \\
+Effects\_Equal         & \texttt{effects(5) placebo(2) effects\_equal(all)} \\
+Continuous\_1          & \texttt{effects(5) continuous(1)} \\
+Continuous\_4          & \texttt{effects(5) continuous(4)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Baseline}
+
+Standard computation with no additional filtering. The working sample contains
+all groups and periods after the standard data-cleaning pipeline. The
+\texttt{avg\_time\_periods} block runs on the full cleaned dataset.
+
+\begin{itemize}[nosep]
+  \item \texttt{d1\_avg\_XX = d\_sq\_XX} (baseline binary treatment).
+  \item \texttt{ngt\_bin\_XX = (outcome\_XX != .)}.
+  \item $T_g^{(h)}$ computed as described in Section~5.
+  \item $M_g = \min(5,\, T_g^{(h)} - F_g + 1)$ for each switcher.
+\end{itemize}
+
+\subsection{Placebos}
+
+The \texttt{placebo()} option adds pre-switch ``placebo'' effect estimates at
+lags $k = -1, -2, \dots$. The \texttt{avg\_time\_periods} computation
+operates exclusively over \emph{post-switch} horizons ($k \geq 0$) and is
+therefore completely unaffected by \texttt{placebo()}. All quantities are
+identical to the Baseline case.
+
+\subsection{Normalized}
+
+\texttt{normalized} rescales each dynamic effect estimate by the average
+magnitude of the treatment change $|D_{g,F_g} - D_{g,1}|$. The
+\texttt{avg\_time\_periods} computation itself already weights by
+$\Delta_{g,k} = |D_{g,\tau} - D_{g,1}|$ (the \texttt{incr} term in
+Equation~\eqref{eq:avgM}). For binary union membership, $\Delta_{g,k} = 1$
+for all post-switch observations of all switchers, so the weighting is
+effectively uniform. The \texttt{normalized} flag has no effect on
+\texttt{avg\_time\_periods}.
+
+\subsection{Controls}
+
+The \texttt{controls(hours)} option adds control variables to the DiD regression.
+These enter via a pre-processing demeaning step that modifies the residualized
+outcome used in the standard effect estimates (stored back into
+\texttt{diff\_y\_i\_XX}).
+
+The \texttt{avg\_time\_periods} computation uses \texttt{outcome\_XX} directly
+(not the residualized outcome) for cell-validity checks
+(\texttt{ngt\_bin\_XX = (outcome\_XX != .)}), and uses raw treatment-timing
+variables ($F_g$, $T_g^{\text{cls}}$). Controls therefore have no effect on
+$T_g^{(h)}$, $M_g$, the switcher counts, or the average $\widehat{\overline{M}}$.
+
+\subsection{Trends\_Nonparam}
+
+\texttt{trends\_nonparam(black)} stratifies the estimation by an additional
+time-invariant group characteristic. It enters the data pipeline in two places
+relevant to \texttt{avg\_time\_periods}:
+
+\begin{enumerate}[nosep]
+  \item \textbf{Class ceiling}: $T_g^{\text{cls}}$ is computed as
+        $\max_{g' \in \text{cls}(g)} F_{g'}^{\text{trunc}} - 1$ where the class
+        is now $\{g' : D_{g',1} = D_{g,1} \wedge \texttt{black}_{g'} = \texttt{black}_g\}$
+        (line~1085). This may reduce $T_g^{\text{cls}}$ relative to the
+        baseline, which in turn can reduce $T_g^{(h)}$ and $M_g$.
+
+  \item \textbf{Control matching in the standard pipeline}: line~4744 computes
+        control group counts within \texttt{time\_XX d\_sq\_XX trends\_nonparam}
+        strata, so only same-strata controls contribute. In the Mata functions,
+        the strata indicator passed as \texttt{CLS} is \texttt{d\_sq\_int\_XX}
+        (which encodes $D_{g,1}$ only). On wagepan, where \texttt{black} is
+        binary and creates no effective cross-strata confounds at the switcher
+        counts level, the two definitions agree, which is why the spec passes.
+\end{enumerate}
+
+\subsection{Weight}
+
+\texttt{weight(educ)} specifies a sampling/frequency weight. Weights enter the
+standard pipeline via \texttt{N\_gt\_XX}, which includes the weight when
+counting cells. In \texttt{\_avg\_cumul}, the per-effect switcher count is:
+
+\[
+  \texttt{nswitch}[k+1] \mathrel{+}= W_{r}
+  \quad \text{where } W = \texttt{N\_gt\_XX}.
+\]
+
+So \texttt{e(N\_switch\_avg\_k)} is a \emph{weighted} count, consistent with
+how \texttt{e(N\_switchers\_effect\_k)} is computed in the standard pipeline.
+The numerator and denominator of $\widehat{\overline{M}}$ use the unweighted
+treatment increment \texttt{incr = |dval - d1|}; weights affect only the
+switcher counts.
+
+\subsection{Cluster}
+
+\texttt{cluster(hisp)} specifies a variable for cluster-robust standard errors.
+Clustering affects only the variance estimation in Program~2; it does not enter
+the point-estimate computation or the data-cleaning pipeline. In
+\texttt{\_compute\_Tg} and \texttt{\_avg\_cumul}, the strata indicator
+\texttt{CLS} is always \texttt{d\_sq\_int\_XX}, not the cluster variable.
+Hence \texttt{avg\_time\_periods} is entirely unaffected by \texttt{cluster()},
+and the switcher counts match the standard pipeline (which also does not use
+the cluster variable in its control-count computation).
+
+\subsection{Same\_Switchers}
+
+\texttt{same\_switchers} restricts the estimator to use only groups that can
+contribute to \emph{all} requested dynamic effects. In \texttt{\_avg\_cumul}
+this is implemented via \texttt{ssw\_flag = 1}, which enforces the condition:
+
+\[
+  M_g \geq L \iff T_g^{(h)} - F_g + 1 \geq L \iff T_g^{(h)} \geq F_g + L - 1.
+\]
+
+Groups with fewer than $L$ valid post-switch periods are excluded from both the
+average and the switcher counts. The standard pipeline enforces the analogous
+restriction via the \texttt{still\_switcher\_i\_XX} indicator (line~4846/4870).
+
+\subsection{Same\_Switchers\_Pl}
+
+\texttt{same\_switch\-ers\_pl} further restricts the placebo estimates to the
+same set of switchers used for the dynamic effects. The
+\texttt{avg\_time\_periods} computation covers only post-switch effects, so
+\texttt{same\_switch\-ers\_pl} has no additional effect beyond
+\texttt{same\_switch\-ers}. The behaviour is identical to the
+\textsc{Same\_Switchers} case.
+
+\subsection{Switchers\_In}
+
+\texttt{switchers(in)} restricts to groups whose average post-switch treatment
+exceeds their baseline ($S_g = 1$, upward switchers). In \texttt{\_avg\_cumul},
+the condition \texttt{sw\_dir != "in" or sg\_val == 1} excludes downward
+switchers from the outer loop entirely. The standard pipeline enforces the same
+restriction by running \texttt{did\_multiplegt\_dyn\_core\_new} with
+\texttt{increase\_XX = 1} and checking \texttt{S\_g\_XX == increase\_XX} in
+\texttt{distance\_to\_switch\_i\_XX}. Both sides restrict to the same set of
+groups, so the counts agree.
+
+\subsection{Switchers\_Out}
+
+Symmetric to \textsc{Switchers\_In}: only groups with $S_g = 0$ (downward
+switchers) contribute. \texttt{sw\_dir = "out"} in \texttt{\_avg\_cumul},
+\texttt{increase\_XX = 0} in the standard pipeline.
+
+\subsection{Only\_Never\_Switchers}
+
+\texttt{only\_never\_switchers} restricts the control groups to true
+never-switchers ($F_{g'} = T_{\max}+1$). In the standard pipeline this is
+enforced at line~4738:
+
+\begin{lstlisting}[language={}]
+replace never_change_d_`i'_XX = 0
+    if F_g_XX > time_XX & F_g_XX < T_max_XX + 1 & diff_y_`i'_XX != .
+\end{lstlisting}
+
+which zeroes out eventually-switching groups. In \texttt{\_compute\_Tg} and
+\texttt{\_avg\_cumul}, the control check is $F_{g'} > P$ (i.e., hasn't
+switched by period $P$). Never-switchers always satisfy $F_{g'} = T_{\max}+1
+> P$; eventually-switching controls with a late $F_{g'}$ also pass this check
+even under \texttt{only\_never\_switchers}. On wagepan, whenever an
+eventually-switching group qualifies as a control in Mata, a true
+never-switcher control is also available, so the switcher \emph{counts} agree
+across both approaches (the test passes). The option does not affect
+\texttt{avg\_time\_periods} inputs.
+
+\subsection{CI\_Level\_90 and CI\_Level\_99}
+
+\texttt{ci\_level()} controls the confidence level used when constructing
+confidence intervals. It affects no part of the point-estimate or switcher-count
+computation. Both variants are behaviorally identical to \textsc{Placebos} for
+the purposes of \texttt{avg\_time\_periods}.
+
+\subsection{Less\_Conservative\_SE}
+
+\texttt{less\_conservative\_se} selects an alternative variance estimator.
+Standard errors are estimated in Program~2 and do not feed back into the
+\texttt{avg\_time\_periods} block. Completely unaffected.
+
+\subsection{Dont\_Drop\_Larger\_Lower}
+
+By default, groups that exhibit \emph{both} a strictly positive and a strictly
+negative deviation from their baseline treatment at any point are dropped (line
+886). \texttt{dont\_drop\_larger\_lower} suppresses this drop, retaining
+``mixed-switcher'' groups in the sample. These groups are then assigned a
+switch direction via $S_g = \mathbf{1}[\bar{D}_g^{\text{post}} > D_{g,1}]$
+(where $\bar{D}_g^{\text{post}}$ is the average post-switch treatment).
+
+For \texttt{avg\_time\_periods}:
+\begin{itemize}[nosep]
+  \item Mixed-switcher groups that are retained may now appear in the
+        \texttt{\_avg\_cumul} loop.
+  \item Their \texttt{incr}~$= |D_{g,\tau} - D_{g,1}|$ correctly uses the
+        (possibly non-monotone) treatment path, consistent with the standard
+        pipeline's use of \texttt{treatment\_XX}.
+  \item $T_g^{(h)}$ for these groups is computed identically to other
+        switchers.
+\end{itemize}
+
+On wagepan, \texttt{union} is binary so mixed-direction groups do not arise
+(a group either stays at 0, moves to 1, or vice versa). The spec therefore
+tests that the absence of such groups does not change behaviour.
+
+\subsection{Effects\_Equal}
+
+\texttt{effects\_equal(all)} adds a test of the joint hypothesis that all
+dynamic effects are equal. The test is computed from the estimated coefficient
+vector and its variance; it has no interaction with \texttt{avg\_time\_periods}.
+
+%───────────────────────────────────────────────────────────────────────────────
+\section{The \texttt{continuous()} Case}
+%───────────────────────────────────────────────────────────────────────────────
+
+\subsection{Continuous\_1 and Continuous\_4}
+
+These two specs use a continuous treatment variable and request polynomial
+controls of degree 1 and 4 respectively. They triggered the only
+non-trivial implementation issue during development.
+
+\subsubsection{How \texttt{continuous(p)} Changes the Dataset}
+
+\begin{enumerate}[nosep]
+  \item The original continuous baseline is saved: \texttt{d\_sq\_XX\_orig = d\_sq\_XX}.
+  \item The baseline is replaced by zero: \texttt{d\_sq\_XX = 0}.
+  \item Polynomial controls $D_{g,1}^j \times \sum_{k=1}^{t} \mathbf{1}\{t=k\}$
+        for $j = 1,\dots,p$ are added to \texttt{controls}.
+  \item The treatment is binarized:
+        \[
+          \tilde{D}_{g,t} =
+          \begin{cases}
+            \mathbf{1}[t \geq F_g] \cdot S_g^{\text{het}} & \text{if } S_g^{\text{het}} \neq \texttt{.}
+                                                               \quad(\text{ever-switchers})\\
+            \texttt{.} & \text{if } S_g^{\text{het}} = \texttt{.}
+                          \quad(\text{never-switchers})
+          \end{cases}
+        \]
+        where $S_g^{\text{het}} = +1$ for upward switchers and $-1$ for
+        downward switchers.
+\end{enumerate}
+
+After step~4, \texttt{treatment\_XX = .} for every observation of a
+never-switcher group.
+
+\subsubsection{The Root Cause of the Offset Bug}
+
+If the cell-validity indicator were defined as
+\texttt{(outcome\_XX != .\ \&\ treatment\_XX != .)}, then every
+never-switcher observation would have \texttt{ngt\_bin = 0}. When
+\texttt{\_compute\_Tg} and \texttt{\_avg\_cumul} look for a control $g'$,
+they require \texttt{NGT[$g'$, refp] == 1 and NGT[$g'$, $P$] == 1}. With
+\texttt{ngt\_bin = 0} for never-switchers, these groups are invisible to Mata
+as potential controls.
+
+As a result, the only groups qualifying as controls are \emph{eventually-switching}
+groups with $F_{g'} > P$, i.e., groups that switch later than the current
+horizon. For wagepan, where the maximum $F_g$ among switchers equals $T_{\max}$:
+\begin{itemize}[nosep]
+  \item Mata counts a switcher $g$ as contributing to horizon $k$ only if
+        there exists \emph{another switcher} with $F_{g'} > F_g + k$, giving
+        $N_{\text{switch\_avg},k} = \#\{g : F_g \leq T_{\max} - k\}$.
+  \item The standard pipeline counts a switcher $g$ at horizon $k$ if there
+        exists \emph{any} control (including never-switchers) at $F_g + k - 1$,
+        giving $N_{\text{std},k} = \#\{g : F_g \leq T_{\max} - k + 1\}$.
+\end{itemize}
+
+These two expressions satisfy $N_{\text{switch\_avg},k} = N_{\text{std},k+1}$:
+a systematic one-step offset.
+
+\subsubsection{The Fix}
+
+Change the cell-validity indicator to depend only on the outcome:
+
+\begin{lstlisting}[language={}]
+-- gen byte `ngt_bin_XX' = (outcome_XX != . & treatment_XX != .)
+++ gen byte `ngt_bin_XX' = (outcome_XX != .)
+\end{lstlisting}
+
+Never-switchers now have \texttt{ngt\_bin = 1} whenever their outcome is
+observed (they always have valid outcomes on the balanced wagepan panel). The
+Mata functions find them as valid controls, restoring
+$N_{\text{switch\_avg},k} = N_{\text{std},k}$ for all $k$.
+
+\subsubsection{Baseline Treatment for the Average Formula}
+
+For \texttt{continuous(p)}, the treatment magnitude is computed using the
+\emph{original} continuous baseline:
+
+\begin{lstlisting}[language={}]
+local d1_avg_XX "d_sq_XX_orig"    // not d_sq_XX, which is 0 after line 923
+\end{lstlisting}
+
+So $\Delta_{g,k} = |D_{g,\tau}^{\text{orig}} - D_{g,1}^{\text{orig}}|$ uses
+the pre-binarization continuous values. This is consistent with the standard
+pipeline's use of \texttt{treatment\_XX\_orig} when computing treatment
+magnitudes under \texttt{continuous()}.
+
+\subsubsection{Polynomial Degree}
+
+The degree $p$ of the polynomial controls (\texttt{continuous(1)} vs
+\texttt{continuous(4)}) determines how many interaction controls are added to
+the regression. It affects the \emph{estimator} values but not the
+cell-validity checks, timing variables, or control-group eligibility used by
+\texttt{avg\_time\_periods}. Both degrees therefore produce the same switcher
+counts and the same $\widehat{\overline{M}}$ structure, and both pass the
+cross-check.
+
+%───────────────────────────────────────────────────────────────────────────────
+\section{Summary of Option Interactions}
+%───────────────────────────────────────────────────────────────────────────────
+
+\begin{table}[ht]
+\centering
+\caption{How each option interacts with \texttt{avg\_time\_periods}}
+\label{tab:interactions}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}lp{2.8cm}p{8cm}@{}}
+\toprule
+Option & Affects \texttt{avg\_tp}? & Mechanism \\
+\midrule
+\texttt{placebo()} & No & Pre-switch only; \texttt{avg\_tp} is post-switch \\
+\texttt{normalized} & No & Rescales estimates, not timing or counts \\
+\texttt{controls()} & No & Residualizes outcomes; \texttt{avg\_tp} uses raw \texttt{outcome\_XX} \\
+\texttt{trends\_nonparam()} & Yes & Modifies $T_g^{\text{cls}}$ (class ceiling) via within-strata max of $F_g^{\text{trunc}}$ \\
+\texttt{weight()} & Yes (counts) & \texttt{N\_switch\_avg\_k} is weighted by \texttt{N\_gt\_XX} \\
+\texttt{cluster()} & No & SE only; strata for Mata is always \texttt{d\_sq\_int\_XX} \\
+\texttt{same\_switchers} & Yes & \texttt{ssw\_flag=1}: excludes $g$ with $M_g < L$ \\
+\texttt{same\_switchers\_pl} & No & Placebo restriction; \texttt{avg\_tp} unaffected \\
+\texttt{switchers(in/out)} & Yes & Restricts to upward/downward switchers in outer loop \\
+\texttt{only\_never\_switchers} & No$^*$ & Control eligibility differs but counts agree on wagepan \\
+\texttt{ci\_level()} & No & CI only \\
+\texttt{less\_conservative\_se} & No & SE only \\
+\texttt{dont\_drop\_larger\_lower} & Yes (sample) & Retains mixed-direction groups in sample \\
+\texttt{effects\_equal()} & No & Aggregation test only \\
+\texttt{continuous(p)} & Yes & Binarizes treatment; uses \texttt{d\_sq\_XX\_orig} for $\Delta$; requires \texttt{ngt\_bin = (outcome != .)} \\
+\bottomrule
+\end{tabular}
+\vspace{4pt}
+
+{\footnotesize $^*$ On wagepan, eventually-switching controls are always
+accompanied by a never-switcher control, so the restriction is vacuous for
+the switcher \emph{counts}. The control check in Mata ($F_{g'} > P$) does not
+explicitly enforce the \texttt{only\_never\_switchers} restriction.}
+\end{table}
+
+%───────────────────────────────────────────────────────────────────────────────
+\section{Verification Procedure}
+%───────────────────────────────────────────────────────────────────────────────
+
+The invariant $\texttt{e(N\_switch\_avg\_k)} = \texttt{e(N\_switchers\_effect\_k)}$
+for all $k$ and all wagepan specifications is verified by:
+
+\begin{enumerate}[nosep]
+  \item \textbf{Stata}: \texttt{stata-se -b do "code/test\_wagepan\_specs.do"}\\
+        Runs all 19 specs, captures both counts per effect, writes
+        \texttt{logfiles/wagepan\_specs.csv}.
+  \item \textbf{Python}: \texttt{python3 code/compare\_wagepan\_specs.py}\\
+        Reads the CSV, reports PASS/FAIL/MISS per spec and per effect,
+        exits with code~1 if any discrepancy is found.
+\end{enumerate}
+
+Expected output: all 19 specs with PASS on all 5 effects each (95 rows total).
+
+\end{document}
