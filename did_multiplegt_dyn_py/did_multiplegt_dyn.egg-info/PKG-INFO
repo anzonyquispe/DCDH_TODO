@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: did_multiplegt_dyn
+Version: 0.1.0
+Summary: Python implementation of did_multiplegt_dyn (de Chaisemartin & D'Haultfoeuille)
+Requires-Python: >=3.9
+Requires-Dist: numpy>=1.24
+Requires-Dist: pandas>=2.0
+Requires-Dist: scipy>=1.10
+Requires-Dist: pyreadstat>=1.2
+Provides-Extra: dev
+Requires-Dist: pytest>=7; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: ruff; extra == "dev"

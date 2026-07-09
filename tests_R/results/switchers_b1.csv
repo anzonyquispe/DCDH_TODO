@@ -1,0 +1,5 @@
+dataset,spec,reset,effect_num,N_did,N_avg,diff,pass
+gentzkow,noreset,0,1,711,711,0,PASS 
+gentzkow,noreset,0,2,674,674,0,PASS 
+gentzkow,noreset,0,3,645,645,0,PASS 
+gentzkow,noreset,0,4,613,613,0,PASS 

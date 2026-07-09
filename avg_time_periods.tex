@@ -54,6 +54,49 @@ of \texttt{did\_multiplegt\_dyn\_reset.do} (Program 1, lines~57--307) and
 called from the \texttt{avg\_time\_periods} Stata block (lines~3272--3326).
 
 %───────────────────────────────────────────────────────────────────────────────
+\section{Option Description (help-file entry)}
+%───────────────────────────────────────────────────────────────────────────────
+
+The following text is the description added to the \textbf{Other options}
+section of \texttt{did\_multiplegt\_dyn\_reset.sthlp}.
+
+\bigskip
+\noindent\rule{\linewidth}{0.4pt}
+
+\noindent\textbf{avg\_time\_periods}: when this option is specified, the command
+reports the average number of time periods over which a switcher group's
+treatment effect is accumulated, and the number of switchers entering the
+estimation of each dynamic effect.
+
+For each ever-switcher group $g$, let $F_g$ denote its date of first treatment
+change, let $T_g$ denote the last period for which a valid control group exists
+at every horizon from $F_g$ to $T_g$ (given the sample and the options
+requested), and let $M_g = \min(L,\, T_g - F_g + 1)$, where $L$ is the number
+of effects requested with \texttt{effects()}. The command returns the scalar
+\texttt{e(avg\_cumul)}, defined as
+
+\[
+  \texttt{e(avg\_cumul)}
+  \;=\;
+  \frac{\displaystyle\sum_{g}\;\sum_{k=0}^{M_g-1}
+        |D_{g,F_g+k} - D_{g,1}|\cdot(M_g - k)}
+       {\displaystyle\sum_{g}\;\sum_{k=0}^{M_g-1}
+        |D_{g,F_g+k} - D_{g,1}|},
+\]
+
+where the outer sums run over all switcher groups $g$ for which a valid control
+group exists at horizon $k$, and $D_{g,1}$ is group $g$'s period-one
+treatment. For a binary treatment, \texttt{e(avg\_cumul)} simplifies to a
+weighted mean of the $M_g$ values with weights proportional to $M_g$. The
+command also returns, for each $k = 1,\dots,L$, the scalar
+\texttt{e(N\_switch\_avg\_k)}: the (weighted) number of switcher groups
+contributing to dynamic effect $k$, which equals
+\texttt{e(N\_switchers\_effect\_k)} from the standard pipeline.
+
+\noindent\rule{\linewidth}{0.4pt}
+\bigskip
+
+%───────────────────────────────────────────────────────────────────────────────
 \section{Notation}
 %───────────────────────────────────────────────────────────────────────────────
 

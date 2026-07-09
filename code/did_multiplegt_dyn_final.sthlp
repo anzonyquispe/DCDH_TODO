@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1  2025-03-25}{...}
+{* *! version 1  2026-06-26}{...}
 {viewerjumpto "Syntax" "did_multiplegt_dyn##syntax"}{...}
 {viewerjumpto "Description" "did_multiplegt_dyn##description"}{...}
 {viewerjumpto "Further detail" "did_multiplegt_dyn##detail"}{...}
@@ -239,6 +239,7 @@ but they assume that older lags do not affect the outcome (instead, without this
 for effects of lagged treatments up to any lag). 
 When this option is specified, standard errors remain clustered at the level of the original groups, or at 
 a coarser level if the user specifies a coarser clustering variable in the {cmd:cluster()} option.
+When this option is specified, the command restricts the estimation sample to groups whose treatment is observed at all dates.
 {p_end}
 
 {p 4 8}
@@ -284,6 +285,17 @@ only for switchers for which all the requested effects and placebos can be estim
 the command estimates the event-study effects using only
 never-switchers as control units, instead of using all not-yet-switchers (a larger control group than just never-switchers).
 {p_end}
+
+
+{p 4 8}
+{cmd:avg_time_periods}: if this option is specified,
+the command reports the average number of time 
+periods over which the effect of a treatment dose is cumulated. Each time a switcher group receives an 
+incremental dose of treatment relative to its baseline, the effect of that dose is tracked from the
+period it is received until the last period for which a valid control group exists for that switcher. 
+Groups that can be followed for longer, or that receive more doses, contribute more to this average. The result is stored in e(avg_cumul)
+{p_end}
+
 
 {marker options_PT}{...}
 {title:Options to understand and leverage your design}
@@ -342,6 +354,24 @@ Excel file providing a valid file path in the second argument.
 
 {marker options_PT}{...}
 {title:Options to relax the parallel-trends assumption}
+
+{p 4 8}
+Before describing the command's options to include covariates in the estimation,
+let us emphasize that there is evidence that when they choose their control variables, 
+researchers engage in phacking:
+they choose the covariates that make their event-study estimates more significant,
+rather than choosing those that make the parallel-trends assumption more
+plausible. Thus, while DID estimators with control variables rely, in principle, on
+a weaker identifying assumption than DID estimators without controls, in practice
+they should be considered as less reliable. Accordingly, we recommend that by default,
+researchers do not include any control variable in their estimation. When pre-trend
+coefficients are precisely estimated and not significantly different from zero, there is no
+reason to include control variables in the estimation. On the other hand,
+when pre-trend estimators are smaller, less significant, and/or more precisely estimated
+with than without control variables, then it may make sense to include some control variables.
+See Section 4.1 of  "Causal Inference with Differences-in-Differences: Credible 
+Answers to Hard Questions" by Chaisemartin and D'Haultfoeuille for further details.
+{p_end}
 
 {p 4 8}
 {cmd:controls(}{it:varlist}{cmd:)} gives the names of
@@ -831,6 +861,9 @@ and women in the same (g,t) cell. Then,
 for each (g,t) cell, you just need to compute the difference between the average 
 outcome of men and women in cell (g,t).
 Then, you simply run the command with this new outcome.
+The triple difference-in-differences should be used to relax the identifying assumption,
+not to estimate heterogeneous treatment effects between men and women. To estimate
+heterogeneous effects, you can use the {cmd:predict_het} or {cmd:by} option. 
 {p_end}
 
 {p 4 4}
@@ -881,6 +914,17 @@ in post estimation:
 Yes. See the {cmd:reset()} option.
 {p_end}
 
+{p 4 4}
+{it: My data is at a more disaggregated level than the group level (e.g., observations are at the individual level while groups are municipalities). How can I control for individual-level covariates?}
+{p_end}
+
+{p 4 4}
+One possibility is to include those variables in the {cmd:controls()} option. In that case, the command does not control for the individual-level covariates themselves, but for their averages within each (g,t) cell. Specifically, the {cmd:controls()} option works by regressing the first difference of the average outcome in each (g,t) cell on the first differences of the average controls in that cell, and replacing the first-differenced outcome with the resulting residuals. Accordingly, the estimator allows for differential trends across groups experiencing different changes in the average values of their covariates.
+{p_end}
+
+{p 4 4}
+If instead you wish to control for the individual-level covariates themselves, rather than for their (g,t)-level averages, you can first regress the individual-level outcome on those covariates, compute the residuals from that regression, and then run the command using those residuals as the outcome variable.
+{p_end}
 
 {title:References}
 

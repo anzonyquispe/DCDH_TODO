@@ -1,0 +1,60 @@
+=== test_b1_gentzkow_noreset  started: 2026-06-29 19:18:01.705795 ===
+Loaded /Users/anzony.quisperojas/Documents/GitHub/did_multiplegt_dyn/R/_data/gentzkowetal_didtextbook_balanced.dta  (11696 rows, 19 cols)
+
+------------------------------------------------------------
+gentzkow  effects(4)  no_reset
+------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 2.328885
+   Effect_1 switchers: 711
+   Effect_2 switchers: 674
+   Effect_3 switchers: 645
+   Effect_4 switchers: 613
+
+======================================================================
+RESULT DUMP: gentzkow/noreset reset=0 effects=4
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI   UB CI   N     Switchers
+Effect_1     0.01758  0.00491 0.00796 0.02720 3,664 711      
+Effect_2     0.02861  0.00640 0.01606 0.04116 3,016 674      
+Effect_3     0.03548  0.00852 0.01878 0.05219 2,450 645      
+Effect_4     0.03507  0.01010 0.01527 0.05487 1,962 613      
+
+Test of joint nullity of the effects : p-value = 0.0003
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.02118   0.00475   0.01186   0.03049     5,596     2,643 
+Average number of time periods over which a treatment effect is accumulated: 2.3378
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 2.328885
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         711                     711                 0       PASS
+  2         674                     674                 0       PASS
+  3         645                     645                 0       PASS
+  4         613                     613                 0       PASS
+======================================================================
+  -> N_did effects found: 4
+  -> N_avg effects found: 4
+  PASS  gentzkow/noreset  reset=0  eff=1  did=711  avg=711
+  PASS  gentzkow/noreset  reset=0  eff=2  did=674  avg=674
+  PASS  gentzkow/noreset  reset=0  eff=3  did=645  avg=645
+  PASS  gentzkow/noreset  reset=0  eff=4  did=613  avg=613
+
+CSV written to: /Users/anzony.quisperojas/Documents/GitHub/did_multiplegt_dyn/R/tests_R/results/switchers_b1.csv
+=== test_b1_gentzkow_noreset  finished: 2026-06-29 19:18:03.443015 ===
