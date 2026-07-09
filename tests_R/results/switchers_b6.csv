@@ -1,0 +1,5 @@
+dataset,spec,reset,effect_num,N_did,N_avg,diff,pass
+favara_imbs,reset4,4,1,946,946,0,PASS 
+favara_imbs,reset4,4,2,911,911,0,PASS 
+favara_imbs,reset4,4,3,907,907,0,PASS 
+favara_imbs,reset4,4,4,907,907,0,PASS 

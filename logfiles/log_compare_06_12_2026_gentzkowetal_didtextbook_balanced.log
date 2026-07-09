@@ -1,0 +1,26 @@
+----------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/logfiles/log_compare_06_12_2026_gentzkowetal_didtextbook_b
+> alanced.log
+  log type:  text
+ opened on:  24 Jun 2026, 14:38:40
+.         di as text "=== Comparison started: $S_DATE $S_TIME ==="
+=== Comparison started: 24 Jun 2026 14:38:40 ===
+.         compare_dyn_matrices, new(store_results_new) ssc(store_results_ssc) tol(`diff_tol')
+
+=== Comparison: NEW vs SSC ===
+Rows in NEW matrix: 609
+Rows in SSC matrix: 609
+Rows with |diff| > 1.00000000000e-08: 0
+Maximum absolute difference: 0
+
+Differing rows:
+.         di as text "=== Comparison finished: $S_DATE $S_TIME ==="
+=== Comparison finished: 24 Jun 2026 14:38:40 ===
+.         log close
+      name:  <unnamed>
+       log:  /Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/logfiles/log_compare_06_12_2026_gentzkowetal_didtextbook_b
+> alanced.log
+  log type:  text
+ closed on:  24 Jun 2026, 14:38:40
+----------------------------------------------------------------------------------------------------------------------------

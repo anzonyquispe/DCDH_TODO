@@ -1,0 +1,61 @@
+## test_b5_favara_noreset.R
+## Batch 5: favara_imbs — binary treatment (inter_bra), no reset, effects(600)
+## Cross-check: N_switchers_effect_k  ==  N_switch_avg_k
+## Mirrors: code/test_switchers_b5.do
+
+.this_dir <- (function() { a <- commandArgs(trailingOnly = FALSE); m <- regmatches(a, regexpr("(?<=--file=).*", a, perl = TRUE)); if (length(m)) return(dirname(normalizePath(m[1], mustWork = FALSE))); for (i in seq_len(sys.nframe())) { fr <- sys.frame(i); if (!is.null(fr$ofile)) return(dirname(normalizePath(fr$ofile, mustWork = FALSE))) }; getwd() })(); source(file.path(.this_dir, "helpers.R"))
+library(DIDmultiplegtDYN)
+
+DS    <- "favara_imbs"
+SPEC  <- "noreset"
+RST   <- 0L
+NEFF  <- 4L
+DATA  <- file.path(DATA_DIR, "favara_imbs.dta")
+Y     <- "Dl_hpi"
+G     <- "county"
+TM    <- "year"
+D     <- "inter_bra"
+
+CSV <- file.path(RESULTS_DIR, "switchers_b5.csv")
+LOG <- file.path(RESULTS_DIR, "test_b5_favara_noreset.log")
+con <- file(LOG, open = "wt")
+sink(con, type = "message"); sink(con, type = "output")
+on.exit({ sink(type = "output"); sink(type = "message"); close(con) })
+
+cat(sprintf("=== test_b5_favara_noreset  started: %s ===\n", Sys.time()))
+init_switcher_csv(CSV)
+
+df <- as.data.frame(read_dta(DATA))
+cat(sprintf("Loaded %s  (%d rows)\n", DATA, nrow(df)))
+
+cat(sprintf("\n%s\n%s  effects(%d)  no_reset  (binary treatment inter_bra)\n%s\n",
+            strrep("-", 60), DS, NEFF, strrep("-", 60)))
+
+res_did <- tryCatch(
+  did_multiplegt_dyn(df = df, outcome = Y, group = G, time = TM,
+                     treatment = D, effects = NEFF,
+                     avg_time_periods = TRUE, graph_off = TRUE),
+  error = function(e) { warning("did_multiplegt_dyn failed: ", e$message); NULL }
+)
+
+dump_result(res_did, sprintf("%s/%s reset=%d effects=%d", DS, SPEC, RST, NEFF), NEFF)
+
+N_did <- extract_N_switchers(res_did, NEFF)
+N_avg <- extract_N_switch_avg(res_did, NEFF)
+
+n_did_found <- sum(!is.na(N_did))
+n_avg_found <- sum(!is.na(N_avg))
+cat(sprintf("  -> N_did effects found: %d\n", n_did_found))
+cat(sprintf("  -> N_avg effects found: %d\n", n_avg_found))
+
+if (n_did_found == 0 && n_avg_found == 0) {
+  write_diagrow(CSV, DS, SPEC, RST, "no_effects_found")
+} else {
+  n_max <- max(n_did_found, n_avg_found)
+  for (k in seq_len(n_max)) {
+    write_swrow(CSV, DS, SPEC, RST, k, N_did[[k]], N_avg[[k]])
+  }
+}
+
+cat(sprintf("\nCSV written to: %s\n", CSV))
+cat(sprintf("=== test_b5_favara_noreset  finished: %s ===\n", Sys.time()))

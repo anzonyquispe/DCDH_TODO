@@ -1,0 +1,61 @@
+=== test_b6_favara_reset4  started: 2026-06-29 19:18:01.704938 ===
+Loaded /Users/anzony.quisperojas/Documents/GitHub/did_multiplegt_dyn/R/_data/favara_imbs.dta  (12538 rows)
+
+------------------------------------------------------------
+favara_imbs  effects(4)  reset(4) applied to data  (binary inter_bra)
+------------------------------------------------------------
+reset_groups_R: reset=4 | dropped=22 | pseudo-groups=1917
+Average number of time periods over which a treatment's effect is accumulated = 2.477999
+   Effect_1 switchers: 946
+   Effect_2 switchers: 911
+   Effect_3 switchers: 907
+   Effect_4 switchers: 907
+
+======================================================================
+RESULT DUMP: favara_imbs/reset4 reset=4 effects=4
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.00248  0.00144 -0.00034 0.00530 4,802 946      
+Effect_2     0.00539  0.00154 0.00236  0.00841 3,605 911      
+Effect_3     0.00791  0.00196 0.00408  0.01175 2,671 907      
+Effect_4     0.01282  0.00216 0.00859  0.01705 2,123 907      
+
+Test of joint nullity of the effects : p-value = 0.0000
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.00333   0.00067   0.00203   0.00464     8,304     3,671 
+Average number of time periods over which a treatment effect is accumulated: 2.4780
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 2.477999
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         946                     946                 0       PASS
+  2         911                     911                 0       PASS
+  3         907                     907                 0       PASS
+  4         907                     907                 0       PASS
+======================================================================
+  -> N_did effects found: 4
+  -> N_avg effects found: 4
+  PASS  favara_imbs/reset4  reset=4  eff=1  did=946  avg=946
+  PASS  favara_imbs/reset4  reset=4  eff=2  did=911  avg=911
+  PASS  favara_imbs/reset4  reset=4  eff=3  did=907  avg=907
+  PASS  favara_imbs/reset4  reset=4  eff=4  did=907  avg=907
+
+CSV written to: /Users/anzony.quisperojas/Documents/GitHub/did_multiplegt_dyn/R/tests_R/results/switchers_b6.csv
+=== test_b6_favara_reset4  finished: 2026-06-29 19:18:03.209449 ===

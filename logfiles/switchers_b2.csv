@@ -1,0 +1,16 @@
+dataset,spec,reset,effect_num,N_did,N_avg,diff,pass
+gentzkow,reset4,4,-1,.,.,.,ERROR:did_multiplegt_dyn_rc_111
+gentzkow,reset4,4,1,.,892,.,MISS
+gentzkow,reset4,4,2,.,810,.,MISS
+gentzkow,reset4,4,3,.,745,.,MISS
+gentzkow,reset4,4,4,.,688,.,MISS
+gentzkow,reset4,4,5,.,530,.,MISS
+gentzkow,reset4,4,6,.,422,.,MISS
+gentzkow,reset4,4,7,.,336,.,MISS
+gentzkow,reset4,4,8,.,271,.,MISS
+gentzkow,reset4,4,9,.,218,.,MISS
+gentzkow,reset4,4,10,.,145,.,MISS
+gentzkow,reset4,4,11,.,109,.,MISS
+gentzkow,reset4,4,12,.,63,.,MISS
+gentzkow,reset4,4,13,.,38,.,MISS
+gentzkow,reset4,4,14,.,17,.,MISS

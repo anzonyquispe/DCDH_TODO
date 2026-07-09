@@ -1,0 +1,61 @@
+=== test_b2_gentzkow_reset4  started: 2026-06-29 19:18:01.704942 ===
+Loaded /Users/anzony.quisperojas/Documents/GitHub/did_multiplegt_dyn/R/_data/gentzkowetal_didtextbook_balanced.dta  (11696 rows)
+
+------------------------------------------------------------
+gentzkow  effects(4)  reset(4) applied to data
+------------------------------------------------------------
+reset_groups_R: reset=4 | dropped=0 | pseudo-groups=1190
+Average number of time periods over which a treatment's effect is accumulated = 2.317708
+   Effect_1 switchers: 892
+   Effect_2 switchers: 810
+   Effect_3 switchers: 745
+   Effect_4 switchers: 688
+
+======================================================================
+RESULT DUMP: gentzkow/reset4 reset=4 effects=4
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI   UB CI   N     Switchers
+Effect_1     0.01489  0.00420 0.00667 0.02312 4,673 892      
+Effect_2     0.02094  0.00556 0.01005 0.03183 3,656 810      
+Effect_3     0.02611  0.00740 0.01160 0.04062 2,844 745      
+Effect_4     0.03101  0.00907 0.01323 0.04880 2,191 688      
+
+Test of joint nullity of the effects : p-value = 0.0013
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.01762   0.00428   0.00923   0.02601     6,917     3,135 
+Average number of time periods over which a treatment effect is accumulated: 2.3906
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 2.317708
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         892                     892                 0       PASS
+  2         810                     810                 0       PASS
+  3         745                     745                 0       PASS
+  4         688                     688                 0       PASS
+======================================================================
+  -> N_did effects found: 4
+  -> N_avg effects found: 4
+  PASS  gentzkow/reset4  reset=4  eff=1  did=892  avg=892
+  PASS  gentzkow/reset4  reset=4  eff=2  did=810  avg=810
+  PASS  gentzkow/reset4  reset=4  eff=3  did=745  avg=745
+  PASS  gentzkow/reset4  reset=4  eff=4  did=688  avg=688
+
+CSV written to: /Users/anzony.quisperojas/Documents/GitHub/did_multiplegt_dyn/R/tests_R/results/switchers_b2.csv
+=== test_b2_gentzkow_reset4  finished: 2026-06-29 19:18:03.705224 ===

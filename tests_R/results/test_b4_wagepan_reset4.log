@@ -1,0 +1,61 @@
+=== test_b4_wagepan_reset4  started: 2026-06-29 19:18:01.705877 ===
+Loaded /Users/anzony.quisperojas/Documents/GitHub/did_multiplegt_dyn/R/_data/wagepan.dta  (4360 rows)
+
+------------------------------------------------------------
+wagepan  effects(4)  reset(4) applied to data
+------------------------------------------------------------
+reset_groups_R: reset=4 | dropped=0 | pseudo-groups=644
+Average number of time periods over which a treatment's effect is accumulated = 2.576052
+   Effect_1 switchers: 260
+   Effect_2 switchers: 227
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+
+======================================================================
+RESULT DUMP: wagepan/reset4 reset=4 effects=4
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.03497  0.03255 -0.02882 0.09877 2,880 260      
+Effect_2     0.01942  0.03905 -0.05713 0.09596 2,324 227      
+Effect_3     0.03110  0.04260 -0.05239 0.11459 1,885 212      
+Effect_4     0.01816  0.04721 -0.07437 0.11069 1,497 195      
+
+Test of joint nullity of the effects : p-value = 0.8341
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.03825   0.05093  -0.06157   0.13806     3,514       894 
+Average number of time periods over which a treatment effect is accumulated: 2.5761
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 2.576052
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         260                     260                 0       PASS
+  2         227                     227                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+======================================================================
+  -> N_did effects found: 4
+  -> N_avg effects found: 4
+  PASS  wagepan/reset4  reset=4  eff=1  did=260  avg=260
+  PASS  wagepan/reset4  reset=4  eff=2  did=227  avg=227
+  PASS  wagepan/reset4  reset=4  eff=3  did=212  avg=212
+  PASS  wagepan/reset4  reset=4  eff=4  did=195  avg=195
+
+CSV written to: /Users/anzony.quisperojas/Documents/GitHub/did_multiplegt_dyn/R/tests_R/results/switchers_b4.csv
+=== test_b4_wagepan_reset4  finished: 2026-06-29 19:18:03.275146 ===

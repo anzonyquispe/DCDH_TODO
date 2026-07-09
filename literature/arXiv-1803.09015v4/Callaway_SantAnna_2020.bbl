@@ -1,0 +1,442 @@
+\begin{thebibliography}{xx}
+
+\harvarditem{Abadie}{2005}{Abadie2005}
+Abadie, A.  \harvardyearleft 2005\harvardyearright , ``Semiparametric
+  difference-in-difference estimators,'' {\em Review of Economic Studies},
+  72,~1--19.
+
+\harvarditem[Abadie et~al.]{Abadie, Athey, Imbens \harvardand\
+  Wooldridge}{2017}{Abadie2017a}
+Abadie, A., Athey, S., Imbens, G., \harvardand\ Wooldridge, J.
+  \harvardyearleft 2017\harvardyearright , ``When should you adjust standard
+  errors for clustering?,'' {\em Working Paper}.
+
+\harvarditem{Abbring \harvardand\ van~den Berg}{2003}{Abbring2003}
+Abbring, J.~H., \harvardand\ van~den Berg, G.~J.  \harvardyearleft
+  2003\harvardyearright , ``{The nonparametric identification of treatment
+  effects in duration models},'' {\em Econometrica}, 71(5),~1491--1517.
+
+\harvarditem{Ai \harvardand\ Chen}{2003}{Ai2003}
+Ai, C., \harvardand\ Chen, X.  \harvardyearleft 2003\harvardyearright ,
+  ``{Efficient estimation of models with conditional moment restrictions
+  containin unknown functions},'' {\em Econometrica}, 71(6),~1795--1843.
+
+\harvarditem{Ai \harvardand\ Chen}{2007}{Ai2007}
+Ai, C., \harvardand\ Chen, X.  \harvardyearleft 2007\harvardyearright ,
+  ``Estimation of possibly misspecified semiparametric conditional moment
+  restriction models with different conditioning variables,'' {\em Journal of
+  Econometrics}, 141(1),~5--43.
+
+\harvarditem{Ai \harvardand\ Chen}{2012}{Ai2012}
+Ai, C., \harvardand\ Chen, X.  \harvardyearleft 2012\harvardyearright , ``{The
+  semiparametric efficiency bound for models of sequential moment restrictions
+  containing unknown functions},'' {\em Journal of Econometrics},
+  170(2),~442--457.
+
+\harvarditem{Athey \harvardand\ Imbens}{2006}{Athey2006}
+Athey, S., \harvardand\ Imbens, G.~W.  \harvardyearleft 2006\harvardyearright ,
+  ``Identification and inference in nonlinear difference in differences
+  models,'' {\em Econometrica}, 74(2),~431--497.
+
+\harvarditem{Athey \harvardand\ Imbens}{2018}{Athey2018}
+Athey, S., \harvardand\ Imbens, G.~W.  \harvardyearleft 2018\harvardyearright ,
+  ``Design-based analysis in difference-in-differences settings with staggered
+  adoption,'' {\em Working Paper}.
+
+\harvarditem{Bailey \harvardand\ Goodman-Bacon}{2015}{Bailey2015}
+Bailey, M.~J., \harvardand\ Goodman-Bacon, A.  \harvardyearleft
+  2015\harvardyearright , ``{The war on poverty's experiment in public
+  medicine: Community health centers and the mortality of older Americans},''
+  {\em American Economic Review}, 105(3),~1067--1104.
+
+\harvarditem[Belloni et~al.]{Belloni, Chernozhukov, Fern{\'{a}}ndez-Val
+  \harvardand\ Hansen}{2017}{Belloni2017}
+Belloni, A., Chernozhukov, V., Fern{\'{a}}ndez-Val, I., \harvardand\ Hansen, C.
+   \harvardyearleft 2017\harvardyearright , ``Program evaluation and causal
+  inference with high-dimensional data,'' {\em Econometrica}, 85(1),~233--298.
+
+\harvarditem[Bertrand et~al.]{Bertrand, Duflo \harvardand\
+  Mullainathan}{2004}{Bertrand2004}
+Bertrand, M., Duflo, E., \harvardand\ Mullainathan, S.  \harvardyearleft
+  2004\harvardyearright , ``How much should we trust differences-in-differences
+  estimates?,'' {\em The Quarterly Journal of Economics}, 119(1),~249--275.
+
+\harvarditem[Bojinov et~al.]{Bojinov, Rambachan \harvardand\
+  Shephard}{2020}{Bojinov2020}
+Bojinov, I., Rambachan, A., \harvardand\ Shephard, N.  \harvardyearleft
+  2020\harvardyearright , ``{Panel Experiments and Dynamic Causal Effects: A
+  Finite Population Perspective},'' {\em Working Paper}.
+
+\harvarditem{Bonhomme \harvardand\ Sauder}{2011}{Bonhomme2011}
+Bonhomme, S., \harvardand\ Sauder, U.  \harvardyearleft 2011\harvardyearright ,
+  ``Recovering distributions in difference-in-differences models: A comparison
+  of selective and comprehensive schooling,'' {\em Review of Economics and
+  Statistics}, 93(May),~479--494.
+
+\harvarditem{Borusyak \harvardand\ Jaravel}{2017}{Borusyak2017}
+Borusyak, K., \harvardand\ Jaravel, X.  \harvardyearleft 2017\harvardyearright
+  , ``Revisiting event study designs,'' {\em Working Paper}.
+
+\harvarditem{Botosaru \harvardand\ Gutierrez}{2018}{Botosaru2017}
+Botosaru, I., \harvardand\ Gutierrez, F.~H.  \harvardyearleft
+  2018\harvardyearright , ``Difference-in-differences when the treatment status
+  is observed in only one period,'' {\em Journal of Applied Econometrics},
+  33(1),~73--90.
+
+\harvarditem[Busso et~al.]{Busso, Dinardo \harvardand\
+  McCrary}{2014}{Busso2014}
+Busso, M., Dinardo, J., \harvardand\ McCrary, J.  \harvardyearleft
+  2014\harvardyearright , ``New evidence on the finite sample properties of
+  propensity score reweighting and matching estimators,'' {\em The Review of
+  Economics and Statistics}, 96(5),~885--895.
+
+\harvarditem[Callaway et~al.]{Callaway, Li \harvardand\
+  Oka}{2018}{Callaway2018}
+Callaway, B., Li, T., \harvardand\ Oka, T.  \harvardyearleft
+  2018\harvardyearright , ``Quantile treatment effects in difference in
+  differences models under dependence restrictions and with only two time
+  periods,'' {\em Journal of Econometrics}, 206(2),~395--413.
+
+\harvarditem{Card \harvardand\ Krueger}{1994}{Card1994}
+Card, D., \harvardand\ Krueger, A.~B.  \harvardyearleft 1994\harvardyearright ,
+  ``Minimum wages and employment: A case study of the fast-food industry in New
+  Jersey and Pennsylvania,'' {\em American Economic Review}, 84(4),~772--793.
+
+\harvarditem[Chen et~al.]{Chen, Hong \harvardand\ Tarozzi}{2008}{Chen2008}
+Chen, X., Hong, H., \harvardand\ Tarozzi, A.  \harvardyearleft
+  2008\harvardyearright , ``Semiparametric efficiency in GMM models with
+  auxiliary data,'' {\em The Annals of Statistics}, 36(2),~808--843.
+
+\harvarditem[Chen et~al.]{Chen, Linton \harvardand\ {Van
+  Keilegom}}{2003}{Chen2003}
+Chen, X., Linton, O., \harvardand\ {Van Keilegom}, I.  \harvardyearleft
+  2003\harvardyearright , ``Estimation of semiparametric models when the
+  criterion function is not smooth,'' {\em Econometrica}, 71(5),~1591--1608.
+
+\harvarditem[Cheng et~al.]{Cheng, Yu \harvardand\ Huang}{2013}{Cheng2013}
+Cheng, G., Yu, Z., \harvardand\ Huang, J.~Z.  \harvardyearleft
+  2013\harvardyearright , ``The cluster bootstrap consistency in generalized
+  estimating equations,'' {\em Journal of Multivariate Analysis}, 115,~33--47.
+
+\harvarditem[Chernozhukov et~al.]{Chernozhukov, Fern{\'{a}}ndez-Val, Hahn
+  \harvardand\ Newey}{2013}{Chernozhukov2013}
+Chernozhukov, V., Fern{\'{a}}ndez-Val, I., Hahn, J., \harvardand\ Newey, W.
+  \harvardyearleft 2013\harvardyearright , ``Average and quantile effects in
+  nonseparable panel models,'' {\em Econometrica}, 81(2),~535--580.
+
+\harvarditem[Chernozhukov et~al.]{Chernozhukov, Fern{\'a}ndez-Val \harvardand\
+  Luo}{2018}{chernozhukov2018sorted}
+Chernozhukov, V., Fern{\'a}ndez-Val, I., \harvardand\ Luo, Y.  \harvardyearleft
+  2018\harvardyearright , ``The sorted effects method: Discovering
+  heterogeneous effects beyond their averages,'' {\em Econometrica},
+  86(6),~1911--1938.
+
+\harvarditem{Conley \harvardand\ Taber}{2011}{Conley2011}
+Conley, T., \harvardand\ Taber, C.  \harvardyearleft 2011\harvardyearright ,
+  ``Inference with ``difference in differences'' with a small number of policy
+  changes,'' {\em Review of Economics and Statistics}, 93(1),~113--125.
+
+\harvarditem[Crump et~al.]{Crump, Hotz, Imbens \harvardand\
+  Mitnik}{2009}{Crump2009}
+Crump, R.~K., Hotz, V.~J., Imbens, G.~W., \harvardand\ Mitnik, O.~A.
+  \harvardyearleft 2009\harvardyearright , ``{Dealing with limited overlap in
+  estimation of average treatment effects},'' {\em Biometrika},
+  96(1),~187--199.
+
+\harvarditem{de~Chaisemartin \harvardand\
+  D'Haultf{\oe}uille}{2017}{DeChaisemartin2017}
+de~Chaisemartin, C., \harvardand\ D'Haultf{\oe}uille, X.  \harvardyearleft
+  2017\harvardyearright , ``Fuzzy differences-in-differences,'' {\em The Review
+  of Economic Studies}, 85,~999--1028.
+
+\harvarditem{de~Chaisemartin \harvardand\
+  D'Haultf{\oe}uille}{2020}{DeChaisemartin2016}
+de~Chaisemartin, C., \harvardand\ D'Haultf{\oe}uille, X.  \harvardyearleft
+  2020\harvardyearright , ``Two-way fixed effects estimators with heterogeneous
+  treatment effects,'' {\em American Economic Review}, 110(9),~2964--2996.
+
+\harvarditem[Dube et~al.]{Dube, Lester \harvardand\ Reich}{2010}{Dube2010}
+Dube, A., Lester, T.~W., \harvardand\ Reich, M.  \harvardyearleft
+  2010\harvardyearright , ``Minimum wage effects across state borders:
+  Estimates using contiguous counties,'' {\em Review of Economics and
+  Statistics}, 92(4),~945--964.
+
+\harvarditem[Dube et~al.]{Dube, Lester \harvardand\ Reich}{2016}{Dube2016}
+Dube, A., Lester, T.~W., \harvardand\ Reich, M.  \harvardyearleft
+  2016\harvardyearright , ``Minimum wage shocks, employment flows, and labor
+  market frictions,'' {\em Journal of Labor Economics}, 34(3),~663--704.
+
+\harvarditem{Farber}{2017}{Farber2017}
+Farber, H.~S.  \harvardyearleft 2017\harvardyearright , ``Employment, hours,
+  and earnings consequences of job loss: US evidence from the displaced workers
+  survey,'' {\em Journal of Labor Economics}, 35(S1),~S235--S272.
+
+\harvarditem{Ferman \harvardand\ Pinto}{2019}{Ferman2018}
+Ferman, B., \harvardand\ Pinto, C.  \harvardyearleft 2019\harvardyearright ,
+  ``Inference in differences-in-differences with few treated groups and
+  heteroskedasticity,'' {\em Review of Economics and Statistics},
+  101(3),~452--467.
+
+\harvarditem{Freyberger \harvardand\ Rai}{2018}{Freyberger2018}
+Freyberger, J., \harvardand\ Rai, Y.  \harvardyearleft 2018\harvardyearright ,
+  ``Uniform confidence bands: Characterization and optimality,'' {\em Journal
+  of Econometrics}, 204(1),~119--130.
+
+\harvarditem[Gibbons et~al.]{Gibbons, {Su{\'{a}}rez Serrato} \harvardand\
+  Urbancic}{2018}{Gibbons2018}
+Gibbons, C.~E., {Su{\'{a}}rez Serrato}, J.~C., \harvardand\ Urbancic, M.~B.
+  \harvardyearleft 2018\harvardyearright , ``{Broken or Fixed Effects?},'' {\em
+  Journal of Econometric Methods}, 8(1).
+
+\harvarditem{Goodman-Bacon}{2019}{Goodman-bacon2017}
+Goodman-Bacon, A.  \harvardyearleft 2019\harvardyearright ,
+  ``Difference-in-differences with variation in treatment timing,'' {\em
+  Working Paper}.
+
+\harvarditem[Graham et~al.]{Graham, Pinto \harvardand\ Egel}{2012}{Graham2012}
+Graham, B., Pinto, C., \harvardand\ Egel, D.  \harvardyearleft
+  2012\harvardyearright , ``Inverse probability tilting for moment condition
+  models with missing data,'' {\em The Review of Economic Studies},
+  79(3),~1053--1079.
+
+\harvarditem{H{\'{a}}jek}{1971}{Hajek1971}
+H{\'{a}}jek, J.  \harvardyearleft 1971\harvardyearright , ``Discussion of `An
+  essay on the logical foundations of survey sampling, Part I', by D. Basu,''
+  in {\em Foundations of Statistical Inference}, eds. V.~P. Godambe,
+  \harvardand\ D.~A. Sprott, Toronto: Holt, Rinehart, and Winston.
+
+\harvarditem{Han}{2020}{Han2019}
+Han, S.  \harvardyearleft 2020\harvardyearright , ``Identification in
+  nonparametric models for dynamic treatment effects,'' {\em Journal of
+  Econometrics}, Forthcoming.
+
+\harvarditem[Heckman et~al.]{Heckman, Humphries \harvardand\
+  Veramendi}{2016}{Heckman2016}
+Heckman, J.~J., Humphries, J.~E., \harvardand\ Veramendi, G.  \harvardyearleft
+  2016\harvardyearright , ``{Dynamic treatment effects},'' {\em Journal of
+  Econometrics}, 191(2),~276--292.
+
+\harvarditem[Heckman et~al.]{Heckman, Ichimura, Smith \harvardand\
+  Todd}{1998}{Heckman1998}
+Heckman, J.~J., Ichimura, H., Smith, J., \harvardand\ Todd, P.
+  \harvardyearleft 1998\harvardyearright , ``Characterizing selection bias
+  using experimental data,'' {\em Econometrica}, 66(5),~1017--1098.
+
+\harvarditem[Heckman et~al.]{Heckman, Ichimura \harvardand\
+  Todd}{1997}{Heckman1997}
+Heckman, J.~J., Ichimura, H., \harvardand\ Todd, P.  \harvardyearleft
+  1997\harvardyearright , ``Matching as an econometric evaluation estimator:
+  Evidence from evaluating a job training programme,'' {\em The Review of
+  Economic Studies}, 64(4),~605--654.
+
+\harvarditem[Imai et~al.]{Imai, Kim \harvardand\ Wang}{2018}{Imai2018}
+Imai, K., Kim, I.~S., \harvardand\ Wang, E.  \harvardyearleft
+  2018\harvardyearright , ``Matching methods for causal inference with
+  time-series cross-section data,'' {\em Working Paper}.
+
+\harvarditem{Khan \harvardand\ Tamer}{2010}{Khan2010}
+Khan, S., \harvardand\ Tamer, E.  \harvardyearleft 2010\harvardyearright ,
+  ``Irregular identification, support conditions, and inverse weight
+  estimation,'' {\em Econometrica}, 78(6),~2021--2042.
+
+\harvarditem{Kline \harvardand\ Santos}{2012}{Kline2012}
+Kline, P., \harvardand\ Santos, A.  \harvardyearleft 2012\harvardyearright ,
+  ``A score based approach to wild bootstrap inference,'' {\em Journal of
+  Econometric Methods}, 1(1),~1--40.
+
+\harvarditem{Kosorok}{2008}{kosorok2008}
+Kosorok, M.~R.  \harvardyearleft 2008\harvardyearright , {\em Introduction to
+  Empirical Processes and Semiparametric Inference}, New York, NY: Springer.
+
+\harvarditem{Laporte \harvardand\ Windmeijer}{2005}{Laporte2005}
+Laporte, A., \harvardand\ Windmeijer, F.  \harvardyearleft
+  2005\harvardyearright , ``{Estimation of panel data models with binary
+  indicators when treatment effects are not constant over time},'' {\em
+  Economics Letters}, 88(3),~389--396.
+
+\harvarditem{MacKinnon \harvardand\ Webb}{2018}{Mackinnon2017}
+MacKinnon, J.~G., \harvardand\ Webb, M.~D.  \harvardyearleft
+  2018\harvardyearright , ``The wild bootstrap for few (treated) clusters,''
+  {\em The Econometrics Journal}, 21(2),~114--135.
+
+\harvarditem{MacKinnon \harvardand\ Webb}{2020}{mackinnon2020randomization}
+MacKinnon, J.~G., \harvardand\ Webb, M.~D.  \harvardyearleft
+  2020\harvardyearright , ``Randomization inference for
+  difference-in-differences with few treated clusters,'' {\em Journal of
+  Econometrics}, 218(2),~435--450.
+
+\harvarditem{Malani \harvardand\ Reif}{2015}{Malani2015}
+Malani, A., \harvardand\ Reif, J.  \harvardyearleft 2015\harvardyearright ,
+  ``{Interpreting pre-trends as anticipation: Impact on estimated treatment
+  effects from tort reform},'' {\em Journal of Public Economics}, 124,~1--17.
+
+\harvarditem{Mammen}{1993}{Mammen1993}
+Mammen, E.  \harvardyearleft 1993\harvardyearright , ``Bootstrap and wild
+  bootstrap for high dimensional linear models,'' {\em The Annals of
+  Statistics}, 21(1),~255--285.
+
+\harvarditem{Marcus \harvardand\ Sant'Anna}{2020}{Marcus2020}
+Marcus, M., \harvardand\ Sant'Anna, P. H.~C.  \harvardyearleft
+  2020\harvardyearright , ``{The role of parallel trends in event study
+  settings : An application to environmental economics},'' {\em Journal of the
+  Association of Environmental and Resource Economists}, Forthcoming.
+
+\harvarditem{McCrary}{2007}{McCrary2007}
+McCrary, J.  \harvardyearleft 2007\harvardyearright , ``{The effect of
+  court-ordered hiring quotas on the composition and quality of police},'' {\em
+  American Economic Review}, 97(1),~318--353.
+
+\harvarditem{Meer \harvardand\ West}{2016}{Meer2016}
+Meer, J., \harvardand\ West, J.  \harvardyearleft 2016\harvardyearright ,
+  ``Effects of the minimum wage on employment dynamics,'' {\em Journal of Human
+  Resources}, 51(2),~500--522.
+
+\harvarditem{{Montiel Olea} \harvardand\
+  Plagborg-M{\o}ller}{2018}{MontielOlea2017}
+{Montiel Olea}, J.~L., \harvardand\ Plagborg-M{\o}ller, M.  \harvardyearleft
+  2018\harvardyearright , ``Simultaneous confidence bands: Theory,
+  implementation, and an application to SVARs,'' {\em Journal of Applied
+  Econometrics}, pp.~1--64.
+
+\harvarditem{Murphy}{2003}{Murphy2003}
+Murphy, S.~A.  \harvardyearleft 2003\harvardyearright , ``{Optimal dynamic
+  treatment regimes},'' {\em Journal of the Royal Statistical Society Series
+  B}, 65(2),~331--366.
+
+\harvarditem[Murphy et~al.]{Murphy, {Van der Laan}, Robins, Bierman, Coie,
+  Greenberg, Lochman, McMahon \harvardand\ Pinderhughes}{2001}{Murphy2001}
+Murphy, S.~A., {Van der Laan}, M.~J., Robins, J.~M., Bierman, K.~L., Coie,
+  J.~D., Greenberg, M.~T., Lochman, J.~E., McMahon, R.~J., \harvardand\
+  Pinderhughes, E.  \harvardyearleft 2001\harvardyearright , ``{Marginal mean
+  models for dynamic regimes},'' {\em Journal of the American Statistical
+  Association}, 96(456),~1410--1423.
+
+\harvarditem{Neumark \harvardand\ Wascher}{2000}{Neumark2000}
+Neumark, D., \harvardand\ Wascher, W.  \harvardyearleft 2000\harvardyearright ,
+  ``Minimum wages and employment: A case study of the fast-food industry in New
+  Jersey and Pennsylvania: Comment,'' {\em American Economic Review},
+  90(5),~1362--1396.
+
+\harvarditem{Neumark \harvardand\ Wascher}{2008}{Neumark2008}
+Neumark, D., \harvardand\ Wascher, W.~L.  \harvardyearleft
+  2008\harvardyearright , {\em Minimum Wages}, Cambridge, MA: The MIT Press.
+
+\harvarditem{Newey}{1994}{Newey1994}
+Newey, W.~K.  \harvardyearleft 1994\harvardyearright , ``The asymptotic
+  variance of semiparametric estimators,'' {\em Econometrica},
+  62(6),~1349--1382.
+
+\harvarditem{Newey \harvardand\ McFadden}{1994}{Newey1994c}
+Newey, W.~K., \harvardand\ McFadden, D.  \harvardyearleft 1994\harvardyearright
+  , ``{Large sample estimation and hypothesis testing},'' in {\em Handbook of
+  Econometrics}, Vol.~4, Amsterdam: North-Holland: Elsevier, chapter~36,
+  pp.~2111--2245.
+
+\harvarditem[Oreopoulos et~al.]{Oreopoulos, von Wachter \harvardand\
+  Heisz}{2012}{Oreopoulos2012}
+Oreopoulos, P., von Wachter, T., \harvardand\ Heisz, A.  \harvardyearleft
+  2012\harvardyearright , ``The short- and long-term career effects of
+  graduating in a recession,'' {\em American Economic Journal: Applied
+  Economics}, 4(1),~1--29.
+
+\harvarditem{Qin \harvardand\ Zhang}{2008}{Qin2008}
+Qin, J., \harvardand\ Zhang, B.  \harvardyearleft 2008\harvardyearright ,
+  ``Empirical-likelihood-based difference-in-differences estimators,'' {\em
+  Journal of the Royal Statistical Society. Series B (Methodological)},
+  75(8),~329--349.
+
+\harvarditem{Robins}{1986}{Robins1986}
+Robins, J.~M.  \harvardyearleft 1986\harvardyearright , ``{A new approach to
+  causal inference in mortality studies with a sustained exposure period -
+  Application to control of the healthy worker survivor effect},'' {\em
+  Mathematical Modelling}, 7,~1393--1512.
+
+\harvarditem{Robins}{1987}{Robins1987}
+Robins, J.~M.  \harvardyearleft 1987\harvardyearright , ``{Addendum to `A new
+  approach to causal inference in mortality studies with a sustained exposure
+  period - Application to control of the healthy worker survivor effect'},''
+  {\em Computers \& Mathematics with Applications}, 14(9-12),~923--945.
+
+\harvarditem{Roth}{2020}{Roth2020}
+Roth, J.  \harvardyearleft 2020\harvardyearright , ``Pre-test with caution:
+  Event-study estimates after testing for parallel trends,'' {\em Working
+  Paper}, pp.~1--84.
+
+\harvarditem{Rubin}{2007}{Rubin2007}
+Rubin, D.~B.  \harvardyearleft 2007\harvardyearright , ``{The design versus the
+  analysis of observational studies for causal effects: Parallels with the
+  design of randomized trials},'' {\em Statistics in Medicine}, 26(1),~20--36.
+
+\harvarditem{Rubin}{2008}{Rubin2008}
+Rubin, D.~B.  \harvardyearleft 2008\harvardyearright , ``For objective causal
+  inference, design trumps analysis,'' {\em Annals of Applied Statistics},
+  2(3),~808--840.
+
+\harvarditem{Sant'Anna \harvardand\ Song}{2019}{SantAnna2018}
+Sant'Anna, P. H.~C., \harvardand\ Song, X.  \harvardyearleft
+  2019\harvardyearright , ``Specification tests for the propensity score,''
+  {\em Journal of Econometrics}, 210,~379--404.
+
+\harvarditem{Sant’Anna \harvardand\ Zhao}{2020}{SantAnna2020}
+Sant’Anna, P.~H., \harvardand\ Zhao, J.  \harvardyearleft
+  2020\harvardyearright , ``Doubly robust difference-in-differences
+  estimators,'' {\em Journal of Econometrics}, 219(1),~101--122.
+
+\harvarditem{Sherman \harvardand\ {Le Cessie}}{2007}{Sherman2007a}
+Sherman, M., \harvardand\ {Le Cessie}, S.  \harvardyearleft
+  2007\harvardyearright , ``A comparison between bootstrap methods and
+  generalized estimating equations for correlated outcomes in generalized
+  linear models,'' {\em Communications in Statistics - Simulation and
+  Computation}, 26(3),~901--925.
+
+\harvarditem{Sianesi}{2004}{Sianesi2004}
+Sianesi, B.  \harvardyearleft 2004\harvardyearright , ``{An evaluation of the
+  Swedish system of active labor market programs in the 1990s},'' {\em The
+  Review of Economics and Statistics}, 86(1),~133--155.
+
+\harvarditem{S{\l}oczy{\'n}ski}{2018}{sloczynski-2018}
+S{\l}oczy{\'n}ski, T.  \harvardyearleft 2018\harvardyearright , ``A general
+  weighted average representation of the ordinary and two-stage least squares
+  estimands,'' {\em Working Paper}.
+
+\harvarditem{Sun \harvardand\ Abraham}{2020}{Abraham2018}
+Sun, L., \harvardand\ Abraham, S.  \harvardyearleft 2020\harvardyearright ,
+  ``Estimating dynamic treatment effects in event studies with heterogeneous
+  treatment effects,'' {\em Working Paper}.
+
+\harvarditem{van~der Vaart}{1998}{VanderVaart1998}
+van~der Vaart, A.~W.  \harvardyearleft 1998\harvardyearright , {\em Asymptotic
+  Statistics}, Cambridge: Cambridge University Press.
+
+\harvarditem{van~der Vaart \harvardand\ Wellner}{1996}{VanderVaart1996}
+van~der Vaart, A.~W., \harvardand\ Wellner, J.~A.  \harvardyearleft
+  1996\harvardyearright , {\em Weak Convergence and Empirical Processes}, New
+  York: Springer.
+
+\harvarditem{Wooldridge}{2003}{Wooldridge2003}
+Wooldridge, J.~M.  \harvardyearleft 2003\harvardyearright , ``Cluster-sample
+  methods in applied econometrics,'' {\em American Economic Review P{\&}P},
+  93(2),~133--138.
+
+\harvarditem{Wooldridge}{2005{\em a}}{Wooldridge2005}
+Wooldridge, J.~M.  \harvardyearleft 2005{\em a}\harvardyearright ,
+  ``Fixed-effects and related estimators for correlated random-coefficient and
+  treatment-effect panel data models,'' {\em Review of Economics and
+  Statistics}, 87(2),~385--390.
+
+\harvarditem{Wooldridge}{2005{\em b}}{Wooldridge2005a}
+Wooldridge, J.~M.  \harvardyearleft 2005{\em b}\harvardyearright , ``Violating
+  ignorability of treatment by controlling for too many factors,'' {\em
+  Econometric Theory}, 21(5),~1026--1028.
+
+\harvarditem{Wooldridge}{2007}{Wooldridge2007a}
+Wooldridge, J.~M.  \harvardyearleft 2007\harvardyearright , ``Inverse
+  probability weighted estimation for general missing data problems,'' {\em
+  Journal of Econometrics}, 141(2),~1281--1301.
+
+\harvarditem{Yang \harvardand\ Ding}{2018}{Yang2018}
+Yang, S., \harvardand\ Ding, P.  \harvardyearleft 2018\harvardyearright ,
+  ``{Asymptotic inference of causal effects with observational studies trimmed
+  by the estimated propensity scores},'' {\em Biometrika}, 105(2),~487--493.
+
+\end{thebibliography}

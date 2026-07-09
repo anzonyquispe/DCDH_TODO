@@ -1,0 +1,549 @@
+----------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/logfiles/final_test_avgtime.log
+  log type:  text
+ opened on:  24 Jun 2026, 15:02:29
+
+. di as text "=== final_test_avgtime.do  started: $S_DATE $S_TIME ==="
+=== final_test_avgtime.do  started: 24 Jun 2026 15:02:29 ===
+
+. 
+. //testing with _stat
+. qui do "code/did_multiplegt_stat-working-version.ado"
+
+. qui do "code/reset_groups_function.do"
+
+. qui do "code/avg_cumul_periods_func.do"
+
+. 
+. // ssc install did_multiplegt_stat
+. 
+. use "_data/gentzkowetal_didtextbook.dta", clear
+
+. xtset cnty90 year
+
+Panel variable: cnty90 (unbalanced)
+ Time variable: year, 1868 to 1928, but with gaps
+         Delta: 1 unit
+
+. gen treatment_XX = numdailies
+
+. gen group_XX = cnty90
+
+. gen count_d_non_miss_temp_XX=(treatment_XX!=.)
+
+. tab count_d_non_miss_temp_XX
+
+count_d_non |
+_miss_temp_ |
+         XX |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |     16,872      100.00      100.00
+------------+-----------------------------------
+      Total |     16,872      100.00
+
+. bys group_XX: gegen count_d_non_miss_XX=sum(count_d_non_miss_temp_XX)
+performance warning: -by- prefix may be slower than -by()-
+
+. sum count_d_non_miss_XX
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+count_d~s_XX |     16,872    14.90576    2.388999          3         16
+
+. drop if count_d_non_miss_XX<r(max)
+(5,176 observations deleted)
+
+. xtset cnty90 year
+
+Panel variable: cnty90 (strongly balanced)
+ Time variable: year, 1868 to 1928, but with gaps
+         Delta: 1 unit
+
+. gen fd_treat = numdailies - L4.numdailies
+(731 missing values generated)
+
+. gen lag_fd = L4.fd_treat
+(1,462 missing values generated)
+
+. save "_data/gentzkowetal_didtextbook_balanced.dta", replace
+file _data/gentzkowetal_didtextbook_balanced.dta saved
+
+. 
+. 
+. use "_data/gentzkowetal_didtextbook_balanced.dta", clear
+
+. did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) placebo(4)  cluster(cnty90)  graph_off
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0175817    .004908   .0079622   .0272012       3664        711 
+    Effect_2 |  .0286082   .0064031   .0160584   .0411581       3016        674 
+    Effect_3 |  .0354841    .008523   .0187794   .0521889       2450        645 
+    Effect_4 |  .0350709   .0101026   .0152701   .0548716       1962        613 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .00033013
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0211755    .004751   .0118637   .0304873       5596       2643            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 2.3377815
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 |  .0003287    .004646  -.0087772   .0094346       2939        597 
+   Placebo_2 |  .0012988   .0085523  -.0154634    .018061       1856        507 
+   Placebo_3 | -.0006842   .0126356  -.0254496   .0240812       1113        415 
+   Placebo_4 | -.0206449   .0197808  -.0594145   .0181248        643        304 
+--------------------------------------------------------------------------------
+Test of joint nullity of the placebos : p-value = .71663495
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+. avg_cumul_periods cnty90 year numdailies, effects(4)
+Average number of time periods over which a treatment's effect is accumulated = 2.3288852
+Cells dropped by Design Restriction 2: 469
+Number of switchers per effect:
+   Effect_1 : 711
+   Effect_2 : 674
+   Effect_3 : 645
+   Effect_4 : 613
+
+. reset_groups cnty90 year numdailies , reset(1) replace_group
+Reset option applied (reset = 1).
+  Observations dropped by balancing : 0
+  Pseudo-groups created             : 2394
+  New pseudo-group variable         : new_group
+  Cluster variable                  : old_group
+  cnty90 has been REPLACED with the new pseudo-group ids.
+
+. avg_cumul_periods cnty90 year numdailies, effects(4)  outcome(prestout) 
+Average number of time periods over which a treatment's effect is accumulated = 1.6267645
+Cells dropped by Design Restriction 2: 149
+Number of switchers per effect:
+   Effect_1 : 1772
+   Effect_2 : 737
+   Effect_3 : 253
+   Effect_4 : 121
+
+. did_multiplegt_dyn prestout cnty90 year numdailies, effects(4)   cluster(cnty90)  graph_off
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0100037   .0025854   .0049364   .0150711       7707       1772 
+    Effect_2 |  .0128317   .0046718   .0036751   .0219883       5036        737 
+    Effect_3 |  .0244969   .0099105   .0050727   .0439211       2965        253 
+    Effect_4 |  .0303667   .0157289  -.0004613   .0611947       1789        121 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .00208703
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0104618   .0026926   .0051844   .0157392       8820       2883            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.0909091
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+. 
+end of do-file
+
+. ereturn list
+
+scalars:
+           e(Effect_1) =  .0100037434887811
+         e(N_effect_1) =  7707
+  e(N_switchers_effec
+    t_1)               =  1772
+        e(se_effect_1) =  .0025854474829717
+           e(Effect_2) =  .0128317081031122
+         e(N_effect_2) =  5036
+  e(N_switchers_effec
+    t_2)               =  737
+        e(se_effect_2) =  .0046718348176511
+           e(Effect_3) =  .024496880608277
+         e(N_effect_3) =  2965
+  e(N_switchers_effec
+    t_3)               =  253
+        e(se_effect_3) =  .0099104728682231
+           e(Effect_4) =  .0303666880076434
+         e(N_effect_4) =  1789
+  e(N_switchers_effec
+    t_4)               =  121
+        e(se_effect_4) =  .0157288718987365
+     e(p_jointeffects) =  .0020870266167616
+      e(Av_tot_effect) =  .0104617960711866
+  e(N_avg_total_effec
+    t)                 =  8820
+  e(N_switchers_effec
+    t_average)         =  2883
+  e(se_avg_total_effe
+    ct)                =  .0026926151550373
+
+macros:
+                e(cmd) : "did_multiplegt_dyn"
+            e(effects) : "Effect_1 Effect_2 Effect_3 Effect_4"
+         e(properties) : "b V"
+
+matrices:
+                  e(b) :  1 x 5
+                  e(V) :  5 x 5
+          e(variances) :  6 x 1
+          e(estimates) :  6 x 1
+
+. matrix dir
+    mat_res_avg_XX[1,7]
+        v_eff[1,4]
+        X_eff[4,4]
+    didmgt_chi2effects[1,1]
+    didmgt_effects_t[1,4]
+    didmgt_Var_effects_inv[4,4]
+    didmgt_Var_effects[4,4]
+    didmgt_effects[4,1]
+    didmgt_Var_all_XX[4,4]
+    didmgt_var2[6,1]
+         zero[1,1]
+    didmgt_results_no_avg_XX[1,4]
+    didmgt_results_no_avg1_XX[4,1]
+    mat_res_XX[5,7]
+         v_pl[1,4]
+         X_pl[4,4]
+    didmgt_chi2placebo[1,1]
+    didmgt_Placebo_t[1,4]
+    didmgt_Var_Placebo_inv[4,4]
+    didmgt_Var_Placebo[4,4]
+    didmgt_Placebo[4,1]
+
+. scalar dir
+avg_cumul_XX =  1.6267645
+    den_XX =       3542
+    num_XX =       5762
+    ell_XX =          4
+p_jointeffects =  .00208703
+warning_eff =  63.596291
+cov_3_4_XX =  .00008928
+var_sum_3_4_XX =  .00052418
+cov_2_4_XX =  .00002983
+var_sum_2_4_XX =  .00032887
+cov_2_3_XX =  .00002685
+var_sum_2_3_XX =  .00017374
+cov_1_4_XX =  9.963e-06
+var_sum_1_4_XX =  .00027401
+cov_1_3_XX =  8.579e-06
+var_sum_1_3_XX =  .00012206
+cov_1_2_XX =  5.912e-06
+var_sum_1_2_XX =  .00004034
+all_delta_not_zero =          0
+p_jointplacebo =  .71663495
+warning_pl =  35.604842
+cov_pl_3_4_XX =   .0001787
+var_sum_pla_3_4_XX =  .00090833
+cov_pl_2_4_XX =  .00006947
+var_sum_pla_2_4_XX =  .00060337
+cov_pl_2_3_XX =  .00006458
+var_sum_pla_2_3_XX =  .00036196
+cov_pl_1_4_XX =  .00002368
+var_sum_pla_1_4_XX =  .00046023
+cov_pl_1_3_XX =  .00002198
+var_sum_pla_1_3_XX =  .00022521
+cov_pl_1_2_XX =  .00002064
+var_sum_pla_1_2_XX =    .000136
+cov_comb_7_8_XX =   .0001787
+var_sum_comb_7_8_XX =  .00090833
+cov_comb_6_8_XX =  .00006947
+var_sum_comb_6_8_XX =  .00060337
+cov_comb_6_7_XX =  .00006458
+var_sum_comb_6_7_XX =  .00036196
+cov_comb_5_8_XX =  .00002368
+var_sum_comb_5_8_XX =  .00046023
+cov_comb_5_7_XX =  .00002198
+var_sum_comb_5_7_XX =  .00022521
+cov_comb_5_6_XX =  .00002064
+var_sum_comb_5_6_XX =    .000136
+cov_comb_4_8_XX = -.00005339
+var_sum_comb_4_8_XX =  .00038657
+cov_comb_4_7_XX = -.00004291
+var_sum_comb_4_7_XX =   .0001759
+cov_comb_4_6_XX = -.00001756
+var_sum_comb_4_6_XX =  .00014009
+cov_comb_4_5_XX = -4.226e-06
+var_sum_comb_4_5_XX =   .0001152
+cov_comb_3_8_XX = -.00002635
+var_sum_comb_3_8_XX =  .00041121
+cov_comb_3_7_XX = -7.351e-06
+var_sum_comb_3_7_XX =   .0002176
+cov_comb_3_6_XX = -3.346e-09
+var_sum_comb_3_6_XX =  .00014578
+cov_comb_3_5_XX = -1.157e-07
+var_sum_comb_3_5_XX =  .00009399
+cov_comb_3_4_XX =  .00008928
+var_sum_comb_3_4_XX =  .00052418
+cov_comb_2_8_XX = -8.528e-06
+var_sum_comb_2_8_XX =  .00041522
+cov_comb_2_7_XX =  2.495e-06
+var_sum_comb_2_7_XX =  .00020565
+cov_comb_2_6_XX =  .00001077
+var_sum_comb_2_6_XX =  .00013568
+cov_comb_2_5_XX =  3.449e-06
+var_sum_comb_2_5_XX =  .00006948
+cov_comb_2_4_XX =  .00002983
+var_sum_comb_2_4_XX =  .00032887
+cov_comb_2_3_XX =  .00002685
+var_sum_comb_2_3_XX =  .00017374
+cov_comb_1_8_XX = -4.783e-07
+var_sum_comb_1_8_XX =  .00041441
+cov_comb_1_7_XX =  4.857e-06
+var_sum_comb_1_7_XX =  .00019346
+cov_comb_1_6_XX =  .00001151
+var_sum_comb_1_6_XX =  .00012026
+cov_comb_1_5_XX =  5.686e-06
+var_sum_comb_1_5_XX =  .00005705
+cov_comb_1_4_XX =  9.963e-06
+var_sum_comb_1_4_XX =  .00027401
+cov_comb_1_3_XX =  8.579e-06
+var_sum_comb_1_3_XX =  .00012206
+cov_comb_1_2_XX =  5.912e-06
+var_sum_comb_1_2_XX =  .00004034
+se_all_8_XX =  .01978078
+se_all_7_XX =  .01263564
+se_all_6_XX =   .0085523
+se_all_5_XX =  .00464595
+se_all_4_XX =  .01572887
+se_all_3_XX =  .00991047
+se_all_2_XX =  .00467183
+se_all_1_XX =  .00258545
+all_Ns_not_zero =          4
+all_delta_pl_not_zero =          .
+all_Ns_pl_not_zero =          .
+  UB_CI_XX =  .01573922
+  LB_CI_XX =  .00518437
+     se_XX =  .00269262
+sum_for_var_XX =  7.250e-06
+UB_CI_placebo_4_XX =  .01812476
+LB_CI_placebo_4_XX = -.05941448
+se_placebo_4_XX =  .01978078
+sum_for_var_placebo_4_XX =  .00039128
+UB_CI_placebo_3_XX =  .02408122
+LB_CI_placebo_3_XX = -.02544959
+se_placebo_3_XX =  .01263564
+sum_for_var_placebo_3_XX =  .00015966
+UB_CI_placebo_2_XX =  .01806102
+LB_CI_placebo_2_XX = -.01546338
+se_placebo_2_XX =   .0085523
+sum_for_var_placebo_2_XX =  .00007314
+UB_CI_placebo_1_XX =  .00943457
+LB_CI_placebo_1_XX = -.00877723
+se_placebo_1_XX =  .00464595
+sum_for_var_placebo_1_XX =  .00002158
+UB_CI_4_XX =  .06119471
+LB_CI_4_XX = -.00046133
+   se_4_XX =  .01572887
+sum_for_var_4_XX =   .0002474
+UB_CI_3_XX =  .04392105
+LB_CI_3_XX =  .00507271
+   se_3_XX =  .00991047
+sum_for_var_3_XX =  .00009822
+UB_CI_2_XX =  .02198834
+LB_CI_2_XX =  .00367508
+   se_2_XX =  .00467183
+sum_for_var_2_XX =  .00002183
+UB_CI_1_XX =  .01507113
+LB_CI_1_XX =  .00493636
+   z_level =   1.959964
+  ci_level =        .95
+   se_1_XX =  .00258545
+sum_for_var_1_XX =  6.685e-06
+N_placebo_4_XX =        643
+N_switchers_placebo_4_XX =        304
+DID_placebo_4_XX = -.02064486
+N_placebo_3_XX =       1113
+N_switchers_placebo_3_XX =        415
+DID_placebo_3_XX = -.00068419
+N_placebo_2_XX =       1856
+N_switchers_placebo_2_XX =        507
+DID_placebo_2_XX =  .00129882
+N_placebo_1_XX =       2939
+N_switchers_placebo_1_XX =        597
+DID_placebo_1_XX =  .00032867
+N_effect_XX =       8820
+N_switchers_effect_XX =       2883
+  delta_XX =   .0104618
+ w_plus_XX =  .80321854
+  DID_4_XX =  .03036669
+N_effect_4_XX =       1789
+N_switchers_effect_4_XX =        121
+  DID_3_XX =  .02449688
+N_effect_3_XX =       2965
+N_switchers_effect_3_XX =        253
+  DID_2_XX =  .01283171
+N_effect_2_XX =       5036
+N_switchers_effect_2_XX =        737
+  DID_1_XX =  .01000374
+N_effect_1_XX =       7707
+N_switchers_effect_1_XX =       1772
+N0_3_pl_XX_weight =          1
+N0_2_pl_XX_weight =          2
+N0_1_pl_XX_weight =         10
+N0_4_XX_weight =          6
+N0_3_XX_weight =         30
+N0_2_XX_weight =        135
+N0_1_XX_weight =        513
+    w_4_XX =  .00877193
+    w_3_XX =  .04385965
+    w_2_XX =  .19736842
+    w_1_XX =        .75
+Ntrendslin_pl =          1
+N1_4_pl_XX_weight =        304
+N1_3_pl_XX_weight =        414
+N1_2_pl_XX_weight =        505
+N1_1_pl_XX_weight =        587
+Ntrendslin =          1
+N1_4_XX_weight =        115
+N1_3_XX_weight =        223
+N1_2_XX_weight =        602
+N1_1_XX_weight =       1259
+increase_XX =          0
+l_placebo_u_a_XX =          3
+  l_u_a_XX =          4
+sum_N0_l_XX =        684
+sum_N1_l_XX =       2199
+U_Gg_den_minus_XX =  1.0190058
+U_Gg_den_plus_XX =    1.29377
+N1_placebo_4_XX_new =        304
+N0_placebo_4_XX_new =          0
+N0_placebo_4_XX =          0
+N1_placebo_4_XX =        304
+N1_placebo_3_XX_new =        414
+N0_placebo_3_XX_new =          1
+N0_placebo_3_XX =          1
+N1_placebo_3_XX =        414
+N1_placebo_2_XX_new =        505
+N0_placebo_2_XX_new =          2
+N0_placebo_2_XX =          2
+N1_placebo_2_XX =        505
+N1_placebo_1_XX_new =        587
+N0_placebo_1_XX_new =         10
+sum_for_var_placebo_out_XX =          0
+sum_for_var_placebo_in_XX =          0
+N0_placebo_1_XX =         10
+N1_placebo_1_XX =        587
+N1_4_XX_new =        115
+N0_4_XX_new =          6
+   N0_4_XX =          6
+   N1_4_XX =        115
+N1_3_XX_new =        223
+N0_3_XX_new =         30
+   N0_3_XX =         30
+   N1_3_XX =        223
+N1_2_XX_new =        602
+N0_2_XX_new =        135
+   N0_2_XX =        135
+   N1_2_XX =        602
+N1_1_XX_new =       1259
+N0_1_XX_new =        513
+sum_for_var_out_XX =          0
+sum_for_var_in_XX =          0
+   N0_1_XX =        513
+   N1_1_XX =       1259
+max_pl_gap_XX =         13
+ max_pl_XX =         14
+l_placebo_XX =          0
+      l_XX =          4
+L_placebo_a_XX =          3
+L_placebo_u_XX =          7
+    L_a_XX =         15
+    L_u_XX =         15
+  T_max_XX =         16
+  t_min_XX =          1
+      G_XX =       2389
+     by_XX =          1
+aggregated_data =          1
+__gtools_gfile_ghdfeabs =         65
+__gtools_gfile_gregvcov =         65
+
+. do "/var/folders/gb/56xms55d53n734tnp7xq55bh0000gq/T//SD39892.000000"
+
+. avg_cumul_periods cnty90 year numdailies, effects(4)  outcome(prestout) 
+Average number of time periods over which a treatment's effect is accumulated = 1.6267645
+Cells dropped by Design Restriction 2: 149
+Number of switchers per effect:
+   Effect_1 : 1772
+   Effect_2 : 737
+   Effect_3 : 253
+   Effect_4 : 121
+
+. 
+end of do-file
+
+. return list
+
+scalars:
+                r(avg) =  1.626764539808018
+                r(num) =  5762
+                r(den) =  3542
+              r(N_dr2) =  149
+         r(N_switch_4) =  121
+         r(N_switch_3) =  253
+         r(N_switch_2) =  737
+         r(N_switch_1) =  1772
+
+macros:
+          r(switchers) : "1772 737 253 121"
+
+matrices:
+         r(switch_mat) :  1 x 4
+
+. do "/var/folders/gb/56xms55d53n734tnp7xq55bh0000gq/T//SD39892.000000"
+
+. /*==============================================================================
+>   ACEMOGLU, CANTONI, JOHNSON & ROBINSON (2011)
+>   "The Consequences of Radical Reform: The French Revolution"
+>   American Economic Review, 101(7), 3286-3307
+> 
+>   Pipeline: STEP 1 Data → STEP 2 Table 3 → STEP 3 twowayfeweights → STEP 4 LaTeX
+> 
+>   dCDH Web Appendix #14: Table 3, Regression 1 (FE), sharp design, feTR
+>   "The stable groups assumption is satisfied as there are several polities
+>    that did not experience any year of French presence."
+> 
+>   Specification (Table 3 Col 1):
+>     urbrate_jt = α_j + γ_t + Σ_s β_s × fpresence_j × I(t=s) + ε_jt
+>     Sample: westelbe==1, [aweight=totalpop1750], cluster(id)
+> 
+>   Panel: 13 polities × ~5.7 years ≈ 74 obs (West of Elbe, weighted)
+>          19 polities × ~5.7 years ≈ 109 obs (All, weighted)
+> ==============================================================================*/
+. 
+. clear all
+
+. set more off
+
+. cap log close _all

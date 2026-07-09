@@ -1,0 +1,357 @@
+----------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO/logfiles/inspect_favara_avg.log
+  log type:  text
+ opened on:  24 Jun 2026, 18:19:20
+
+. di as text "=== inspect_favara_avg  started: $S_DATE $S_TIME ==="
+=== inspect_favara_avg  started: 24 Jun 2026 18:19:20 ===
+
+. 
+. qui do "code/avg_cumul_periods_func.do"
+
+. qui do "code/reset_groups_function.do"
+
+. 
+. * Dataset coordinates
+. local data  "_data/favara_imbs.dta"
+
+. local y     Dl_hpi
+
+. local g     county
+
+. local t     year
+
+. local d     inter_bra
+
+. 
+. 
+. ********************************************************************************
+. * PART A — basic data description (run once, both scenarios share this)
+. ********************************************************************************
+. di as text _newline "{hline 78}"
+
+------------------------------------------------------------------------------
+
+. di as text "PART A — favara_imbs data description"
+PART A — favara_imbs data description
+
+. di as text "{hline 78}"
+------------------------------------------------------------------------------
+
+. 
+. use "`data'", clear
+
+. 
+. di as text "Variables / panel structure:"
+Variables / panel structure:
+
+. describe `y' `g' `t' `d'
+
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+----------------------------------------------------------------------------------------------------------------------------
+Dl_hpi          double  %10.0g                log change house price index
+county          double  %9.0g                 county fips code
+year            double  %9.0g                 
+inter_bra       double  %10.0g                Rice & Strahan (2010) index of interstate branching deregulation (4-)
+
+. 
+. di as text _newline "Panel summary:"
+
+Panel summary:
+
+. xtset `g' `t'
+
+Panel variable: county (unbalanced)
+ Time variable: year, 1994 to 2005
+         Delta: 1 unit
+
+. 
+. di as text _newline "Treatment distribution (continuous):"
+
+Treatment distribution (continuous):
+
+. sum `d', detail
+
+          Rice & Strahan (2010) index of interstate
+                 branching deregulation (4-)
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            0              0
+ 5%            0              0
+10%            0              0       Obs              12,538
+25%            0              0       Sum of wgt.      12,538
+
+50%            1                      Mean           1.410353
+                        Largest       Std. dev.      1.513327
+75%            3              4
+90%            4              4       Variance        2.29016
+95%            4              4       Skewness       .6938057
+99%            4              4       Kurtosis        1.95949
+
+. 
+. di as text _newline "Sample treatment trajectories (first 3 groups, all years):"
+
+Sample treatment trajectories (first 3 groups, all years):
+
+. list `g' `t' `d' `y' if `g' <= 1003, sepby(`g')
+
+       +--------------------------------------+
+       | county   year   inter_~a      Dl_hpi |
+       |--------------------------------------|
+    1. |   1001   1994          0   .00317609 |
+    2. |   1001   1995          0   .04891213 |
+    3. |   1001   1996          0   .05820321 |
+    4. |   1001   1997          0     .044366 |
+    5. |   1001   1998          1   .04709159 |
+    6. |   1001   1999          1   .00628021 |
+    7. |   1001   2000          1   .01880258 |
+    8. |   1001   2001          1   .06886281 |
+    9. |   1001   2002          1   .06057643 |
+   10. |   1001   2003          1    .0240425 |
+   11. |   1001   2004          1   .02453954 |
+   12. |   1001   2005          1   .12878626 |
+       +--------------------------------------+
+
+. 
+. 
+. ********************************************************************************
+. * SCENARIO 3 (no reset) — Issue 3 : avg returns 0 for all effects
+. ********************************************************************************
+. di as text _newline "{hline 78}"
+
+------------------------------------------------------------------------------
+
+. di as text "SCENARIO 3 (no reset) — did finds 1 switcher per effect, avg finds 0"
+SCENARIO 3 (no reset) — did finds 1 switcher per effect, avg finds 0
+
+. di as text "{hline 78}"
+------------------------------------------------------------------------------
+
+. 
+. * --- DiD reference: how many effects, how many switchers each ---
+. use "`data'", clear
+
+. cap program drop did_multiplegt_dyn
+
+. capture noisily did_multiplegt_dyn `y' `g' `t' `d', effects(5) graph_off
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0024103   .0014998  -.0005293   .0053498       3948        890 
+    Effect_2 |  .0055268   .0015778   .0024345   .0086192       3137        889 
+    Effect_3 |  .0081492   .0019922   .0042445   .0120539       2524        889 
+    Effect_4 |  .0116607   .0021792   .0073895   .0159318       1976        889 
+    Effect_5 |  .0173245   .0021812   .0130494   .0215996       1844        889 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = 1.347e-12
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0041924    .000692   .0028362   .0055486       8276       4446            
+--------------------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 2.9922578
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+. di as text _newline "  did rc = " _rc
+
+  did rc = 0
+
+. di as text "  e(N) = " e(N)
+  e(N) = .
+
+. forvalues k = 1/5 {
+  2.     di as text "  e(N_switchers_effect_`k') = " e(N_switchers_effect_`k')
+  3. }
+  e(N_switchers_effect_1) = 890
+  e(N_switchers_effect_2) = 889
+  e(N_switchers_effect_3) = 889
+  e(N_switchers_effect_4) = 889
+  e(N_switchers_effect_5) = 889
+
+. 
+. * --- Force avg_cumul_periods to write its temporary diagnostic vars to disk ---
+. use "`data'", clear
+
+. di as text _newline "Pre-avg dataset state:"
+
+Pre-avg dataset state:
+
+. di as text "  N obs   = " _N
+  N obs   = 12538
+
+. qui count if !missing(`d')
+
+. di as text "  N(d!=.) = " r(N)
+  N(d!=.) = 12538
+
+. qui levelsof `g', local(grps)
+
+. 
+. capture noisily avg_cumul_periods `g' `t' `d', effects(5) outcome(`y')
+Average number of time periods over which a treatment's effect is accumulated = 2.9914208
+Number of switchers per effect:
+   Effect_1 : 890
+   Effect_2 : 889
+   Effect_3 : 889
+   Effect_4 : 889
+   Effect_5 : 889
+
+. di as text _newline "  avg_cumul_periods rc = " _rc
+
+  avg_cumul_periods rc = 0
+
+. forvalues k = 1/5 {
+  2.     di as text "  r(N_switch_`k') = " r(N_switch_`k')
+  3. }
+  r(N_switch_1) = 890
+  r(N_switch_2) = 889
+  r(N_switch_3) = 889
+  r(N_switch_4) = 889
+  r(N_switch_5) = 889
+
+. 
+. * If avg returned 0 switchers, the diagnosis is in the S_g filter.
+. * Re-create the Fg / Dg1 / avg_post / Sg variables outside the function so we
+. * can `list` them and see why every group fails the switcher test.
+. di as text _newline "  ---- Manual replication of S_g logic ----"
+
+  ---- Manual replication of S_g logic ----
+
+. 
+. use "`data'", clear
+
+. 
+. * Tg_class : last period in the panel for the baseline class.
+. *   For continuous treatment, each group is its own class (period-one treatment
+. *   is essentially unique per group), so Tg_class = last observed time per g.
+. bys `g': egen Tg_class = max(`t')
+
+. 
+. * Fg : first period where treatment differs from period-1 value
+. gen double d_t1 = `d' if `t' == 1994            // 1994 is first year in favara
+(11,493 missing values generated)
+
+. bys `g': egen double Dg1 = max(d_t1)
+(19 missing values generated)
+
+. gen byte switched_now = (`d' != Dg1) & !missing(`d') & !missing(Dg1)
+
+. bys `g': egen Fg = min(cond(switched_now, `t', .))
+(1,556 missing values generated)
+
+. 
+. * avg_post : average treatment over [Fg, Tg_class]
+. gen double dpost = `d' if `t' >= Fg & `t' <= Tg_class
+(4,919 missing values generated)
+
+. bys `g': egen avg_post = mean(dpost)
+(1,556 missing values generated)
+
+. 
+. * Sg : 1 if avg_post > Dg1
+. gen byte Sg = (avg_post > Dg1) if !missing(avg_post) & !missing(Dg1)
+(1,556 missing values generated)
+
+. 
+. di as text "Distribution of Sg across groups (one obs per group):"
+Distribution of Sg across groups (one obs per group):
+
+. preserve
+
+. bys `g': keep if _n == 1
+(11,490 observations deleted)
+
+. tab Sg, missing
+
+         Sg |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        916       87.40       87.40
+          . |        132       12.60      100.00
+------------+-----------------------------------
+      Total |      1,048      100.00
+
+. di as text "Cross-tab of (avg_post > Dg1):"
+Cross-tab of (avg_post > Dg1):
+
+. gen byte avg_gt_d  = (avg_post > Dg1)  if !missing(avg_post, Dg1)
+(132 missing values generated)
+
+. gen byte avg_lt_d  = (avg_post < Dg1)  if !missing(avg_post, Dg1)
+(132 missing values generated)
+
+. gen byte avg_eq_d  = (avg_post == Dg1) if !missing(avg_post, Dg1)
+(132 missing values generated)
+
+. tab avg_gt_d
+
+   avg_gt_d |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        916      100.00      100.00
+------------+-----------------------------------
+      Total |        916      100.00
+
+. tab avg_lt_d
+
+   avg_lt_d |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |        916      100.00      100.00
+------------+-----------------------------------
+      Total |        916      100.00
+
+. tab avg_eq_d
+
+   avg_eq_d |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |        916      100.00      100.00
+------------+-----------------------------------
+      Total |        916      100.00
+
+. di as text "  -> If many groups have avg_post < Dg1, the (>) test is missing"
+  -> If many groups have avg_post < Dg1, the (>) test is missing
+
+. di as text "     downward switchers that did_multiplegt_dyn does count."
+     downward switchers that did_multiplegt_dyn does count.
+
+. restore
+
+. 
+end of do-file
+
+. help did_multiplegt_dyn
+
+. do "/var/folders/gb/56xms55d53n734tnp7xq55bh0000gq/T//SD39892.000000"
+
+. ***** test_wagepan_specs.do                                                    *
+. ***** Cross-check: e(N_switchers_effect_k) == e(N_switch_avg_k)                *
+. ***** across every Bookmark #1 option combination on the wagepan dataset.      *
+. *                                                                              *
+. * For each spec we call the DEV did_multiplegt_dyn (loaded from                 *
+. * did_multiplegt_dyn_reset.do) with that spec's options PLUS avg_time_periods. *
+. * After each call we capture both sets of switcher counts and emit one CSV     *
+. * row per (spec, effect_num). The Python script then surfaces any divergence.  *
+. *                                                                              *
+. * Output: logfiles/wagepan_specs.csv                                           *
+. * Log   : logfiles/test_wagepan_specs.log                                      *
+. 
+. clear all
+
+. set more off
+
+. cd "/Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO"
+/Users/anzony.quisperojas/Documents/GitHub/DCDH_TODO
+
+. capture log close

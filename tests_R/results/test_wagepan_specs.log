@@ -1,0 +1,1265 @@
+=== test_wagepan_specs  started: 2026-06-29 19:18:01.705948 ===
+Loaded /Users/anzony.quisperojas/Documents/GitHub/did_multiplegt_dyn/R/_data/wagepan.dta  (4360 rows)
+
+----------------------------------------------------------------------
+SPEC: Baseline
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Baseline effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04095  0.03397 -0.02563 0.10753 2,767 246      
+Effect_2     0.02189  0.03934 -0.05521 0.09899 2,292 225      
+Effect_3     0.03110  0.04260 -0.05239 0.11459 1,885 212      
+Effect_4     0.01816  0.04721 -0.07437 0.11069 1,497 195      
+Effect_5     -0.04997 0.05463 -0.15703 0.05710 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.3802
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.02352   0.05517  -0.08460   0.13164     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Baseline  eff=1  std=246  avg=246
+  PASS  Baseline  eff=2  std=225  avg=225
+  PASS  Baseline  eff=3  std=212  avg=212
+  PASS  Baseline  eff=4  std=195  avg=195
+  PASS  Baseline  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Placebos
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Placebos effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04095  0.03397 -0.02563 0.10753 2,767 246      
+Effect_2     0.02189  0.03934 -0.05521 0.09899 2,292 225      
+Effect_3     0.03110  0.04260 -0.05239 0.11459 1,885 212      
+Effect_4     0.01816  0.04721 -0.07437 0.11069 1,497 195      
+Effect_5     -0.04997 0.05463 -0.15703 0.05710 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.3802
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.02352   0.05517  -0.08460   0.13164     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI    N     Switchers
+Placebo_1    -0.08839 0.04226 -0.17122 -0.00557 1,856 155      
+Placebo_2    0.03709  0.05810 -0.07679 0.15097  1,170 74       
+
+Test of joint nullity of the placebos : p-value = 0.0705
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Placebos  eff=1  std=246  avg=246
+  PASS  Placebos  eff=2  std=225  avg=225
+  PASS  Placebos  eff=3  std=212  avg=212
+  PASS  Placebos  eff=4  std=195  avg=195
+  PASS  Placebos  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Normalized
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Normalized effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04095  0.03397 -0.02563 0.10753 2,767 246      
+Effect_2     0.01407  0.02529 -0.03550 0.06364 2,292 225      
+Effect_3     0.01449  0.01985 -0.02441 0.05339 1,885 212      
+Effect_4     0.00676  0.01757 -0.02767 0.04119 1,497 195      
+Effect_5     -0.01528 0.01670 -0.04802 0.01746 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.3802
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.02352   0.05517  -0.08460   0.13164     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI    N     Switchers
+Placebo_1    -0.08839 0.04226 -0.17122 -0.00557 1,856 155      
+Placebo_2    0.02473  0.03874 -0.05119 0.10065  1,170 74       
+
+Test of joint nullity of the placebos : p-value = 0.0705
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Normalized  eff=1  std=246  avg=246
+  PASS  Normalized  eff=2  std=225  avg=225
+  PASS  Normalized  eff=3  std=212  avg=212
+  PASS  Normalized  eff=4  std=195  avg=195
+  PASS  Normalized  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Controls
+----------------------------------------------------------------------
+NOTE: 408 observations removed because of NA values (LHS: 408, RHS: 408).
+NOTE: 137 observations removed because of NA values (LHS: 137, RHS: 137).
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Controls effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04000  0.03206 -0.02283 0.10284 2,767 246      
+Effect_2     0.01094  0.03691 -0.06139 0.08328 2,292 225      
+Effect_3     -0.00008 0.04134 -0.08111 0.08095 1,885 212      
+Effect_4     -0.00469 0.04780 -0.09836 0.08899 1,497 195      
+Effect_5     -0.07045 0.05476 -0.17779 0.03688 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.2147
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+ -0.00127   0.05429  -0.10767   0.10514     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Placebo_1    -0.06751 0.04174 -0.14933 0.01431 1,856 155      
+Placebo_2    0.05850  0.05861 -0.05638 0.17338 1,170 74       
+
+Test of joint nullity of the placebos : p-value = 0.1129
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Controls  eff=1  std=246  avg=246
+  PASS  Controls  eff=2  std=225  avg=225
+  PASS  Controls  eff=3  std=212  avg=212
+  PASS  Controls  eff=4  std=195  avg=195
+  PASS  Controls  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Trends_Nonparam
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Trends_Nonparam effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.03975  0.03373 -0.02635 0.10585 2,709 246      
+Effect_2     0.02586  0.03908 -0.05074 0.10246 2,237 225      
+Effect_3     0.03344  0.04244 -0.04975 0.11662 1,840 212      
+Effect_4     0.02090  0.04665 -0.07052 0.11233 1,478 195      
+Effect_5     -0.04370 0.05471 -0.15093 0.06354 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.4352
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.02741   0.05487  -0.08014   0.13496     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI    N     Switchers
+Placebo_1    -0.09316 0.04190 -0.17529 -0.01104 1,812 155      
+Placebo_2    0.02696  0.05876 -0.08821 0.14213  1,128 74       
+
+Test of joint nullity of the placebos : p-value = 0.0611
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Trends_Nonparam  eff=1  std=246  avg=246
+  PASS  Trends_Nonparam  eff=2  std=225  avg=225
+  PASS  Trends_Nonparam  eff=3  std=212  avg=212
+  PASS  Trends_Nonparam  eff=4  std=195  avg=195
+  PASS  Trends_Nonparam  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Weight
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 2839
+   Effect_2 switchers: 2596
+   Effect_3 switchers: 2440
+   Effect_4 switchers: 2242
+   Effect_5 switchers: 2004
+
+======================================================================
+RESULT DUMP: wagepan/Weight effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers N.w   
+Effect_1     0.05046  0.03395 -0.01607 0.11700 2,767 246       32,838
+Effect_2     0.02498  0.03991 -0.05325 0.10320 2,292 225       27,217
+Effect_3     0.04186  0.04262 -0.04167 0.12539 1,885 212       22,384
+Effect_4     0.02089  0.04872 -0.07460 0.11638 1,497 195       17,777
+Effect_5     -0.05759 0.05656 -0.16844 0.05327 1,126 174       13,368
+             Switchers.w
+Effect_1     2,839      
+Effect_2     2,596      
+Effect_3     2,440      
+Effect_4     2,242      
+Effect_5     2,004      
+
+Test of joint nullity of the effects : p-value = 0.1880
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+   Estimate          SE       LB CI       UB CI           N   Switchers 
+    0.03001     0.05605    -0.07985     0.13986       3,573       1,052 
+        N.w Switchers.w 
+     42,120      12,121 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers N.w   
+Placebo_1    -0.08116 0.04247 -0.16441 0.00208 1,856 155       22,043
+Placebo_2    0.04087  0.06113 -0.07894 0.16068 1,170 74        13,927
+             Switchers.w
+Placebo_1    1,804      
+Placebo_2    860        
+
+Test of joint nullity of the placebos : p-value = 0.0974
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     2839                -2593   FAIL
+  2         225                     2596                -2371   FAIL
+  3         212                     2440                -2228   FAIL
+  4         195                     2242                -2047   FAIL
+  5         174                     2004                -1830   FAIL
+======================================================================
+Warning messages:
+1:   FAIL  Weight  eff=1  std=246  avg=2839 
+2:   FAIL  Weight  eff=2  std=225  avg=2596 
+3:   FAIL  Weight  eff=3  std=212  avg=2440 
+4:   FAIL  Weight  eff=4  std=195  avg=2242 
+5:   FAIL  Weight  eff=5  std=174  avg=2004 
+
+----------------------------------------------------------------------
+SPEC: Cluster
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Cluster effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04095  0.02856 -0.01503 0.09693 2,767 246      
+Effect_2     0.02189  0.02559 -0.02827 0.07205 2,292 225      
+Effect_3     0.03110  0.02789 -0.02356 0.08577 1,885 212      
+Effect_4     0.01816  0.01008 -0.00159 0.03791 1,497 195      
+Effect_5     -0.04997 0.02757 -0.10400 0.00407 1,126 174      
+
+Test of joint nullity of the effects : p-value = not computed (see warnings)
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.02352   0.01720  -0.01020   0.05724     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Placebo_1    -0.08839 0.10091 -0.28618 0.10939 1,856 155      
+Placebo_2    0.03709  0.09584 -0.15074 0.22493 1,170 74       
+
+Test of joint nullity of the placebos : p-value = 0.0000
+
+
+----------------------------------------------------------------------
+    Warnings
+----------------------------------------------------------------------
+- The F-test that all effects are equal to zero is not computed because the variance of effects is not invertible. This can for instance happen if you cluster standard errors and you have more effect estimators than clusters.
+- The F-test that all placebos are equal to zero may not be reliable, because the variance of the placebos is close to not being invertible (the ratio of its largest and smallest eigenvalues is larger than 1000). This can for instance happen when you compute many placebo estimators, or when your placebos are very strongly correlated.
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Cluster  eff=1  std=246  avg=246
+  PASS  Cluster  eff=2  std=225  avg=225
+  PASS  Cluster  eff=3  std=212  avg=212
+  PASS  Cluster  eff=4  std=195  avg=195
+  PASS  Cluster  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Same_Switchers
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.279438
+   Effect_1 switchers: 174
+   Effect_2 switchers: 174
+   Effect_3 switchers: 174
+   Effect_4 switchers: 174
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Same_Switchers effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04659  0.04090 -0.03357 0.12676 1,393 174      
+Effect_2     0.03386  0.04692 -0.05810 0.12581 1,289 174      
+Effect_3     0.04854  0.04928 -0.04805 0.14514 1,228 174      
+Effect_4     0.03748  0.05103 -0.06253 0.13749 1,177 174      
+Effect_5     -0.04997 0.05463 -0.15703 0.05710 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.2641
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.03563   0.06461  -0.09100   0.16226     3,391       870 
+Average number of time periods over which a treatment effect is accumulated: 3.2794
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N   Switchers
+Placebo_1    -0.08699 0.06786 -0.21998 0.04601 687 83       
+Placebo_2    0.07823  0.09789 -0.11364 0.27009 310 23       
+
+Test of joint nullity of the placebos : p-value = 0.2588
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.279438
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         174                     174                 0       PASS
+  2         174                     174                 0       PASS
+  3         174                     174                 0       PASS
+  4         174                     174                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Same_Switchers  eff=1  std=174  avg=174
+  PASS  Same_Switchers  eff=2  std=174  avg=174
+  PASS  Same_Switchers  eff=3  std=174  avg=174
+  PASS  Same_Switchers  eff=4  std=174  avg=174
+  PASS  Same_Switchers  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Same_Switchers_Pl
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.279438
+   Effect_1 switchers: 174
+   Effect_2 switchers: 174
+   Effect_3 switchers: 174
+   Effect_4 switchers: 174
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Same_Switchers_Pl effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04659  0.04090 -0.03357 0.12676 1,393 174      
+Effect_2     0.03386  0.04692 -0.05810 0.12581 1,289 174      
+Effect_3     0.04854  0.04928 -0.04805 0.14514 1,228 174      
+Effect_4     0.03748  0.05103 -0.06253 0.13749 1,177 174      
+Effect_5     -0.04997 0.05463 -0.15703 0.05710 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.2641
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.03563   0.06461  -0.09100   0.16226     3,391       870 
+Average number of time periods over which a treatment effect is accumulated: 3.2794
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N   Switchers
+Placebo_1    -0.04969 0.14073 -0.32551 0.22614 324 23       
+Placebo_2    0.07823  0.09789 -0.11364 0.27009 310 23       
+
+Test of joint nullity of the placebos : p-value = 0.6334
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.279438
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         174                     174                 0       PASS
+  2         174                     174                 0       PASS
+  3         174                     174                 0       PASS
+  4         174                     174                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Same_Switchers_Pl  eff=1  std=174  avg=174
+  PASS  Same_Switchers_Pl  eff=2  std=174  avg=174
+  PASS  Same_Switchers_Pl  eff=3  std=174  avg=174
+  PASS  Same_Switchers_Pl  eff=4  std=174  avg=174
+  PASS  Same_Switchers_Pl  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Switchers_In
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.177326
+   Effect_1 switchers: 143
+   Effect_2 switchers: 128
+   Effect_3 switchers: 121
+   Effect_4 switchers: 114
+   Effect_5 switchers: 100
+
+======================================================================
+RESULT DUMP: wagepan/Switchers_In effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.06934  0.05042 -0.02948 0.16815 2,264 143      
+Effect_2     0.03925  0.05061 -0.05995 0.13845 1,886 128      
+Effect_3     0.04462  0.05841 -0.06987 0.15910 1,555 121      
+Effect_4     0.02446  0.06570 -0.10431 0.15322 1,240 114      
+Effect_5     -0.03795 0.07655 -0.18797 0.11208 932   100      
+
+Test of joint nullity of the effects : p-value = 0.5684
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.05619   0.08922  -0.11867   0.23106     2,727       606 
+Average number of time periods over which a treatment effect is accumulated: 3.1773
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Placebo_1    -0.09208 0.04989 -0.18987 0.00571 1,856 98       
+Placebo_2    0.03624  0.06870 -0.09842 0.17090 1,170 44       
+
+Test of joint nullity of the placebos : p-value = 0.1424
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.177326
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         143                     143                 0       PASS
+  2         128                     128                 0       PASS
+  3         121                     121                 0       PASS
+  4         114                     114                 0       PASS
+  5         100                     100                 0       PASS
+======================================================================
+  PASS  Switchers_In  eff=1  std=143  avg=143
+  PASS  Switchers_In  eff=2  std=128  avg=128
+  PASS  Switchers_In  eff=3  std=121  avg=121
+  PASS  Switchers_In  eff=4  std=114  avg=114
+  PASS  Switchers_In  eff=5  std=100  avg=100
+
+----------------------------------------------------------------------
+SPEC: Switchers_Out
+----------------------------------------------------------------------
+Placebo_1 cannot be estimated. There is no switcher or no control for this placebo.
+Placebo_2 cannot be estimated. There is no switcher or no control for this placebo.
+Average number of time periods over which a treatment's effect is accumulated = 2.960563
+   Effect_1 switchers: 103
+   Effect_2 switchers: 97
+   Effect_3 switchers: 91
+   Effect_4 switchers: 81
+   Effect_5 switchers: 74
+
+======================================================================
+RESULT DUMP: wagepan/Switchers_Out effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N   Switchers
+Effect_1     0.00154  0.04103 -0.07888 0.08196 503 103      
+Effect_2     -0.00102 0.06218 -0.12288 0.12085 406 97       
+Effect_3     0.01313  0.06177 -0.10794 0.13420 330 91       
+Effect_4     0.00931  0.06609 -0.12023 0.13884 257 81       
+Effect_5     -0.06621 0.07614 -0.21545 0.08303 194 74       
+
+Test of joint nullity of the effects : p-value = 0.7144
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+ -0.00814   0.06576  -0.13703   0.12074       846       446 
+Average number of time periods over which a treatment effect is accumulated: 2.9606
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N Switchers
+Placebo_1    -0.08206 0.07646 -0.23193 0.06780 0 57       
+Placebo_2    0.03833  0.10192 -0.16142 0.23809 0 30       
+
+Test of joint nullity of the placebos : p-value = 0.4635
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 2.960563
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         103                     103                 0       PASS
+  2         97                      97                  0       PASS
+  3         91                      91                  0       PASS
+  4         81                      81                  0       PASS
+  5         74                      74                  0       PASS
+======================================================================
+  PASS  Switchers_Out  eff=1  std=103  avg=103
+  PASS  Switchers_Out  eff=2  std=97  avg=97
+  PASS  Switchers_Out  eff=3  std=91  avg=91
+  PASS  Switchers_Out  eff=4  std=81  avg=81
+  PASS  Switchers_Out  eff=5  std=74  avg=74
+
+----------------------------------------------------------------------
+SPEC: Only_Never_Switchers
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Only_Never_Switchers effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.03702  0.03327 -0.02819 0.10223 2,339 246      
+Effect_2     0.00138  0.04027 -0.07754 0.08030 2,019 225      
+Effect_3     0.02238  0.04137 -0.05870 0.10347 1,707 212      
+Effect_4     -0.00171 0.04628 -0.09242 0.08899 1,391 195      
+Effect_5     -0.06086 0.05443 -0.16754 0.04582 1,071 174      
+
+Test of joint nullity of the effects : p-value = 0.2940
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.00463   0.05403  -0.10126   0.11053     3,145     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Placebo_1    -0.07579 0.03922 -0.15267 0.00108 1,688 155      
+Placebo_2    0.04372  0.05560 -0.06526 0.15269 1,104 74       
+
+Test of joint nullity of the placebos : p-value = 0.0770
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Only_Never_Switchers  eff=1  std=246  avg=246
+  PASS  Only_Never_Switchers  eff=2  std=225  avg=225
+  PASS  Only_Never_Switchers  eff=3  std=212  avg=212
+  PASS  Only_Never_Switchers  eff=4  std=195  avg=195
+  PASS  Only_Never_Switchers  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: CI_Level_90
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/CI_Level_90 effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04095  0.03397 -0.01493 0.09683 2,767 246      
+Effect_2     0.02189  0.03934 -0.04282 0.08659 2,292 225      
+Effect_3     0.03110  0.04260 -0.03896 0.10117 1,885 212      
+Effect_4     0.01816  0.04721 -0.05949 0.09582 1,497 195      
+Effect_5     -0.04997 0.05463 -0.13982 0.03989 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.3802
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.02352   0.05517  -0.06722   0.11426     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI    N     Switchers
+Placebo_1    -0.08839 0.04226 -0.15790 -0.01889 1,856 155      
+Placebo_2    0.03709  0.05810 -0.05848 0.13266  1,170 74       
+
+Test of joint nullity of the placebos : p-value = 0.0705
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  CI_Level_90  eff=1  std=246  avg=246
+  PASS  CI_Level_90  eff=2  std=225  avg=225
+  PASS  CI_Level_90  eff=3  std=212  avg=212
+  PASS  CI_Level_90  eff=4  std=195  avg=195
+  PASS  CI_Level_90  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: CI_Level_99
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/CI_Level_99 effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04095  0.03397 -0.04655 0.12845 2,767 246      
+Effect_2     0.02189  0.03934 -0.07944 0.12322 2,292 225      
+Effect_3     0.03110  0.04260 -0.07862 0.14083 1,885 212      
+Effect_4     0.01816  0.04721 -0.10344 0.13977 1,497 195      
+Effect_5     -0.04997 0.05463 -0.19067 0.09074 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.3802
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.02352   0.05517  -0.11858   0.16562     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Placebo_1    -0.08839 0.04226 -0.19724 0.02046 1,856 155      
+Placebo_2    0.03709  0.05810 -0.11257 0.18676 1,170 74       
+
+Test of joint nullity of the placebos : p-value = 0.0705
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  CI_Level_99  eff=1  std=246  avg=246
+  PASS  CI_Level_99  eff=2  std=225  avg=225
+  PASS  CI_Level_99  eff=3  std=212  avg=212
+  PASS  CI_Level_99  eff=4  std=195  avg=195
+  PASS  CI_Level_99  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Less_Conservative_SE
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Less_Conservative_SE effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04095  0.03397 -0.02563 0.10753 2,767 246      
+Effect_2     0.02189  0.03853 -0.05363 0.09740 2,292 225      
+Effect_3     0.03110  0.04300 -0.05317 0.11538 1,885 212      
+Effect_4     0.01816  0.04695 -0.07385 0.11017 1,497 195      
+Effect_5     -0.04997 0.05340 -0.15462 0.05469 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.4536
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.02352   0.05370  -0.08173   0.12877     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI    N     Switchers
+Placebo_1    -0.08839 0.04226 -0.17122 -0.00557 1,856 155      
+Placebo_2    0.03709  0.05810 -0.07679 0.15097  1,170 74       
+
+Test of joint nullity of the placebos : p-value = 0.0705
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Less_Conservative_SE  eff=1  std=246  avg=246
+  PASS  Less_Conservative_SE  eff=2  std=225  avg=225
+  PASS  Less_Conservative_SE  eff=3  std=212  avg=212
+  PASS  Less_Conservative_SE  eff=4  std=195  avg=195
+  PASS  Less_Conservative_SE  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Dont_Drop_Larger_Lower
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Dont_Drop_Larger_Lower effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04095  0.03397 -0.02563 0.10753 2,767 246      
+Effect_2     0.02189  0.03934 -0.05521 0.09899 2,292 225      
+Effect_3     0.03110  0.04260 -0.05239 0.11459 1,885 212      
+Effect_4     0.01816  0.04721 -0.07437 0.11069 1,497 195      
+Effect_5     -0.04997 0.05463 -0.15703 0.05710 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.3802
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.02352   0.05517  -0.08460   0.13164     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI    N     Switchers
+Placebo_1    -0.08839 0.04226 -0.17122 -0.00557 1,856 155      
+Placebo_2    0.03709  0.05810 -0.07679 0.15097  1,170 74       
+
+Test of joint nullity of the placebos : p-value = 0.0705
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Dont_Drop_Larger_Lower  eff=1  std=246  avg=246
+  PASS  Dont_Drop_Larger_Lower  eff=2  std=225  avg=225
+  PASS  Dont_Drop_Larger_Lower  eff=3  std=212  avg=212
+  PASS  Dont_Drop_Larger_Lower  eff=4  std=195  avg=195
+  PASS  Dont_Drop_Larger_Lower  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Effects_Equal
+----------------------------------------------------------------------
+Average number of time periods over which a treatment's effect is accumulated = 3.067239
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Effects_Equal effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04095  0.03397 -0.02563 0.10753 2,767 246      
+Effect_2     0.02189  0.03934 -0.05521 0.09899 2,292 225      
+Effect_3     0.03110  0.04260 -0.05239 0.11459 1,885 212      
+Effect_4     0.01816  0.04721 -0.07437 0.11069 1,497 195      
+Effect_5     -0.04997 0.05463 -0.15703 0.05710 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.3802
+Test of equality of the effects : p-value = 0.3691
+
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.02352   0.05517  -0.08460   0.13164     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+----------------------------------------------------------------------
+     Testing the parallel trends and no anticipation assumptions
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI    N     Switchers
+Placebo_1    -0.08839 0.04226 -0.17122 -0.00557 1,856 155      
+Placebo_2    0.03709  0.05810 -0.07679 0.15097  1,170 74       
+
+Test of joint nullity of the placebos : p-value = 0.0705
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 3.067239
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Effects_Equal  eff=1  std=246  avg=246
+  PASS  Effects_Equal  eff=2  std=225  avg=225
+  PASS  Effects_Equal  eff=3  std=212  avg=212
+  PASS  Effects_Equal  eff=4  std=195  avg=195
+  PASS  Effects_Equal  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Continuous_1
+----------------------------------------------------------------------
+You specified the continuous option without the bootstrap option. 
+Please be aware that we recommend to compute bootstraped standard errors when you are using the continuous option as the analytical standard errors can be liberal in that case.
+NOTE: 545 observations removed because of NA values (LHS: 545, RHS: 545).
+Average number of time periods over which a treatment's effect is accumulated = 2.834446
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Continuous_1 effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04095  0.03397 -0.02563 0.10754 2,767 246      
+Effect_2     0.01318  0.04037 -0.06593 0.09230 2,292 225      
+Effect_3     0.02283  0.04304 -0.06153 0.10719 1,885 212      
+Effect_4     0.00573  0.04846 -0.08925 0.10070 1,497 195      
+Effect_5     -0.05797 0.05584 -0.16741 0.05147 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.3189
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.01275   0.05642  -0.09783   0.12333     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 2.834446
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Continuous_1  eff=1  std=246  avg=246
+  PASS  Continuous_1  eff=2  std=225  avg=225
+  PASS  Continuous_1  eff=3  std=212  avg=212
+  PASS  Continuous_1  eff=4  std=195  avg=195
+  PASS  Continuous_1  eff=5  std=174  avg=174
+
+----------------------------------------------------------------------
+SPEC: Continuous_4
+----------------------------------------------------------------------
+You specified the continuous option without the bootstrap option. 
+Please be aware that we recommend to compute bootstraped standard errors when you are using the continuous option as the analytical standard errors can be liberal in that case.
+NOTE: 545 observations removed because of NA values (LHS: 545, RHS: 545).
+The variables 'diff_X2_XX', 'diff_X3_XX', 'diff_X4_XX', 'diff_X6_XX',
+'diff_X7_XX', 'diff_X8_XX' and 15 others have been removed because of
+collinearity (see $collin.var).
+Average number of time periods over which a treatment's effect is accumulated = 2.834446
+   Effect_1 switchers: 246
+   Effect_2 switchers: 225
+   Effect_3 switchers: 212
+   Effect_4 switchers: 195
+   Effect_5 switchers: 174
+
+======================================================================
+RESULT DUMP: wagepan/Continuous_4 effects=5
+======================================================================
+
+-- summary(res) --
+
+----------------------------------------------------------------------
+       Estimation of treatment effects: Event-study effects
+----------------------------------------------------------------------
+             Estimate SE      LB CI    UB CI   N     Switchers
+Effect_1     0.04094  0.03397 -0.02565 0.10752 2,767 246      
+Effect_2     0.01316  0.04036 -0.06595 0.09226 2,292 225      
+Effect_3     0.02276  0.04303 -0.06158 0.10710 1,885 212      
+Effect_4     0.00556  0.04854 -0.08957 0.10069 1,497 195      
+Effect_5     -0.05814 0.05586 -0.16763 0.05135 1,126 174      
+
+Test of joint nullity of the effects : p-value = 0.3182
+----------------------------------------------------------------------
+    Average cumulative (total) effect per treatment unit
+----------------------------------------------------------------------
+ Estimate        SE     LB CI     UB CI         N Switchers 
+  0.01262   0.05643  -0.09797   0.12322     3,573     1,052 
+Average number of time periods over which a treatment effect is accumulated: 3.0672
+
+
+The development of this package was funded by the European Union.
+ERC REALLYCREDIBLE - GA N. 101043899
+NULL
+
+-- avg_time_periods --
+  avg_cumul = 2.834446
+
+-- per-effect comparison (N_switchers_effect_k vs N_switch_avg_k) --
+  effect    N_switchers_effect_k    N_switch_avg_k      diff    status
+  ------------------------------------------------------------------
+  1         246                     246                 0       PASS
+  2         225                     225                 0       PASS
+  3         212                     212                 0       PASS
+  4         195                     195                 0       PASS
+  5         174                     174                 0       PASS
+======================================================================
+  PASS  Continuous_4  eff=1  std=246  avg=246
+  PASS  Continuous_4  eff=2  std=225  avg=225
+  PASS  Continuous_4  eff=3  std=212  avg=212
+  PASS  Continuous_4  eff=4  std=195  avg=195
+  PASS  Continuous_4  eff=5  std=174  avg=174
+
+CSV written to: /Users/anzony.quisperojas/Documents/GitHub/did_multiplegt_dyn/R/tests_R/results/wagepan_specs.csv
+=== test_wagepan_specs  finished: 2026-06-29 19:19:09.45988 ===
