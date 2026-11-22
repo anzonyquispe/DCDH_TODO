@@ -158,3 +158,14 @@ NOT SUPPORTED list; `details.csv` has every single check.
   from one spec into the next in the old `tests_by_path` harness.
 * R and Python write their results after every spec, so a crash keeps what
   was done; specs never reached are reported as ERROR.
+
+## Public page
+
+`TESTING.html` is published with GitHub Pages at
+<https://anzonyquispe.github.io/DCDH_TODO/did_multiplegt_dyn/TESTING.html>.
+How it is set up (already done; repeat only for a fork):
+
+1. The repository is public.
+2. GitHub → Settings → Pages → Source: *Deploy from a branch*, branch `main`, folder `/ (root)`.
+3. An empty `.nojekyll` at the repository root makes GitHub serve the files as they are.
+4. Every push to `main` updates the page within a minute or two.
