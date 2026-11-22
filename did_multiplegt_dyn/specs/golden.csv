@@ -1,0 +1,5 @@
+spec_id,file,note
+G07,reference_stata/gentzkow_noreset_option.dta,saved by DCDH_TODO code/*.do with save_results() (Stata with reset support)
+G08,reference_stata/gentzkow_reset1_option.dta,saved by DCDH_TODO code/*.do with save_results()
+G09,reference_stata/gentzkow_reset4_option.dta,saved by DCDH_TODO code/*.do with save_results()
+G10,reference_stata/gentzkow_reset1_norm_option.dta,saved by DCDH_TODO code/*.do with save_results()

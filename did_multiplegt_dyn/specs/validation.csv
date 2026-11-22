@@ -1,0 +1,15 @@
+vid,test_option,value_type,expected_stata,note
+H01,by_path(2),num,accepted,valid positive integer
+H02,by_path(all),str,accepted,valid keyword
+H03,by_path(ALL),str,rejected,Stata only accepts lowercase all
+H04,by_path(0),num,rejected,zero is not a positive integer
+H05,by_path(-1),num,rejected,negative integer (R/Python docs once documented -1 as all)
+H06,by_path(-3),num,rejected,negative integer
+H07,by_path(2.5),num,rejected,non-integer
+H08,by_path(abc),str,rejected,arbitrary string
+H09,by_path(-1),str,rejected,negative number passed as text
+H10,by_path(2) by(black),num,rejected,by() and by_path() cannot be combined
+H11,by_path(2) graphoptions(title(x)),num,rejected,by_path() does not allow graphoptions()
+H12,reset(1),num,accepted,valid reset
+H13,reset(-1),num,rejected,negative reset
+H14,reset(2.5),num,rejected,non-integer reset

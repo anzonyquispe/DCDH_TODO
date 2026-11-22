@@ -1,0 +1,6 @@
+results/
+config.env
+R_bootstrap/results/
+__pycache__/
+*.log
+full_run_console.txt

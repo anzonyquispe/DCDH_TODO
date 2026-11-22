@@ -1,0 +1,40 @@
+bid,base_spec,reps,seed,subsample,stata_manual,note
+RB01,A02,4,1234,groups_5pct,1,"tests_stata.do bootstrap(20,1234) spec (wagepan effects(5) placebo(2)); 5% of the groups and 4 replications to keep it fast"
+RB02,A08,4,1234,groups_5pct,1,bootstrap + weight; 5% of the groups and 4 replications to keep it fast
+RB03,A09,4,1234,groups_5pct,1,bootstrap + cluster (resampling clusters); 5% of the groups and 4 replications to keep it fast
+RB04,B03,4,1234,groups_5pct,0,bootstrap + by_path(4); 5% of the groups and 4 replications to keep it fast
+RB05,G04,4,1234,groups_5pct,0,bootstrap + reset(4) + avg_time_periods; 5% of the groups and 4 replications to keep it fast
+RB06,C01,20,1234,,1,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB07,C02,20,1234,,1,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB08,C03,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB09,C04,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB10,C05,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB11,C06,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB12,C07,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB13,C08,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB14,C09,20,1234,,1,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB15,C10,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB16,C11,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB17,C12,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB18,C13,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB19,C14,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB20,C15,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB21,C16,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB22,C17,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB23,C18,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB24,C19,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (deryugina stata_* specs)
+RB25,D01,20,1234,,1,R_didgt_polars bootstrap_equivalence specs.R (book chapters 1-4)
+RB26,D02,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (book chapters 1-4)
+RB27,D03,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (book chapters 1-4)
+RB28,D04,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (book chapters 1-4)
+RB29,D05,20,1234,,1,R_didgt_polars bootstrap_equivalence specs.R (book chapters 1-4)
+RB30,D06,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (book chapters 1-4)
+RB31,D07,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (book chapters 1-4)
+RB32,D08,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (book chapters 1-4)
+RB33,D09,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R (book chapters 1-4)
+RB34,E01,20,1234,,1,R_didgt_polars bootstrap_equivalence specs.R
+RB35,E02,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R
+RB36,E03,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R
+RB37,E04,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R
+RB38,E05,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R
+RB39,E06,20,1234,,0,R_didgt_polars bootstrap_equivalence specs.R

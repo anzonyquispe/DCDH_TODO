@@ -1,0 +1,9 @@
+lang,option,scope,reason
+r,design,output,design() output was updated in the latest Stata version; R not yet updated (estimates are still compared)
+python,design,output,design() output was updated in the latest Stata version; Python not yet updated (estimates are still compared)
+r,predict_het,output,predict_het() output was updated in the latest Stata version; R not yet updated (estimates are still compared)
+python,predict_het,output,predict_het() output was updated in the latest Stata version; Python not yet updated (estimates are still compared)
+python,date_first_switch,output,Python prints the switching dates but does not return them
+python,bootstrap,spec,Python does not implement bootstrap standard errors
+r,graphoptions,spec,R has no graphoptions() argument (ggplot_args instead)
+python,graphoptions,spec,Python has no graphoptions() argument

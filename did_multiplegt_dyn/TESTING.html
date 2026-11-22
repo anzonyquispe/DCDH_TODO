@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testing did_multiplegt_dyn</title>
+<style>
+:root{--bg:#fff;--fg:#1d1d1f;--mut:#666;--code:#f3f3f5;--line:#ddd;--acc:#0b5cad}
+@media (prefers-color-scheme:dark){:root{--bg:#161618;--fg:#e8e8ea;--mut:#9a9aa0;--code:#232327;--line:#333;--acc:#6aa8ff}}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,sans-serif;max-width:760px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.6em;margin:0 0 4px}h2{font-size:1.15em;margin:28px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+p.sub{color:var(--mut);margin:0 0 8px}
+pre,code{background:var(--code);border-radius:6px;font:14px/1.45 ui-monospace,Consolas,monospace}
+pre{padding:10px 12px;overflow-x:auto}code{padding:1px 4px}pre code{padding:0}
+table{border-collapse:collapse;width:100%;font-size:15px}td{border-bottom:1px solid var(--line);padding:5px 6px;vertical-align:top}
+td:first-child{white-space:nowrap;font-weight:600}a{color:var(--acc)}
+</style>
+</head>
+<body>
+<h1>Testing did_multiplegt_dyn</h1>
+<p class="sub">Check that a new Stata, R or Python version still gives Stata's results. Stata is the reference.</p>
+
+<h2>1. Install once</h2>
+<ul>
+<li><b>Stata</b> with <code>gtools</code> (<code>ssc install gtools</code>).</li>
+<li><b>R</b> with <code>haven</code>, <code>polars</code> (<code>install.packages("polars", repos = "https://rpolars.r-universe.dev")</code>) and <code>pkgload</code>.</li>
+<li><b>Python</b> with <code>numpy pandas "polars&lt;2"</code>.</li>
+<li>On Windows, run the commands below from <b>Git Bash</b>, inside the <code>did_multiplegt_dyn/</code> folder.</li>
+</ul>
+
+<h2>2. Say which versions to test</h2>
+<p>Nothing is assumed. Each option takes <code>installed</code> or a path:</p>
+<table>
+<tr><td>--stata-ado</td><td><code>installed</code>, or the folder or file containing <code>did_multiplegt_dyn.ado</code></td></tr>
+<tr><td>--r-pkg</td><td><code>installed</code>, a source folder (with <code>DESCRIPTION</code>), or a <code>.tar.gz</code></td></tr>
+<tr><td>--py-pkg</td><td><code>installed</code>, or the folder containing the <code>did_multiplegt_dyn</code> package (e.g. <code>…/src</code>)</td></tr>
+</table>
+
+<h2>3. Run</h2>
+<p>Every spec runs as its own job. Stata runs 6 at a time, then R and Python run one spec at a time. A full run takes about 1 hour.</p>
+<pre><code>python run_jobs.py --stata-ado installed --r-pkg installed --py-pkg installed</code></pre>
+<p>Useful variants:</p>
+<pre><code># only the package you changed (Stata's last results are reused)
+python run_jobs.py --r-pkg ../../did_multiplegt_dyn/R --skip stata,python
+
+# a few specs
+python run_jobs.py --stata-ado installed --r-pkg installed --py-pkg installed --only "A01 D10"
+
+# re-merge existing jobs and compare again, without running anything
+python run_jobs.py --merge-only</code></pre>
+
+<h2>4. Read the result</h2>
+<p>Open <code>results/report.txt</code>. It gives one verdict per spec and language, then every problem grouped by kind. Every single check is in <code>results/details.csv</code>.</p>
+<table>
+<tr><td>PASS</td><td>Equal to Stata within 1e-7 + 1e-6·|x|. Counts must be exactly equal.</td></tr>
+<tr><td>FAIL / MISSING / ERROR</td><td>A value differs, is not returned, or the run crashed. <b>Investigate these.</b></td></tr>
+<tr><td>NOT_SUPPORTED</td><td>The language lacks that option (listed in <code>specs/not_supported.csv</code>). This is not a failure.</td></tr>
+<tr><td>STATA_NOT_SUPPORTED</td><td>The Stata ado under test can't run the spec, so there is no reference.</td></tr>
+</table>
+<p>Everything is OK when the last line says <code>RESULT: ALL CHECKS PASSED</code> (exit code 0). To see whether a release fixed or broke something, compare against the report from a run on the previous version.</p>
+<p>If a job crashes, look at <code>results/jobs/&lt;lang&gt;/&lt;spec&gt;/console.log</code>.</p>
+
+<h2>5. Where things are</h2>
+<table>
+<tr><td>specs/specs.csv</td><td>The 121 specifications, written in Stata syntax. Add a row to add a test.</td></tr>
+<tr><td>specs/option_map.csv</td><td>Stata option → R / Python argument. Add a row for every new option.</td></tr>
+<tr><td>specs/element_map.csv</td><td>Where each Stata <code>e()</code> result is found in the R and Python objects.</td></tr>
+<tr><td>specs/validation.csv</td><td>Inputs that must be accepted or rejected.</td></tr>
+<tr><td>R_bootstrap/</td><td>Bootstrap tests for R. They run separately; see their README.</td></tr>
+</table>
+
+<h2>Known differences (Nov 2026)</h2>
+<p>Stata ado dated January 17th, 2026, R 2.4.0, Python 0.1.9. These are expected to FAIL until the packages are fixed:</p>
+<ul>
+<li>R: the off-diagonal cells of <code>coef$vcov</code> and <code>N_placebo_#</code> differ from Stata. A20 (<code>continuous(4)</code>) crashes because polars runs out of memory.</li>
+<li>Python: <code>coef['b']</code> is unnamed and lists the effects twice. F10, F13 and F29 crash.</li>
+<li>R and Python: neither includes <code>Av_tot_eff</code> in <code>b</code> or <code>V</code>.</li>
+<li>The installed ado has no <code>reset</code> or <code>avg_time_periods</code>, so block G has no Stata reference. Point <code>--stata-ado</code> at a newer ado to compare it.</li>
+</ul>
+</body>
+</html>

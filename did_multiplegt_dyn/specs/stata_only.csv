@@ -1,0 +1,7 @@
+kind,name,reason
+r_scalar,*,r() after did_multiplegt_dyn is left over from internal commands (summarize/test); it is not part of the command's results
+e_macro,properties,Stata estimation-command bookkeeping ("b V")
+e_matrix,estimates,Stata compatibility vector; R/Python return the same numbers in their Effects/ATE/Placebos tables (compared via mat_res_XX)
+e_matrix,variances,Stata compatibility vector (squared SEs); compared via the SE column of mat_res_XX
+e_matrix,didmgt_variances,Stata compatibility vector; compared via the SE column of mat_res_XX
+matrix,mat_res_avg_XX,internal Stata matrix

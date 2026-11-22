@@ -1,0 +1,20 @@
+stata_element,stata_kind,r_location,python_location,status,note
+Effect_#,e_scalar,results$Effects[k Estimate],res['did_multiplegt_dyn']['Effects'] row Effect_k col Estimate,compared,
+se_effect_#,e_scalar,results$Effects[k SE],res['did_multiplegt_dyn']['Effects'] col SE,compared,
+N_effect_#,e_scalar,results$Effects[k N],res['did_multiplegt_dyn']['Effects'] col N,compared,
+N_switchers_effect_#,e_scalar,results$Effects[k Switchers],res['did_multiplegt_dyn']['Effects'] col Switchers,compared,R also has a top-level copy $N_switchers_effect_k
+N_effect_#_w / N_switchers_effect_#_w,e_scalar,results$Effects cols N.w / Switchers.w,Effects cols N.w / Switchers.w,compared when Stata stores them,Stata stores *_w only with weight(); otherwise reported as EXTRA
+Placebo_# / se_placebo_# / N_placebo_# / N_switchers_placebo_#,e_scalar,results$Placebos (same columns as Effects),res['did_multiplegt_dyn']['Placebos'],compared,
+Av_tot_effect / se_avg_total_effect / N_avg_total_effect / N_switchers_effect_average,e_scalar,results$ATE row Av_tot_eff,res['did_multiplegt_dyn']['ATE'] row Average_Total_Effect,compared,Python's row label differs (Average_Total_Effect); harness relabels it Av_tot_eff
+p_jointeffects / p_jointplacebo,e_scalar,results$p_jointeffects / results$p_jointplacebo,res['did_multiplegt_dyn']['p_jointeffects'] / ['p_jointplacebo'],compared,
+p_equality_effects,e_scalar,results$p_equality_effects,res['did_multiplegt_dyn']['p_equality_effects'],compared,Python takes effects_equal=True (bool); R takes "all"
+mat_res_XX,matrix,built from results$Effects/ATE/Placebos (cols 1-6) + time_to_treat,res['mat_res_XX'] (also built from the tables by the harness),compared,
+b,e_matrix,coef$b (named; no Av_tot_eff entry),res['coef']['b'] (unnamed ndarray; no names),compared,"Python 0.1.9 bug: b has 2*effects+1 values (effects twice + ATE, no placebos); R and Python both omit Av_tot_eff"
+V,e_matrix,coef$vcov (named matrix; no Av_tot_eff row/col),res['coef']['vcov'] (named DataFrame; no Av_tot_eff row/col),compared,"R 2.4.0: off-diagonal covariances differ from Stata (often opposite sign); Python matches Stata. Python's covariances are also in res['dict_glob']['cov_i_j_XX']"
+effect_het_#_XX / effect_het_pl_#_XX,e_matrix,results$predict_het (data.frame: effect covariate Estimate SE t LB UB N pF),res['did_multiplegt_dyn']['predict_het'] (DataFrame; same columns),compared (output flagged NOT_SUPPORTED in not_supported.csv),cols 1-6 = Estimate SE t LB UB N; effect<0 = placebo
+desmat,matrix,design$design_mat (noquote char; cols N Share l=0..),res['design'] (DataFrame; cols #Groups %Groups l=0..),compared (output flagged NOT_SUPPORTED),compared by column position
+dfs# / switch_dates_Dsq_# / switch_dates,matrix / e_scalar,date_first_switch$dfs_mat# (rows = dates; cols N Share); switch_dates_Dsq_# = nrow(dfs_mat#),not returned (printed only),compared for R; NOT_SUPPORTED for Python,switch_dates_Dsq_# with by_baseline_treat; switch_dates otherwise
+avg_cumul / N_switch_avg_#,e_scalar,$avg_cumul / $N_switch_avg_k (top level; also $avg_time_periods list),res['did_multiplegt_dyn']['avg_cumul'] / ['N_switch_avg_k'] (also ['avg_time_periods']),compared,only Stata versions with avg_time_periods (the installed Jan 17 2026 ado lacks it)
+by() levels,unit,by_levels + by_level_k$results / $coef / $level,res['did_multiplegt_dyn']['all_by_results'][i] {by_var by_value result},compared per level,
+by_path() paths,unit,by_levels (path labels) + by_level_k$results / $coef,res['did_multiplegt_dyn']['all_path_results'][i] {path_id treatment_sequence n_groups result},compared per path,Stata keeps only the last path in e(); runner re-runs by_path(k)
+estimates / variances / properties,e_matrix / e_macro,-,-,Stata only (stata_only.csv),
