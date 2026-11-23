@@ -24,7 +24,7 @@ ol li,ul li{margin:3px 0}
 <p class="sub">Check that a new Stata, R or Python version of <code>did_multiplegt_dyn</code> still gives the same results as Stata, the reference. Everything runs on your own computer.</p>
 
 <p>The suite runs 121 specifications and 14 input checks in Stata, R and Python, then compares every result with Stata's.
-Known differences: <a href="DIFFERENCES.html">DIFFERENCES.html</a>. History of fixes: <a href="https://github.com/anzonyquispe/DCDH_TODO/blob/main/did_multiplegt_dyn/CHANGELOG.md">CHANGELOG.md</a>.</p>
+What is tested, spec by spec: <a href="SPECS.html">SPECS.html</a>. Known differences: <a href="DIFFERENCES.html">DIFFERENCES.html</a>. History of fixes: <a href="https://github.com/anzonyquispe/DCDH_TODO/blob/main/did_multiplegt_dyn/CHANGELOG.md">CHANGELOG.md</a>.</p>
 
 <div class="note">Type the commands in a terminal: <b>PowerShell</b> or <b>Git Bash</b> on Windows, <b>Terminal</b> on Mac or Linux. Lines starting with <code>#</code> are comments.
 The R and Stata commands in step 1 go in the R console (or RStudio) and in Stata.
@@ -136,7 +136,7 @@ When you fix something, add an entry to <code>CHANGELOG.md</code>.</p>
 
 <h2>Where things are</h2>
 <table>
-<tr><td>specs/specs.csv</td><td>The 121 specifications, in Stata syntax. Add a row to add a test.</td></tr>
+<tr><td>specs/specs.csv</td><td>The 121 specifications, in Stata syntax. Add a row to add a test, then run <code>python specs/make_specs_page.py</code> to update <a href="SPECS.html">SPECS.html</a>.</td></tr>
 <tr><td>specs/option_map.csv</td><td>Stata option → R / Python argument. Add a row for every new option.</td></tr>
 <tr><td>specs/element_map.csv</td><td>Where each Stata <code>e()</code> result is found in the R and Python objects.</td></tr>
 <tr><td>specs/validation.csv</td><td>Inputs that must be accepted or rejected.</td></tr>

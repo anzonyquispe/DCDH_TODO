@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test specifications</title>
+<style>
+:root{--bg:#fff;--fg:#1d1d1f;--mut:#666;--code:#f3f3f5;--line:#ddd;--acc:#0b5cad}
+@media (prefers-color-scheme:dark){:root{--bg:#161618;--fg:#e8e8ea;--mut:#9a9aa0;--code:#232327;--line:#333;--acc:#6aa8ff}}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,sans-serif;max-width:980px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.6em;margin:0 0 4px}h2{font-size:1.15em;margin:28px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+p.sub{color:var(--mut);margin:0 0 8px}a{color:var(--acc)}
+code,pre{background:var(--code);border-radius:4px;font:13.5px/1.45 ui-monospace,Consolas,monospace}
+code{padding:1px 4px}pre{margin:0;padding:6px 8px;white-space:pre-wrap;word-break:break-word}
+.t{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14.5px}
+th{text-align:left;color:var(--mut);font-weight:600}th,td{border-bottom:1px solid var(--line);padding:6px;vertical-align:top}
+td.id{white-space:nowrap;font-weight:600}td.what{min-width:140px}.mut{color:var(--mut);font-size:13px}
+input{font:inherit;padding:6px 10px;width:100%;max-width:420px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg)}
+</style>
+</head>
+<body>
+<h1>Test specifications</h1>
+<p class="sub">Every specification the test suite runs: 121 estimations and 14 input checks, written as the Stata commands that produce the reference results. R and Python run the same specifications (translated through <code>specs/option_map.csv</code>) and every result is compared with Stata's.
+How to run them: <a href="TESTING.html">TESTING.html</a>. Known differences: <a href="DIFFERENCES.html">DIFFERENCES.html</a>.</p>
+<p class="mut">Each spec starts with <code>use data/&lt;dataset&gt;.dta, clear</code> from the suite's <code>data/</code> folder; <code>graph_off</code> is added to every command. This page is generated from <code>specs/specs.csv</code> by <code>specs/make_specs_page.py</code>.</p>
+<p><input id="q" type="search" placeholder="Filter: e.g. weight, by_path, D18, deryugina" aria-label="Filter specifications"></p>
+<h2>Blocks</h2>
+<div class="t"><table>
+<tr><th>Block</th><th>What it covers</th><th>Specs</th></tr>
+<tr><td class="id"><a href="#block-A">A</a></td><td>wagepan (union membership), <code>effects(5) placebo(2)</code> with each option of <code>tests_stata.do</code></td><td>20</td></tr>
+<tr><td class="id"><a href="#block-B">B</a></td><td>wagepan: additional outputs (<code>design</code>, <code>by</code>, <code>by_path</code>, <code>predict_het</code>, <code>date_first_switch</code>)</td><td>5</td></tr>
+<tr><td class="id"><a href="#block-C">C</a></td><td>Block A's options on deryugina (absorbing binary treatment)</td><td>19</td></tr>
+<tr><td class="id"><a href="#block-D">D</a></td><td>Examples from the DID textbook chapters and other datasets</td><td>18</td></tr>
+<tr><td class="id"><a href="#block-E">E</a></td><td>favara_imbs: weights, <code>predict_het</code>, <code>by</code>, <code>normalized_weights</code>, missing treatments</td><td>6</td></tr>
+<tr><td class="id"><a href="#block-F">F</a></td><td><code>by_path</code>: earlier by_path tests, help-file examples and <code>by_path</code> × each option</td><td>35</td></tr>
+<tr><td class="id"><a href="#block-G">G</a></td><td><code>reset</code> and <code>avg_time_periods</code> (need a Stata ado that has them)</td><td>18</td></tr>
+<tr><td class="id"><a href="#block-H">H</a></td><td>Input checks: options that must be accepted or rejected</td><td>14</td></tr>
+</table></div>
+<h2 id="block-A">Block A</h2>
+<p class="mut">wagepan (union membership), <code>effects(5) placebo(2)</code> with each option of <code>tests_stata.do</code></p>
+<div class="t"><table class="specs">
+<tr><th>ID</th><th>Stata commands</th><th class="what">What it tests</th></tr>
+<tr><td class="id">A01</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) graph_off</pre></td><td>baseline: no other options<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A02</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) graph_off</pre></td><td>baseline: no other options<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A03</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) normalized graph_off</pre></td><td>normalized effects<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A04</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) controls(hours) graph_off</pre></td><td>controls: hours<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A05</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) trends_nonparam(black) graph_off</pre></td><td>non-parametric trends by black<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A06</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) trends_lin graph_off</pre></td><td>group-specific linear trends<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A07</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) continuous(1) graph_off</pre></td><td>continuous period-one treatment (polynomial of order 1)<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A08</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) weight(educ) graph_off</pre></td><td>weighted by educ<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A09</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) cluster(hisp) graph_off</pre></td><td>SEs clustered by hisp<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A10</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) same_switchers graph_off</pre></td><td>same switchers for all effects<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A11</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) same_switchers same_switchers_pl graph_off</pre></td><td>same switchers for all effects; same switchers for effects and placebos<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A12</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) switchers(in) graph_off</pre></td><td>only switchers in<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A13</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) switchers(out) graph_off</pre></td><td>only switchers out<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A14</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) only_never_switchers graph_off</pre></td><td>only never-switchers as controls<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A15</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) ci_level(90) graph_off</pre></td><td>90% confidence intervals<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A16</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) ci_level(99) graph_off</pre></td><td>99% confidence intervals<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A17</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) less_conservative_se graph_off</pre></td><td>less conservative standard errors<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A18</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) dont_drop_larger_lower graph_off</pre></td><td>keeps cells with treatment above and below baseline<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A19</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) effects_equal(all) graph_off</pre></td><td>test that effects are equal (all)<div class="mut">source: tests_stata.do (main block)</div></td></tr>
+<tr><td class="id">A20</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) continuous(4) graph_off</pre></td><td>continuous period-one treatment (polynomial of order 4)<div class="mut">source: DCDH_TODO tests_R/test_wagepan_specs.R</div></td></tr>
+</table></div>
+<h2 id="block-B">Block B</h2>
+<p class="mut">wagepan: additional outputs (<code>design</code>, <code>by</code>, <code>by_path</code>, <code>predict_het</code>, <code>date_first_switch</code>)</p>
+<div class="t"><table class="specs">
+<tr><th>ID</th><th>Stata commands</th><th class="what">What it tests</th></tr>
+<tr><td class="id">B01</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) design(,console) graph_off</pre></td><td>design table (console)<div class="mut">source: tests_stata.do (additional-outputs block, commented out)</div></td></tr>
+<tr><td class="id">B02</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) by(black) graph_off</pre></td><td>separately by black<div class="mut">source: tests_stata.do (additional-outputs block, commented out)</div></td></tr>
+<tr><td class="id">B03</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) by_path(4) graph_off</pre></td><td>separately by treatment path (4)<div class="mut">source: tests_stata.do (additional-outputs block, commented out)</div></td></tr>
+<tr><td class="id">B04</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) predict_het(black,all) graph_off</pre></td><td>heterogeneity regressions (black,all)<div class="mut">source: tests_stata.do (additional-outputs block, commented out)</div></td></tr>
+<tr><td class="id">B05</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) date_first_switch(by_baseline_treat,console) graph_off</pre></td><td>dates of first switch (by_baseline_treat,console)<div class="mut">source: tests_stata.do (additional-outputs block, commented out)</div></td></tr>
+</table></div>
+<h2 id="block-C">Block C</h2>
+<p class="mut">Block A's options on deryugina (absorbing binary treatment)</p>
+<div class="t"><table class="specs">
+<tr><th>ID</th><th>Stata commands</th><th class="what">What it tests</th></tr>
+<tr><td class="id">C01</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) graph_off</pre></td><td>baseline: no other options<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C02</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) graph_off</pre></td><td>baseline: no other options<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C03</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) normalized graph_off</pre></td><td>normalized effects<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C04</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) controls(log_pop1969) graph_off</pre></td><td>controls: log_pop1969<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C05</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) trends_nonparam(coastal) graph_off</pre></td><td>non-parametric trends by coastal<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C06</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) trends_lin graph_off</pre></td><td>group-specific linear trends<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C07</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) continuous(1) graph_off</pre></td><td>continuous period-one treatment (polynomial of order 1)<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C08</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) weight(emp_rate1969) graph_off</pre></td><td>weighted by emp_rate1969<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C09</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) cluster(county_fips) graph_off</pre></td><td>SEs clustered by county_fips<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C10</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) same_switchers graph_off</pre></td><td>same switchers for all effects<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C11</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) same_switchers same_switchers_pl graph_off</pre></td><td>same switchers for all effects; same switchers for effects and placebos<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C12</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) switchers(in) graph_off</pre></td><td>only switchers in<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C13</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) switchers(out) graph_off</pre></td><td>only switchers out<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C14</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) only_never_switchers graph_off</pre></td><td>only never-switchers as controls<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C15</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) ci_level(90) graph_off</pre></td><td>90% confidence intervals<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C16</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) ci_level(99) graph_off</pre></td><td>99% confidence intervals<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C17</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) less_conservative_se graph_off</pre></td><td>less conservative standard errors<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C18</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) dont_drop_larger_lower graph_off</pre></td><td>keeps cells with treatment above and below baseline<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+<tr><td class="id">C19</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(5) placebo(2) effects_equal(all) graph_off</pre></td><td>test that effects are equal (all)<div class="mut">source: R_didgt_polars specs.R (tests_stata.do options on deryugina)</div></td></tr>
+</table></div>
+<h2 id="block-D">Block D</h2>
+<p class="mut">Examples from the DID textbook chapters and other datasets</p>
+<div class="t"><table class="specs">
+<tr><th>ID</th><th>Stata commands</th><th class="what">What it tests</th></tr>
+<tr><td class="id">D01</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(3) placebo(3) cluster(county_fips) graph_off</pre></td><td>SEs clustered by county_fips<div class="mut">source: book ch01 T2 (specs.R)</div></td></tr>
+<tr><td class="id">D02</td><td><pre>use data/deryugina_2017.dta, clear
+foreach v in coastal land_area1970 log_pop1969 frac_young1969 frac_old1969 frac_black1969 log_wage_pc1969 emp_rate1969 {
+    gen double `v'_year = `v' * year
+}
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(3) placebo(3) cluster(county_fips) controls(coastal_year land_area1970_year log_pop1969_year frac_young1969_year frac_old1969_year frac_black1969_year log_wage_pc1969_year emp_rate1969_year) graph_off</pre></td><td>SEs clustered by county_fips; controls: coastal_year land_area1970_year log_pop1969_year frac_young1969_year frac_old1969_year frac_black1969_year log_wage_pc1969_year emp_rate1969_year<div class="mut">source: book ch01 T3 (specs.R)</div></td></tr>
+<tr><td class="id">D03</td><td><pre>use data/east_et_al_2023.dta, clear
+did_multiplegt_dyn lbw_detrend81 plborn dob_y_p newsimeli, effects(3) placebo(3) continuous(1) controls(stmarried sthsdrop pop25_44 urate incpc) weight(births) effects_equal(all) graph_off</pre></td><td>continuous period-one treatment (polynomial of order 1); controls: stmarried sthsdrop pop25_44 urate incpc; weighted by births; test that effects are equal (all)<div class="mut">source: book ch02 T5 (specs.R, trimmed controls)</div></td></tr>
+<tr><td class="id">D04</td><td><pre>use data/east_et_al_2023.dta, clear
+did_multiplegt_dyn lbw_detrend81 plborn dob_y_p newsimeli, effects(3) placebo(3) continuous(1) controls(stmarried sthsdrop pop25_44 urate incpc) weight(births) normalized effects_equal(all) graph_off</pre></td><td>continuous period-one treatment (polynomial of order 1); controls: stmarried sthsdrop pop25_44 urate incpc; weighted by births; normalized effects; test that effects are equal (all)<div class="mut">source: book ch02 T6 (specs.R)</div></td></tr>
+<tr><td class="id">D05</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) placebo(4) effects_equal(all) graph_off</pre></td><td>test that effects are equal (all)<div class="mut">source: book ch03 T8 (specs.R)</div></td></tr>
+<tr><td class="id">D06</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) placebo(4) normalized effects_equal(all) graph_off</pre></td><td>normalized effects; test that effects are equal (all)<div class="mut">source: book ch03 T10 (specs.R)</div></td></tr>
+<tr><td class="id">D07</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+keep if year &lt;= first_change | same_treat_after_first_change == 1
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(2) effects_equal(all) same_switchers graph_off</pre></td><td>test that effects are equal (all); same switchers for all effects<div class="mut">source: book ch03 T11 (specs.R): year&lt;=first_change | same_treat_after_first_change==1</div></td></tr>
+<tr><td class="id">D08</td><td><pre>use data/hollingsworth_et_al_2022.dta, clear
+keep if rm == 0
+did_multiplegt_dyn ln_mj_use_365 state year mm, effects(3) placebo(3) cluster(state) graph_off</pre></td><td>SEs clustered by state<div class="mut">source: book ch04 T13 (specs.R): rm==0</div></td></tr>
+<tr><td class="id">D09</td><td><pre>use data/hollingsworth_et_al_2022.dta, clear
+egen double fg1 = min(cond(mm == 1, year, .)), by(state)
+keep if mm == 1
+did_multiplegt_dyn ln_mj_use_365 state year rm, effects(3) placebo(3) trends_nonparam(fg1) cluster(state) graph_off</pre></td><td>non-parametric trends by fg1; SEs clustered by state<div class="mut">source: book ch04 T14 (specs.R)</div></td></tr>
+<tr><td class="id">D10</td><td><pre>use data/moser_voena_didtextbook.dta, clear
+did_multiplegt_dyn patents subclass year twea, effects(21) placebo(18) trends_nonparam(patents1900) graph_off</pre></td><td>non-parametric trends by patents1900<div class="mut">source: did_book ch04.qmd</div></td></tr>
+<tr><td class="id">D11</td><td><pre>use data/wolfers2006_didtextbook.dta, clear
+did_multiplegt_dyn div_rate state year udl, effects(13) placebo(13) weight(stpop) graph_off</pre></td><td>weighted by stpop<div class="mut">source: did_book ch06.qmd</div></td></tr>
+<tr><td class="id">D12</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(1) design(0.8,console) graph_off</pre></td><td>design table (0.8,console)<div class="mut">source: did_book ch08.qmd</div></td></tr>
+<tr><td class="id">D13</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(2) design(0.8,console) graph_off</pre></td><td>design table (0.8,console)<div class="mut">source: did_book ch08.qmd</div></td></tr>
+<tr><td class="id">D14</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) design(0.8,console) graph_off</pre></td><td>design table (0.8,console)<div class="mut">source: did_book ch08.qmd</div></td></tr>
+<tr><td class="id">D15</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) placebo(4) effects_equal(all) cluster(cnty90) graph_off</pre></td><td>test that effects are equal (all); SEs clustered by cnty90<div class="mut">source: did_book ch08.qmd</div></td></tr>
+<tr><td class="id">D16</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) placebo(4) normalized effects_equal(all) normalized_weights cluster(cnty90) graph_off</pre></td><td>normalized effects; test that effects are equal (all); weights of the normalized effects; SEs clustered by cnty90<div class="mut">source: did_book ch08.qmd</div></td></tr>
+<tr><td class="id">D17</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+keep if year &lt; first_change | same_treat_after_first_change == 1
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(2) effects_equal(all) same_switchers graph_off</pre></td><td>test that effects are equal (all); same switchers for all effects<div class="mut">source: did_book ch08.qmd: if year&lt;first_change | same_treat_after_first_change==1</div></td></tr>
+<tr><td class="id">D18</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(2) by_path(3) graph_off</pre></td><td>separately by treatment path (3)<div class="mut">source: did_book ch08.qmd CQ#45b</div></td></tr>
+</table></div>
+<h2 id="block-E">Block E</h2>
+<p class="mut">favara_imbs: weights, <code>predict_het</code>, <code>by</code>, <code>normalized_weights</code>, missing treatments</p>
+<div class="t"><table class="specs">
+<tr><th>ID</th><th>Stata commands</th><th class="what">What it tests</th></tr>
+<tr><td class="id">E01</td><td><pre>use data/favara_imbs.dta, clear
+did_multiplegt_dyn Dl_hpi county year inter_bra, effects(3) placebo(2) cluster(state_n) graph_off</pre></td><td>SEs clustered by state_n<div class="mut">source: R_didgt_polars specs.R</div></td></tr>
+<tr><td class="id">E02</td><td><pre>use data/favara_imbs.dta, clear
+did_multiplegt_dyn Dl_hpi county year inter_bra, effects(3) placebo(2) cluster(state_n) weight(w1) graph_off</pre></td><td>SEs clustered by state_n; weighted by w1<div class="mut">source: R_didgt_polars specs.R</div></td></tr>
+<tr><td class="id">E03</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(3) placebo(2) predict_het(coastal,all) graph_off</pre></td><td>heterogeneity regressions (coastal,all)<div class="mut">source: R_didgt_polars specs.R</div></td></tr>
+<tr><td class="id">E04</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(3) placebo(2) by(coastal) graph_off</pre></td><td>separately by coastal<div class="mut">source: R_didgt_polars specs.R</div></td></tr>
+<tr><td class="id">E05</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(3) placebo(2) normalized normalized_weights graph_off</pre></td><td>normalized effects; weights of the normalized effects<div class="mut">source: R_didgt_polars specs.R</div></td></tr>
+<tr><td class="id">E06</td><td><pre>use data/deryugina_2017.dta, clear
+did_multiplegt_dyn log_curr_trans_ind_gov_pc county_fips year hurricane, effects(3) placebo(2) drop_if_d_miss_before_first_switch graph_off</pre></td><td>drops groups with missing treatment before the first switch<div class="mut">source: R_didgt_polars specs.R</div></td></tr>
+</table></div>
+<h2 id="block-F">Block F</h2>
+<p class="mut"><code>by_path</code>: earlier by_path tests, help-file examples and <code>by_path</code> × each option</p>
+<div class="t"><table class="specs">
+<tr><th>ID</th><th>Stata commands</th><th class="what">What it tests</th></tr>
+<tr><td class="id">F01</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(2) placebo(1) by_path(3) graph_off</pre></td><td>separately by treatment path (3)<div class="mut">source: DCDH_TODO tests_by_path/cases.csv (book CQ#45b + placebo)</div></td></tr>
+<tr><td class="id">F02</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(3) placebo(1) by_path(3) graph_off</pre></td><td>separately by treatment path (3)<div class="mut">source: DCDH_TODO tests_by_path/cases.csv</div></td></tr>
+<tr><td class="id">F03</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(3) placebo(1) by_path(all) graph_off</pre></td><td>separately by treatment path (all)<div class="mut">source: DCDH_TODO tests_by_path/cases.csv</div></td></tr>
+<tr><td class="id">F04</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(2) placebo(1) by_path(99) graph_off</pre></td><td>separately by treatment path (99)<div class="mut">source: DCDH_TODO tests_by_path/cases.csv (# &gt; number of paths)</div></td></tr>
+<tr><td class="id">F05</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(3) placebo(1) by_path(3) controls(hours) graph_off</pre></td><td>separately by treatment path (3); controls: hours<div class="mut">source: DCDH_TODO tests_by_path/cases.csv</div></td></tr>
+<tr><td class="id">F06</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(3) placebo(1) by_path(3) weight(educ) graph_off</pre></td><td>separately by treatment path (3); weighted by educ<div class="mut">source: DCDH_TODO tests_by_path/cases.csv</div></td></tr>
+<tr><td class="id">F07</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(3) placebo(1) by_path(3) normalized graph_off</pre></td><td>separately by treatment path (3); normalized effects<div class="mut">source: DCDH_TODO tests_by_path/cases.csv</div></td></tr>
+<tr><td class="id">F08</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(3) placebo(1) by_path(3) switchers(in) graph_off</pre></td><td>separately by treatment path (3); only switchers in<div class="mut">source: DCDH_TODO tests_by_path/cases.csv</div></td></tr>
+<tr><td class="id">F09</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(3) placebo(1) by_path(3) switchers(out) graph_off</pre></td><td>separately by treatment path (3); only switchers out<div class="mut">source: DCDH_TODO tests_by_path/cases.csv</div></td></tr>
+<tr><td class="id">F10</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(3) placebo(1) by_path(3) only_never_switchers graph_off</pre></td><td>separately by treatment path (3); only never-switchers as controls<div class="mut">source: DCDH_TODO tests_by_path/cases.csv</div></td></tr>
+<tr><td class="id">F11</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(2) placebo(1) by_path(3) cluster(st) graph_off</pre></td><td>separately by treatment path (3); SEs clustered by st<div class="mut">source: DCDH_TODO tests_by_path/cases.csv</div></td></tr>
+<tr><td class="id">F12</td><td><pre>use data/favara_imbs.dta, clear
+did_multiplegt_dyn Dl_hpi county year inter_bra, effects(8) placebo(3) cluster(state_n) by_path(2) graph_off</pre></td><td>SEs clustered by state_n; separately by treatment path (2)<div class="mut">source: Stata help file example</div></td></tr>
+<tr><td class="id">F13</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(1) by_path(all) graph_off</pre></td><td>separately by treatment path (all)<div class="mut">source: DCDH_TODO tests_by_path/cases.csv (multi-digit treatment values)</div></td></tr>
+<tr><td class="id">F14</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) by_path(3) graph_off</pre></td><td>separately by treatment path (3)<div class="mut">source: py_did_multiplegt_dyn pytest test_by_path_stratification</div></td></tr>
+<tr><td class="id">F15</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) by_path(all) graph_off</pre></td><td>separately by treatment path (all)<div class="mut">source: py_did_multiplegt_dyn pytest test_by_path_all</div></td></tr>
+<tr><td class="id">F16</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) by_path(6) graph_off</pre></td><td>separately by treatment path (6)<div class="mut">source: DCDH_TODO code/testing_updates.ipynb</div></td></tr>
+<tr><td class="id">F17</td><td><pre>use data/favara_imbs.dta, clear
+did_multiplegt_dyn Dl_vloans_b county year inter_bra, effects(8) placebo(3) cluster(state_n) normalized same_switchers effects_equal(all) by_path(all) graph_off</pre></td><td>SEs clustered by state_n; normalized effects; same switchers for all effects; test that effects are equal (all); separately by treatment path (all)<div class="mut">source: DCDH_TODO .Rhistory (by_path = -1)</div></td></tr>
+<tr><td class="id">F18</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) normalized by_path(4) graph_off</pre></td><td>normalized effects; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F19</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) controls(hours) by_path(4) graph_off</pre></td><td>controls: hours; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F20</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) trends_nonparam(black) by_path(4) graph_off</pre></td><td>non-parametric trends by black; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F21</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) trends_lin by_path(4) graph_off</pre></td><td>group-specific linear trends; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F22</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) continuous(1) by_path(4) graph_off</pre></td><td>continuous period-one treatment (polynomial of order 1); separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F23</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) weight(educ) by_path(4) graph_off</pre></td><td>weighted by educ; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F24</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) cluster(hisp) by_path(4) graph_off</pre></td><td>SEs clustered by hisp; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F25</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) same_switchers by_path(4) graph_off</pre></td><td>same switchers for all effects; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F26</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) same_switchers same_switchers_pl by_path(4) graph_off</pre></td><td>same switchers for all effects; same switchers for effects and placebos; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F27</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) switchers(in) by_path(4) graph_off</pre></td><td>only switchers in; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F28</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) switchers(out) by_path(4) graph_off</pre></td><td>only switchers out; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F29</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) only_never_switchers by_path(4) graph_off</pre></td><td>only never-switchers as controls; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F30</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) ci_level(90) by_path(4) graph_off</pre></td><td>90% confidence intervals; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F31</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) ci_level(99) by_path(4) graph_off</pre></td><td>99% confidence intervals; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F32</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) less_conservative_se by_path(4) graph_off</pre></td><td>less conservative standard errors; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F33</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) dont_drop_larger_lower by_path(4) graph_off</pre></td><td>keeps cells with treatment above and below baseline; separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F34</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) effects_equal(all) by_path(4) graph_off</pre></td><td>test that effects are equal (all); separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+<tr><td class="id">F35</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(5) placebo(2) continuous(4) by_path(4) graph_off</pre></td><td>continuous period-one treatment (polynomial of order 4); separately by treatment path (4)<div class="mut">source: new: by_path(4) x tests_stata.do option</div></td></tr>
+</table></div>
+<h2 id="block-G">Block G</h2>
+<p class="mut"><code>reset</code> and <code>avg_time_periods</code> (need a Stata ado that has them)</p>
+<div class="t"><table class="specs">
+<tr><th>ID</th><th>Stata commands</th><th class="what">What it tests</th></tr>
+<tr><td class="id">G01</td><td><pre>use data/gentzkowetal_didtextbook_balanced.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) avg_time_periods graph_off</pre></td><td>average number of periods effects accumulate<div class="mut">source: DCDH_TODO tests_R b1</div></td></tr>
+<tr><td class="id">G02</td><td><pre>use data/gentzkowetal_didtextbook_balanced.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) avg_time_periods reset(4) graph_off</pre></td><td>average number of periods effects accumulate; reset(4): new subgroup after 4 unchanged periods<div class="mut">source: DCDH_TODO tests_R b2</div></td></tr>
+<tr><td class="id">G03</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(4) avg_time_periods graph_off</pre></td><td>average number of periods effects accumulate<div class="mut">source: DCDH_TODO tests_R b3</div></td></tr>
+<tr><td class="id">G04</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(4) avg_time_periods reset(4) graph_off</pre></td><td>average number of periods effects accumulate; reset(4): new subgroup after 4 unchanged periods<div class="mut">source: DCDH_TODO tests_R b4</div></td></tr>
+<tr><td class="id">G05</td><td><pre>use data/favara_imbs.dta, clear
+did_multiplegt_dyn Dl_hpi county year inter_bra, effects(4) avg_time_periods graph_off</pre></td><td>average number of periods effects accumulate<div class="mut">source: DCDH_TODO tests_R b5</div></td></tr>
+<tr><td class="id">G06</td><td><pre>use data/favara_imbs.dta, clear
+did_multiplegt_dyn Dl_hpi county year inter_bra, effects(4) avg_time_periods reset(4) graph_off</pre></td><td>average number of periods effects accumulate; reset(4): new subgroup after 4 unchanged periods<div class="mut">source: DCDH_TODO tests_R b6</div></td></tr>
+<tr><td class="id">G07</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) placebo(4) effects_equal(all) cluster(cnty90) graph_off</pre></td><td>test that effects are equal (all); SEs clustered by cnty90 <span class="mut">(also compared with saved Stata results)</span><div class="mut">source: DCDH_TODO code/*.do -&gt; data/reference_stata/gentzkow_noreset_option.dta</div></td></tr>
+<tr><td class="id">G08</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) placebo(4) effects_equal(all) cluster(cnty90) reset(1) graph_off</pre></td><td>test that effects are equal (all); SEs clustered by cnty90; reset(1): new subgroup after 1 unchanged periods <span class="mut">(also compared with saved Stata results)</span><div class="mut">source: DCDH_TODO code/*.do -&gt; gentzkow_reset1_option.dta</div></td></tr>
+<tr><td class="id">G09</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) placebo(4) effects_equal(all) cluster(cnty90) reset(4) graph_off</pre></td><td>test that effects are equal (all); SEs clustered by cnty90; reset(4): new subgroup after 4 unchanged periods <span class="mut">(also compared with saved Stata results)</span><div class="mut">source: DCDH_TODO code/*.do -&gt; gentzkow_reset4_option.dta</div></td></tr>
+<tr><td class="id">G10</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(4) placebo(4) effects_equal(all) cluster(cnty90) reset(1) normalized graph_off</pre></td><td>test that effects are equal (all); SEs clustered by cnty90; reset(1): new subgroup after 1 unchanged periods; normalized effects <span class="mut">(also compared with saved Stata results)</span><div class="mut">source: DCDH_TODO code/*.do -&gt; gentzkow_reset1_norm_option.dta</div></td></tr>
+<tr><td class="id">G11</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(3) placebo(1) reset(4) by_path(3) graph_off</pre></td><td>reset(4): new subgroup after 4 unchanged periods; separately by treatment path (3)<div class="mut">source: new: reset x by_path</div></td></tr>
+<tr><td class="id">G12</td><td><pre>use data/gentzkowetal_didtextbook.dta, clear
+did_multiplegt_dyn prestout cnty90 year numdailies, effects(2) placebo(1) reset(4) by_path(3) graph_off</pre></td><td>reset(4): new subgroup after 4 unchanged periods; separately by treatment path (3)<div class="mut">source: new: reset x by_path</div></td></tr>
+<tr><td class="id">G13</td><td><pre>use data/favara_imbs.dta, clear
+did_multiplegt_dyn Dl_hpi county year inter_bra, effects(3) placebo(2) cluster(state_n) reset(4) by_path(2) graph_off</pre></td><td>SEs clustered by state_n; reset(4): new subgroup after 4 unchanged periods; separately by treatment path (2)<div class="mut">source: new: reset x by_path</div></td></tr>
+<tr><td class="id">G14</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(4) placebo(2) reset(4) normalized graph_off</pre></td><td>reset(4): new subgroup after 4 unchanged periods; normalized effects<div class="mut">source: new: reset x option</div></td></tr>
+<tr><td class="id">G15</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(4) placebo(2) reset(4) controls(hours) graph_off</pre></td><td>reset(4): new subgroup after 4 unchanged periods; controls: hours<div class="mut">source: new: reset x option</div></td></tr>
+<tr><td class="id">G16</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(4) placebo(2) reset(4) weight(educ) graph_off</pre></td><td>reset(4): new subgroup after 4 unchanged periods; weighted by educ<div class="mut">source: new: reset x option</div></td></tr>
+<tr><td class="id">G17</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(4) placebo(2) reset(4) cluster(hisp) graph_off</pre></td><td>reset(4): new subgroup after 4 unchanged periods; SEs clustered by hisp<div class="mut">source: new: reset x option</div></td></tr>
+<tr><td class="id">G18</td><td><pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(4) placebo(2) reset(2) avg_time_periods graph_off</pre></td><td>reset(2): new subgroup after 2 unchanged periods; average number of periods effects accumulate<div class="mut">source: new: reset x avg_time_periods</div></td></tr>
+</table></div>
+<h2 id="block-H">Block H: input checks</h2>
+<p class="mut">Each check runs the command below with one option added and records whether Stata accepts it (results are produced) or rejects it.</p>
+<pre>use data/wagepan.dta, clear
+did_multiplegt_dyn lwage nr year union, effects(2) placebo(0) graph_off &lt;option&gt;</pre>
+<div class="t"><table class="specs" style="margin-top:8px">
+<tr><th>ID</th><th>Option</th><th>Expected in Stata</th><th class="what">Why</th></tr>
+<tr><td class="id">H01</td><td><code>by_path(2)</code></td><td>accepted</td><td>valid positive integer</td></tr>
+<tr><td class="id">H02</td><td><code>by_path(all)</code></td><td>accepted</td><td>valid keyword</td></tr>
+<tr><td class="id">H03</td><td><code>by_path(ALL)</code></td><td>rejected</td><td>Stata only accepts lowercase all</td></tr>
+<tr><td class="id">H04</td><td><code>by_path(0)</code></td><td>rejected</td><td>zero is not a positive integer</td></tr>
+<tr><td class="id">H05</td><td><code>by_path(-1)</code></td><td>rejected</td><td>negative integer (R/Python docs once documented -1 as all)</td></tr>
+<tr><td class="id">H06</td><td><code>by_path(-3)</code></td><td>rejected</td><td>negative integer</td></tr>
+<tr><td class="id">H07</td><td><code>by_path(2.5)</code></td><td>rejected</td><td>non-integer</td></tr>
+<tr><td class="id">H08</td><td><code>by_path(abc)</code></td><td>rejected</td><td>arbitrary string</td></tr>
+<tr><td class="id">H09</td><td><code>by_path(-1)</code></td><td>rejected</td><td>negative number passed as text</td></tr>
+<tr><td class="id">H10</td><td><code>by_path(2) by(black)</code></td><td>rejected</td><td>by() and by_path() cannot be combined</td></tr>
+<tr><td class="id">H11</td><td><code>by_path(2) graphoptions(title(x))</code></td><td>rejected</td><td>by_path() does not allow graphoptions()</td></tr>
+<tr><td class="id">H12</td><td><code>reset(1)</code></td><td>accepted</td><td>valid reset</td></tr>
+<tr><td class="id">H13</td><td><code>reset(-1)</code></td><td>rejected</td><td>negative reset</td></tr>
+<tr><td class="id">H14</td><td><code>reset(2.5)</code></td><td>rejected</td><td>non-integer reset</td></tr>
+</table></div>
+<script>
+(function(){var q=document.getElementById('q');if(!q)return;
+q.addEventListener('input',function(){var t=q.value.toLowerCase();
+document.querySelectorAll('table.specs tr').forEach(function(r,i){if(!r.querySelector('td'))return;
+r.style.display=!t||r.textContent.toLowerCase().indexOf(t)>-1?'':'none';});});})();
+</script>
+</body>
+</html>
