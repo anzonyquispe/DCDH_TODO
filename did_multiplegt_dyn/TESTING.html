@@ -5,84 +5,146 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Testing did_multiplegt_dyn</title>
 <style>
-:root{--bg:#fff;--fg:#1d1d1f;--mut:#666;--code:#f3f3f5;--line:#ddd;--acc:#0b5cad}
-@media (prefers-color-scheme:dark){:root{--bg:#161618;--fg:#e8e8ea;--mut:#9a9aa0;--code:#232327;--line:#333;--acc:#6aa8ff}}
-body{background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,sans-serif;max-width:760px;margin:0 auto;padding:24px 16px}
-h1{font-size:1.6em;margin:0 0 4px}h2{font-size:1.15em;margin:28px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+:root{--bg:#fff;--fg:#1d1d1f;--mut:#666;--code:#f3f3f5;--line:#ddd;--acc:#0b5cad;--note:#fff6e0;--noteb:#e6c66a}
+@media (prefers-color-scheme:dark){:root{--bg:#161618;--fg:#e8e8ea;--mut:#9a9aa0;--code:#232327;--line:#333;--acc:#6aa8ff;--note:#2b2618;--noteb:#7a6630}}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,sans-serif;max-width:780px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.6em;margin:0 0 4px}h2{font-size:1.2em;margin:32px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+h3{font-size:1.02em;margin:20px 0 6px}
 p.sub{color:var(--mut);margin:0 0 8px}
 pre,code{background:var(--code);border-radius:6px;font:14px/1.45 ui-monospace,Consolas,monospace}
 pre{padding:10px 12px;overflow-x:auto}code{padding:1px 4px}pre code{padding:0}
 table{border-collapse:collapse;width:100%;font-size:15px}td{border-bottom:1px solid var(--line);padding:5px 6px;vertical-align:top}
 td:first-child{white-space:nowrap;font-weight:600}a{color:var(--acc)}
+.note{background:var(--note);border-left:3px solid var(--noteb);padding:8px 12px;border-radius:4px;margin:10px 0}
+ol li,ul li{margin:3px 0}
 </style>
 </head>
 <body>
 <h1>Testing did_multiplegt_dyn</h1>
-<p class="sub">Check that a new Stata, R or Python version still gives Stata's results. Stata is the reference.</p>
+<p class="sub">Check that a new Stata, R or Python version of <code>did_multiplegt_dyn</code> still gives the same results as Stata, the reference. Everything runs on your own computer.</p>
 
-<h2>1. Install once</h2>
+<p>The suite runs 121 specifications and 14 input checks in Stata, R and Python, then compares every result with Stata's.
+Known differences: <a href="DIFFERENCES.html">DIFFERENCES.html</a>. History of fixes: <a href="https://github.com/anzonyquispe/DCDH_TODO/blob/main/did_multiplegt_dyn/CHANGELOG.md">CHANGELOG.md</a>.</p>
+
+<div class="note">Type the commands in a terminal: <b>PowerShell</b> or <b>Git Bash</b> on Windows, <b>Terminal</b> on Mac or Linux. Lines starting with <code>#</code> are comments.
+The R and Stata commands in step 1 go in the R console (or RStudio) and in Stata.
+If <code>python</code> is not found on Windows, use <code>py</code> instead.</div>
+
+<h2>Step 1. Install the software (once)</h2>
+<ol>
+<li><b>Git</b>: <a href="https://git-scm.com/downloads">git-scm.com</a>.</li>
+<li><b>Stata</b> with <code>gtools</code> (tested with Stata 18 MP). In Stata:
+<pre><code>ssc install gtools, replace</code></pre></li>
+<li><b>R</b> (tested with R 4.5). In the R console:
+<pre><code>install.packages(c("haven", "pkgload", "data.table", "MASS", "fixest", "dplyr", "ggplot2",
+                   "openxlsx", "car", "lmtest", "sandwich", "cowplot", "rnames", "Rcpp"))
+install.packages("polars", repos = "https://rpolars.r-universe.dev")</code></pre>
+To test R <b>source</b> code (see example A2) you also need a compiler: <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> on Windows, or <code>xcode-select --install</code> on Mac.</li>
+<li><b>Python</b> 3 (tested with 3.12). In the terminal:
+<pre><code>python -m pip install numpy pandas scipy statsmodels matplotlib seaborn pyarrow "polars&gt;=1.3,&lt;2"</code></pre>
+Keep <code>polars</code> below 2: the package does not work with polars 2 yet.</li>
+</ol>
+
+<h2>Step 2. Get the test suite (once)</h2>
+<pre><code>git clone https://github.com/anzonyquispe/DCDH_TODO.git
+cd DCDH_TODO/did_multiplegt_dyn</code></pre>
+<p>All the following commands are run from this <code>did_multiplegt_dyn</code> folder. Next time, update the suite first with <code>git pull</code>.</p>
+
+<h2>Step 3. Make the reference run (once)</h2>
+<p>This runs everything with the versions already installed on your computer, so later runs have something to compare with. It takes about 1½ hours (Stata ~60 min, R ~20 min, Python ~15 min).</p>
+<pre><code># quick check first (about 2 minutes): one spec in each language
+python run_jobs.py --stata-ado installed --r-pkg installed --py-pkg installed --only "A01"
+
+# the full run
+python run_jobs.py --stata-ado installed --r-pkg installed --py-pkg installed</code></pre>
+<p><code>installed</code> means "the version installed in Stata / R / Python". It is never assumed: you always say which version each language uses.</p>
+<p>To keep this result for later, copy the <code>results</code> folder, e.g. to <code>results_reference</code>.</p>
+
+<h2>Step 4. Test a new version from a zip file</h2>
+<p>Create a folder called <code>new_versions</code> inside <code>did_multiplegt_dyn</code> (Git ignores it) and <b>copy the zip file into it</b>. Then unzip it there and point the suite at the unzipped folder.
+The command <code>python -m zipfile -e &lt;zip&gt; &lt;folder&gt;</code> unzips on every system:</p>
+<pre><code>mkdir new_versions</code></pre>
+<p>
+Use <code>--skip</code> to reuse the last results of the languages you are not testing: only the new version is run, and it is compared with Stata's results from step 3.</p>
+
+<h3>A. New R version</h3>
+<p>First look at what the zip contains after unzipping:</p>
 <ul>
-<li><b>Stata</b> with <code>gtools</code> (<code>ssc install gtools</code>).</li>
-<li><b>R</b> with <code>haven</code>, <code>polars</code> (<code>install.packages("polars", repos = "https://rpolars.r-universe.dev")</code>) and <code>pkgload</code>.</li>
-<li><b>Python</b> with <code>numpy pandas "polars&lt;2"</code>.</li>
-<li>On Windows, run the commands below from <b>Git Bash</b>, inside the <code>did_multiplegt_dyn/</code> folder.</li>
+<li>a folder with <code>libs</code> inside: a <b>ready-built</b> package (e.g. a Windows <code>.zip</code> from CRAN or a colleague) → example A1;</li>
+<li>a folder with <code>DESCRIPTION</code>, <code>R</code>, <code>man</code> and <code>src</code> inside: <b>source code</b> (e.g. GitHub's "Download ZIP") → example A2.</li>
 </ul>
+<p><b>A1. Ready-built zip</b>, e.g. <code>DIDmultiplegtDYN_2.5.0.zip</code>, copied into <code>new_versions</code>:</p>
+<pre><code>python -m zipfile -e new_versions/DIDmultiplegtDYN_2.5.0.zip new_versions/R_2.5.0
+python run_jobs.py --r-pkg new_versions/R_2.5.0 --skip stata,python</code></pre>
+<p>(<code>new_versions/R_2.5.0</code> now contains the folder <code>DIDmultiplegtDYN</code>; the suite loads it from there without installing it.)</p>
+<p><b>A2. Source zip</b>, e.g. <code>did_multiplegt_dyn-main.zip</code> downloaded from GitHub (it contains the R and Stata code):</p>
+<pre><code>python -m zipfile -e new_versions/did_multiplegt_dyn-main.zip new_versions
+python run_jobs.py --r-pkg new_versions/did_multiplegt_dyn-main/R --skip stata,python</code></pre>
+<p>Point <code>--r-pkg</code> at the folder that contains <code>DESCRIPTION</code>. The package is compiled on the fly, which needs Rtools on Windows. A source <code>.tar.gz</code> file can also be given directly, without unzipping (it needs Rtools too): <code>--r-pkg new_versions/DIDmultiplegtDYN_2.5.0.tar.gz</code>.</p>
 
-<h2>2. Say which versions to test</h2>
-<p>Nothing is assumed. Each option takes <code>installed</code> or a path:</p>
+<h3>B. New Python version</h3>
+<p>E.g. <code>py_did_multiplegt_dyn-main.zip</code> downloaded from GitHub (or a zip of a branch):</p>
+<pre><code>python -m zipfile -e new_versions/py_did_multiplegt_dyn-main.zip new_versions
+python run_jobs.py --py-pkg new_versions/py_did_multiplegt_dyn-main/src --skip stata,r</code></pre>
+<p>Point <code>--py-pkg</code> at the folder that <b>contains</b> the <code>did_multiplegt_dyn</code> package folder (here <code>src</code>). Nothing is installed: your installed version stays as it is.</p>
+
+<h3>C. New Stata version</h3>
+<p>E.g. <code>did_multiplegt_dyn_stata.zip</code> containing <code>did_multiplegt_dyn.ado</code> (and its <code>.sthlp</code>):</p>
+<pre><code>python -m zipfile -e new_versions/did_multiplegt_dyn_stata.zip new_versions/stata_new
+python run_jobs.py --stata-ado new_versions/stata_new --skip r,python</code></pre>
+<p>Point <code>--stata-ado</code> at the folder that contains <code>did_multiplegt_dyn.ado</code> (if the zip has a subfolder, add it to the path). Your installed ado is not touched.
+Stata is the reference, so this re-runs Stata (~60 min, 6 specs at a time) and compares R's and Python's last results with the new Stata.</p>
+
+<h3>Several new versions at once</h3>
+<pre><code>python run_jobs.py --stata-ado new_versions/stata_new --r-pkg new_versions/R_2.5.0 --py-pkg new_versions/py_did_multiplegt_dyn-main/src</code></pre>
+<p>Useful options: <code>--only "A01 D18"</code> runs only some specs; <code>--merge-only</code> re-does the comparison without running anything; <code>--stata-workers 3</code> runs fewer Stata jobs at a time (less memory).</p>
+
+<h2>Step 5. Read the result</h2>
+<p>The last line in the terminal says <code>RESULT: ALL CHECKS PASSED</code> or the number of failed checks. Then open:</p>
 <table>
-<tr><td>--stata-ado</td><td><code>installed</code>, or the folder or file containing <code>did_multiplegt_dyn.ado</code></td></tr>
-<tr><td>--r-pkg</td><td><code>installed</code>, a source folder (with <code>DESCRIPTION</code>), or a <code>.tar.gz</code></td></tr>
-<tr><td>--py-pkg</td><td><code>installed</code>, or the folder containing the <code>did_multiplegt_dyn</code> package (e.g. <code>…/src</code>)</td></tr>
+<tr><td>results/report.txt</td><td>One verdict per spec and language, then all problems grouped by kind.</td></tr>
+<tr><td>results/details.csv</td><td>Every single check: spec, element, Stata's value, the other language's value, difference.</td></tr>
+<tr><td>results/jobs/&lt;lang&gt;/&lt;spec&gt;/console.log</td><td>The output of one job, if it crashed.</td></tr>
 </table>
-<p>To test a branch that is not released yet, check it out in the package's repository and point the option at its source folder. For example, for the Python fixes on branch <code>fix_bypath_weights</code>:</p>
-<pre><code>git -C ../../py_did_multiplegt_dyn checkout fix_bypath_weights
-python run_jobs.py --py-pkg ../../py_did_multiplegt_dyn/src --skip stata,r</code></pre>
-
-<h2>3. Run</h2>
-<p>Every spec runs as its own job. Stata runs 6 at a time, then R and Python run one spec at a time. A full run takes about 1 hour.</p>
-<pre><code>python run_jobs.py --stata-ado installed --r-pkg installed --py-pkg installed</code></pre>
-<p>Useful variants:</p>
-<pre><code># only the package you changed (Stata's last results are reused)
-python run_jobs.py --r-pkg ../../did_multiplegt_dyn/R --skip stata,python
-
-# a few specs
-python run_jobs.py --stata-ado installed --r-pkg installed --py-pkg installed --only "A01 D10"
-
-# re-merge existing jobs and compare again, without running anything
-python run_jobs.py --merge-only</code></pre>
-
-<h2>4. Read the result</h2>
-<p>Open <code>results/report.txt</code>. It gives one verdict per spec and language, then every problem grouped by kind. Every single check is in <code>results/details.csv</code>.</p>
+<h3>Verdicts</h3>
 <table>
-<tr><td>PASS</td><td>Equal to Stata within 1e-7 + 1e-6·|x|. Counts must be exactly equal.</td></tr>
+<tr><td>PASS</td><td>Equal to Stata within 1e-7 + 1e-6·|x|; counts exactly equal.</td></tr>
 <tr><td>WARN</td><td>Everything compared passes; the language also returns something Stata does not store (e.g. <code>N_*_w</code> without weights). Not a failure.</td></tr>
-<tr><td>PASS*</td><td>Everything compared passes; some output of an option is NOT_SUPPORTED in this language.</td></tr>
+<tr><td>PASS*</td><td>Everything compared passes; an option's output is NOT_SUPPORTED in this language.</td></tr>
 <tr><td>FAIL / MISSING / ERROR</td><td>A value differs, is not returned, or the run crashed. <b>Investigate these.</b></td></tr>
-<tr><td>NOT_SUPPORTED</td><td>The language lacks that option (listed in <code>specs/not_supported.csv</code>). This is not a failure.</td></tr>
-<tr><td>STATA_NOT_SUPPORTED</td><td>The Stata ado under test can't run the spec, so there is no reference.</td></tr>
+<tr><td>NOT_SUPPORTED</td><td>The language lacks the option (<code>specs/not_supported.csv</code>). Not a failure.</td></tr>
+<tr><td>STATA_NOT_SUPPORTED / STATA_ERROR</td><td>The Stata ado under test cannot run the spec, so there is no reference.</td></tr>
 </table>
-<p>Everything is OK when the last line says <code>RESULT: ALL CHECKS PASSED</code> (exit code 0). To see whether a release fixed or broke something, compare against the report from a run on the previous version.</p>
-<p>Three comparison rules to know:</p>
+<h3>Did the new version fix or break something?</h3>
+<p>Compare the new <code>results/report.txt</code> with the one saved in step 3 (<code>results_reference/report.txt</code>), and check <a href="DIFFERENCES.html">DIFFERENCES.html</a> for differences already known.
+When you fix something, add an entry to <code>CHANGELOG.md</code>.</p>
+<h3>Comparison rules</h3>
 <ul>
 <li><code>e(b)</code> is not compared: its numbers are compared one by one as <code>Effect_#</code>, <code>Placebo_#</code>, <code>Av_tot_effect</code> and their <code>se_*</code>.</li>
 <li>With <code>weight()</code>, Stata's <code>e(N_*)</code> scalars hold the <b>weighted</b> count; they are compared with R/Python <code>N_*_w</code>. Stata's table is compared with their unweighted <code>N</code>.</li>
 <li>The <code>Av_tot_eff</code> row of <code>e(V)</code>: its diagonal is compared with the SE² of the R/Python <code>ATE</code> table; its zero covariances are Stata placeholders and are not compared.</li>
 </ul>
-<p>Differences already known: <a href="DIFFERENCES.html">DIFFERENCES.html</a>. Fixes and changes to the suite: <a href="https://github.com/anzonyquispe/DCDH_TODO/blob/main/did_multiplegt_dyn/CHANGELOG.md">CHANGELOG.md</a>.</p>
-<p>If a job crashes, look at <code>results/jobs/&lt;lang&gt;/&lt;spec&gt;/console.log</code>.</p>
 
-<h2>5. Where things are</h2>
+<h2>If something goes wrong</h2>
 <table>
-<tr><td>specs/specs.csv</td><td>The 121 specifications, written in Stata syntax. Add a row to add a test.</td></tr>
+<tr><td>Stata not found</td><td>On Windows the suite looks in <code>C:\Program Files\Stata*</code>. Otherwise set its path, e.g. on Mac: <code>export STATA_BIN=/Applications/Stata/StataMP.app/Contents/MacOS/stata-mp</code>; in PowerShell: <code>$env:STATA_BIN = "D:\Stata18\StataMP-64.exe"</code>.</td></tr>
+<tr><td>Rscript not found</td><td>Add R's <code>bin</code> folder to your PATH, or set <code>RSCRIPT</code> the same way as <code>STATA_BIN</code>.</td></tr>
+<tr><td>"Could not find tools necessary to compile a package"</td><td>You gave R source code (example A2) without Rtools. Install Rtools, or use a ready-built zip (A1).</td></tr>
+<tr><td>Python: <code>pl.count</code> error</td><td>polars 2 is installed: <code>python -m pip install "polars&gt;=1.3,&lt;2"</code>.</td></tr>
+<tr><td>A job says DID NOT FINISH</td><td>Read its <code>console.log</code>. "memory allocation failed" means the computer ran out of memory: close other programs or use <code>--stata-workers 3</code>. The largest spec (D10) needs about 6 GB.</td></tr>
+</table>
+
+<h2>Where things are</h2>
+<table>
+<tr><td>specs/specs.csv</td><td>The 121 specifications, in Stata syntax. Add a row to add a test.</td></tr>
 <tr><td>specs/option_map.csv</td><td>Stata option → R / Python argument. Add a row for every new option.</td></tr>
 <tr><td>specs/element_map.csv</td><td>Where each Stata <code>e()</code> result is found in the R and Python objects.</td></tr>
 <tr><td>specs/validation.csv</td><td>Inputs that must be accepted or rejected.</td></tr>
-<tr><td>CHANGELOG.md</td><td>One entry per issue found: symptom, cause, fix, evidence. Add an entry for every fix.</td></tr>
-<tr><td>R_bootstrap/</td><td>Bootstrap tests for R. They run separately; see their README.</td></tr>
+<tr><td>CHANGELOG.md</td><td>One entry per issue found: symptom, cause, fix, evidence.</td></tr>
+<tr><td>R_bootstrap/</td><td>Bootstrap tests for R; they run separately (see their README).</td></tr>
 </table>
 
 <h2>Status (22 Nov 2026)</h2>
-<p>Stata ado dated January 17th, 2026 (reference), R 2.4.0, Python from branch <code>fix_bypath_weights</code>. Of the 121 specs, 97 have a Stata reference. Python passes 78 of them (PASS, WARN or PASS*) and R passes 1. Both pass 8 of the 10 input checks that Stata can run. Details: <a href="DIFFERENCES.html">DIFFERENCES.html</a>.</p>
+<p>Stata ado dated January 17th, 2026 (reference), R 2.4.0, Python from branch <code>fix_bypath_weights</code>. Of the 121 specs, 97 have a Stata reference: Python passes 78 of them and R passes 1. Details: <a href="DIFFERENCES.html">DIFFERENCES.html</a>.</p>
 </body>
 </html>

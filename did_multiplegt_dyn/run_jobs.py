@@ -139,6 +139,13 @@ def main():
     skip = set(filter(None, a.skip.split(",")))
     langs = [l for l in ("stata", "r", "python") if l not in skip]
     need = {"stata": a.stata_ado, "r": a.r_pkg, "python": a.py_pkg}
+    # Jobs run inside their own folders, so a relative package path (e.g.
+    # new_versions/R_2.5.0) must be made absolute here, against the folder
+    # the command was started from.
+    def absolute(p):
+        return p if p in ("", "installed") else str(Path(p).expanduser().resolve())
+    a.stata_ado, a.r_pkg, a.py_pkg = absolute(a.stata_ado), absolute(a.r_pkg), absolute(a.py_pkg)
+    need = {"stata": a.stata_ado, "r": a.r_pkg, "python": a.py_pkg}
     for l in langs:
         if not need[l] and not a.merge_only:
             sys.exit(f"ERROR: say which {l} package to test (--stata-ado / --r-pkg / --py-pkg); nothing is assumed.")
