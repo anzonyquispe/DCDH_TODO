@@ -4,3 +4,5 @@ R_bootstrap/results/
 __pycache__/
 *.log
 full_run_console.txt
+new_versions/
+results_*/
