@@ -109,11 +109,7 @@ emit_unit <- function(spec, unit, u, top = u) {
   emit(spec, unit, "e_macro", "cmd", "did_multiplegt_dyn")
   if (!is.null(R$Effects)) emit(spec, unit, "e_macro", "effects", paste(trimws(rownames(as.matrix(R$Effects))), collapse = " "))
   if (!is.null(R$Placebos)) emit(spec, unit, "e_macro", "placebo", paste(trimws(rownames(as.matrix(R$Placebos))), collapse = " "))
-  cf <- u$coef
-  if (!is.null(cf$b)) {
-    b <- cf$b
-    for (j in seq_along(b)) emit(spec, unit, "e_matrix", "b", num(b[j]), row = 1, col = j, colname = trimws(names(b)[j]))
-  }
+  cf <- u$coef  # e(b) is not compared (see specs/stata_only.csv)
   if (!is.null(cf$vcov)) {
     V <- as.matrix(cf$vcov)
     for (i in seq_len(nrow(V))) for (j in seq_len(ncol(V)))

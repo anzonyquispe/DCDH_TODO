@@ -1,0 +1,11 @@
+vcase_id,outcome,message
+v_int2,accepted,
+v_all,accepted,
+v_ALL,accepted,
+v_zero,rejected,"ValueError: by_path must be positive, got 0"
+v_minus1,rejected,"ValueError: by_path must be positive, got -1"
+v_minus3,rejected,"ValueError: by_path must be positive, got -3"
+v_frac,rejected,"ValueError: by_path must be 'all' or a positive integer, got <class 'float'>"
+v_abc,rejected,"ValueError: by_path must be 'all' or a positive integer, got 'abc'"
+v_str_minus1,accepted,
+v_with_by,rejected,"ValueError: Cannot specify both 'by' and 'by_path' options. Use 'by' to stratify by a grouping variable, or 'by_path' to stratify by treatment paths."

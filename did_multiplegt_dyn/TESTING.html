@@ -35,6 +35,9 @@ td:first-child{white-space:nowrap;font-weight:600}a{color:var(--acc)}
 <tr><td>--r-pkg</td><td><code>installed</code>, a source folder (with <code>DESCRIPTION</code>), or a <code>.tar.gz</code></td></tr>
 <tr><td>--py-pkg</td><td><code>installed</code>, or the folder containing the <code>did_multiplegt_dyn</code> package (e.g. <code>…/src</code>)</td></tr>
 </table>
+<p>To test a branch that is not released yet, check it out in the package's repository and point the option at its source folder. For example, for the Python fixes on branch <code>fix_bypath_weights</code>:</p>
+<pre><code>git -C ../../py_did_multiplegt_dyn checkout fix_bypath_weights
+python run_jobs.py --py-pkg ../../py_did_multiplegt_dyn/src --skip stata,r</code></pre>
 
 <h2>3. Run</h2>
 <p>Every spec runs as its own job. Stata runs 6 at a time, then R and Python run one spec at a time. A full run takes about 1 hour.</p>
@@ -53,11 +56,20 @@ python run_jobs.py --merge-only</code></pre>
 <p>Open <code>results/report.txt</code>. It gives one verdict per spec and language, then every problem grouped by kind. Every single check is in <code>results/details.csv</code>.</p>
 <table>
 <tr><td>PASS</td><td>Equal to Stata within 1e-7 + 1e-6·|x|. Counts must be exactly equal.</td></tr>
+<tr><td>WARN</td><td>Everything compared passes; the language also returns something Stata does not store (e.g. <code>N_*_w</code> without weights). Not a failure.</td></tr>
+<tr><td>PASS*</td><td>Everything compared passes; some output of an option is NOT_SUPPORTED in this language.</td></tr>
 <tr><td>FAIL / MISSING / ERROR</td><td>A value differs, is not returned, or the run crashed. <b>Investigate these.</b></td></tr>
 <tr><td>NOT_SUPPORTED</td><td>The language lacks that option (listed in <code>specs/not_supported.csv</code>). This is not a failure.</td></tr>
 <tr><td>STATA_NOT_SUPPORTED</td><td>The Stata ado under test can't run the spec, so there is no reference.</td></tr>
 </table>
 <p>Everything is OK when the last line says <code>RESULT: ALL CHECKS PASSED</code> (exit code 0). To see whether a release fixed or broke something, compare against the report from a run on the previous version.</p>
+<p>Three comparison rules to know:</p>
+<ul>
+<li><code>e(b)</code> is not compared: its numbers are compared one by one as <code>Effect_#</code>, <code>Placebo_#</code>, <code>Av_tot_effect</code> and their <code>se_*</code>.</li>
+<li>With <code>weight()</code>, Stata's <code>e(N_*)</code> scalars hold the <b>weighted</b> count; they are compared with R/Python <code>N_*_w</code>. Stata's table is compared with their unweighted <code>N</code>.</li>
+<li>The <code>Av_tot_eff</code> row of <code>e(V)</code>: its diagonal is compared with the SE² of the R/Python <code>ATE</code> table; its zero covariances are Stata placeholders and are not compared.</li>
+</ul>
+<p>Differences already known: <a href="DIFFERENCES.html">DIFFERENCES.html</a>. Fixes and changes to the suite: <a href="https://github.com/anzonyquispe/DCDH_TODO/blob/main/did_multiplegt_dyn/CHANGELOG.md">CHANGELOG.md</a>.</p>
 <p>If a job crashes, look at <code>results/jobs/&lt;lang&gt;/&lt;spec&gt;/console.log</code>.</p>
 
 <h2>5. Where things are</h2>
@@ -66,16 +78,11 @@ python run_jobs.py --merge-only</code></pre>
 <tr><td>specs/option_map.csv</td><td>Stata option → R / Python argument. Add a row for every new option.</td></tr>
 <tr><td>specs/element_map.csv</td><td>Where each Stata <code>e()</code> result is found in the R and Python objects.</td></tr>
 <tr><td>specs/validation.csv</td><td>Inputs that must be accepted or rejected.</td></tr>
+<tr><td>CHANGELOG.md</td><td>One entry per issue found: symptom, cause, fix, evidence. Add an entry for every fix.</td></tr>
 <tr><td>R_bootstrap/</td><td>Bootstrap tests for R. They run separately; see their README.</td></tr>
 </table>
 
-<h2>Known differences (Nov 2026)</h2>
-<p>Stata ado dated January 17th, 2026, R 2.4.0, Python 0.1.9. These are expected to FAIL until the packages are fixed:</p>
-<ul>
-<li>R: the off-diagonal cells of <code>coef$vcov</code> and <code>N_placebo_#</code> differ from Stata. A20 (<code>continuous(4)</code>) crashes because polars runs out of memory.</li>
-<li>Python: <code>coef['b']</code> is unnamed and lists the effects twice. F10, F13 and F29 crash.</li>
-<li>R and Python: neither includes <code>Av_tot_eff</code> in <code>b</code> or <code>V</code>.</li>
-<li>The installed ado has no <code>reset</code> or <code>avg_time_periods</code>, so block G has no Stata reference. Point <code>--stata-ado</code> at a newer ado to compare it.</li>
-</ul>
+<h2>Status (22 Nov 2026)</h2>
+<p>Stata ado dated January 17th, 2026 (reference), R 2.4.0, Python from branch <code>fix_bypath_weights</code>. Of the 121 specs, 97 have a Stata reference. Python passes 78 of them (PASS, WARN or PASS*) and R passes 1. Both pass 8 of the 10 input checks that Stata can run. Details: <a href="DIFFERENCES.html">DIFFERENCES.html</a>.</p>
 </body>
 </html>

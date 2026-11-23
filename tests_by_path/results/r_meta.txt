@@ -1,0 +1,6 @@
+language=r
+r_version=R version 4.5.0 (2025-04-11 ucrt)
+package_file=C:/Users/eunic/AppData/Local/R/win-library/4.5/DIDmultiplegtDYN
+package_version=2.4.0
+polars_version=2.1.0.9000
+run_at=2026-11-19 14:44:06

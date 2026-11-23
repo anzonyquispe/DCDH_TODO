@@ -243,15 +243,7 @@ def emit_unit(spec, unit, res) -> bool:
     if pl_:
         emit(spec, unit, "e_macro", "placebo", " ".join(pl_))
     coef = res.get("coef") or {}
-    b = coef.get("b")
-    if b is not None:
-        b = np.asarray(b).ravel()
-        # Python returns b without names; Stata's order is Effects, Placebos, Av_tot_eff.
-        names = eff + pl_ + ate
-        if len(names) != len(b):
-            names = [f"b_position_{j + 1}" for j in range(len(b))]
-        for j, v in enumerate(b):
-            emit(spec, unit, "e_matrix", "b", num(v), row=1, col=j + 1, colname=names[j])
+    # e(b) is not compared (see specs/stata_only.csv)
     V = coef.get("vcov")
     if V is not None:
         V = pd.DataFrame(V)

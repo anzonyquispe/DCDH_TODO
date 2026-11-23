@@ -1,0 +1,294 @@
+case,check,status,lang,path,row,field,stata,other,diff,detail
+wagepan_e5p2_bp4,run,PASS,stata,,,,,,,4 paths
+wagepan_e5p2_bp4,run,PASS,r,,,,,,,4 paths
+wagepan_e5p2_bp4,paths,PASS,r,,,,,,,4 paths
+wagepan_e5p2_bp4,values,FAIL,r,"1,0,0,0,0,0",Placebo_1,n,143,0,143,
+wagepan_e5p2_bp4,values,FAIL,r,"1,0,0,0,0,0",Placebo_2,n,58,0,58,
+wagepan_e5p2_bp4,run,PASS,python,,,,,,,4 paths
+wagepan_e5p2_bp4,paths,PASS,python,,,,,,,4 paths
+gentzkow_e2_bp3,run,PASS,stata,,,,,,,3 paths
+gentzkow_e2_bp3,run,PASS,r,,,,,,,3 paths
+gentzkow_e2_bp3,paths,PASS,r,,,,,,,3 paths
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Effect_1,estimate,.013131771079226978,0.01325513923150959,0.000123,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Effect_1,se,.0071358473572292452,0.0071412671952778492,5.42e-06,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Effect_1,lb_ci,-.000854232740117665,-0.00074148727521235712,0.000113,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Effect_1,ub_ci,.027117774898571621,0.027251765738231536,0.000134,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Effect_1,n,4529,4479,50,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Effect_2,estimate,.0093570380096967155,0.010033105686818757,0.000676,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Effect_2,se,.0090552741311404044,0.0090608929199779524,5.62e-06,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Effect_2,lb_ci,-.0083909731574757038,-0.0077259181041119934,0.000665,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Effect_2,ub_ci,.027105049176869137,0.027792129477749505,0.000687,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Effect_2,n,3713,3675,38,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Av_tot_eff,estimate,.011244404628409014,0.011644122459164174,0.0004,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Av_tot_eff,se,.0074428626295563955,0.0074492037846069772,6.34e-06,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Av_tot_eff,lb_ci,-.0033433380674006002,-0.0029560486721649654,0.000387,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Av_tot_eff,ub_ci,.025832147324218627,0.026244293590493312,0.000412,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",Av_tot_eff,n,4894,4843,51,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,1",p_joint_effects,estimate,.17500869844038958,0.17393266648012018,0.00108,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Effect_1,estimate,.014498373055095276,0.014675198001901903,0.000177,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Effect_1,se,.010388914373482033,0.010390331808013548,1.42e-06,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Effect_1,lb_ci,-.0058635249554000023,-0.0056894781292255898,0.000174,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Effect_1,ub_ci,.034860271065590552,0.035039874133029392,0.00018,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Effect_1,n,4373,4323,50,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Effect_2,estimate,.0082605163780797228,0.0092048152072957447,0.000944,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Effect_2,se,.01156391867753436,0.011562913695066714,1e-06,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Effect_2,lb_ci,-.014404347750037669,-0.013458079191379965,0.000946,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Effect_2,ub_ci,.030925380506197114,0.031867709605971455,0.000942,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Effect_2,n,3557,3519,38,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Av_tot_eff,estimate,.022758889700872288,0.023880013209197661,0.00112,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Av_tot_eff,se,.020653179515407755,0.020654240941786622,1.06e-06,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Av_tot_eff,lb_ci,-.017720598315567312,-0.016601555164716755,0.00112,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Av_tot_eff,ub_ci,.063238377717311889,0.064361581583112074,0.00112,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",Av_tot_eff,n,4582,4531,51,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,0",p_joint_effects,estimate,.32227544882090287,0.33244165886955779,0.0102,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Effect_1,estimate,.021204504158926833,0.02170884967157034,0.000504,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Effect_1,lb_ci,.0010102039412480841,0.0015145652656394851,0.000504,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Effect_1,ub_ci,.041398804376605577,0.041903134077501195,0.000504,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Effect_1,n,4317,4267,50,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Effect_2,estimate,.031447314396431045,0.032393703036177827,0.000946,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Effect_2,se,.013273163981329045,0.013279451272429648,6.29e-06,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Effect_2,lb_ci,.0054323910321318475,0.0063664568077611318,0.000934,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Effect_2,ub_ci,.057462237760730242,0.058420949264594527,0.000959,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Effect_2,n,3501,3463,38,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Av_tot_eff,estimate,.01755060624861423,0.018034184235916052,0.000484,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Av_tot_eff,se,.0074216910806011198,0.0074234377272824328,1.75e-06,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Av_tot_eff,lb_ci,.0030043590262538826,0.0034845136489666147,0.00048,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Av_tot_eff,ub_ci,.032096853470974573,0.032583854822865493,0.000487,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",Av_tot_eff,n,4470,4419,51,
+gentzkow_e2_bp3,values,FAIL,r,"0,1,2",p_joint_effects,estimate,.057111116452789212,0.048388627343804003,0.00872,
+gentzkow_e2_bp3,run,PASS,python,,,,,,,3 paths
+gentzkow_e2_bp3,paths,PASS,python,,,,,,,3 paths
+gentzkow_e2p1_bp3,run,PASS,stata,,,,,,,3 paths
+gentzkow_e2p1_bp3,run,PASS,r,,,,,,,3 paths
+gentzkow_e2p1_bp3,paths,PASS,r,,,,,,,3 paths
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Effect_1,estimate,.013131771079226978,0.01325513923150959,0.000123,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Effect_1,se,.0071358473572292452,0.0071412671952778492,5.42e-06,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Effect_1,lb_ci,-.000854232740117665,-0.00074148727521235712,0.000113,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Effect_1,ub_ci,.027117774898571621,0.027251765738231536,0.000134,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Effect_1,n,4529,4479,50,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Effect_2,estimate,.0093570380096967155,0.010033105686818755,0.000676,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Effect_2,se,.0090552741311404044,0.0090608929199779524,5.62e-06,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Effect_2,lb_ci,-.0083909731574757038,-0.0077259181041119951,0.000665,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Effect_2,ub_ci,.027105049176869137,0.027792129477749505,0.000687,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Effect_2,n,3713,3675,38,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Av_tot_eff,estimate,.011244404628409014,0.011644122459164174,0.0004,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Av_tot_eff,se,.0074428626295563955,0.0074492037846069772,6.34e-06,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Av_tot_eff,lb_ci,-.0033433380674006002,-0.0029560486721649654,0.000387,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Av_tot_eff,ub_ci,.025832147324218627,0.026244293590493312,0.000412,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Av_tot_eff,n,4894,4843,51,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Placebo_1,estimate,.0035317057679086386,0.0028626624708018465,0.000669,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Placebo_1,se,.0073253063749328055,0.0073249272196712909,3.79e-07,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Placebo_1,lb_ci,-.010825630902681318,-0.011493931069130995,0.000668,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Placebo_1,ub_ci,.017889042438498596,0.017219256010734686,0.00067,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",Placebo_1,n,3663,3626,37,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,1",p_joint_effects,estimate,.17500869844038958,0.17393266648012018,0.00108,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Effect_1,estimate,.014498373055095276,0.014675198001901903,0.000177,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Effect_1,se,.010388914373482033,0.010390331808013548,1.42e-06,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Effect_1,lb_ci,-.0058635249554000023,-0.0056894781292255898,0.000174,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Effect_1,ub_ci,.034860271065590552,0.035039874133029392,0.00018,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Effect_1,n,4373,4323,50,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Effect_2,estimate,.0082605163780797228,0.0092048152072957464,0.000944,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Effect_2,se,.01156391867753436,0.011562913695066712,1e-06,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Effect_2,lb_ci,-.014404347750037669,-0.01345807919137996,0.000946,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Effect_2,ub_ci,.030925380506197114,0.031867709605971455,0.000942,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Effect_2,n,3557,3519,38,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Av_tot_eff,estimate,.022758889700872288,0.023880013209197665,0.00112,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Av_tot_eff,se,.020653179515407755,0.020654240941786622,1.06e-06,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Av_tot_eff,lb_ci,-.017720598315567312,-0.016601555164716751,0.00112,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Av_tot_eff,ub_ci,.063238377717311889,0.064361581583112087,0.00112,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Av_tot_eff,n,4582,4531,51,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Placebo_1,estimate,-.010367347007768412,-0.010768196823821524,0.000401,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Placebo_1,se,.010761760853859374,0.010760958743595729,8.02e-07,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Placebo_1,lb_ci,-.031460010691565801,-0.03185928840039054,0.000399,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Placebo_1,ub_ci,.010725316676028976,0.01032289475274749,0.000402,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",Placebo_1,n,3508,3471,37,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,0",p_joint_effects,estimate,.32227544882090287,0.33244165886955779,0.0102,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Effect_1,estimate,.021204504158926833,0.021708849671570336,0.000504,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Effect_1,lb_ci,.0010102039412480841,0.0015145652656394851,0.000504,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Effect_1,ub_ci,.041398804376605577,0.041903134077501188,0.000504,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Effect_1,n,4317,4267,50,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Effect_2,estimate,.031447314396431045,0.032393703036177827,0.000946,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Effect_2,se,.013273163981329045,0.013279451272429648,6.29e-06,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Effect_2,lb_ci,.0054323910321318475,0.0063664568077611318,0.000934,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Effect_2,ub_ci,.057462237760730242,0.058420949264594527,0.000959,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Effect_2,n,3501,3463,38,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Av_tot_eff,estimate,.01755060624861423,0.018034184235916052,0.000484,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Av_tot_eff,se,.0074216910806011198,0.0074234377272824328,1.75e-06,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Av_tot_eff,lb_ci,.0030043590262538826,0.0034845136489666147,0.00048,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Av_tot_eff,ub_ci,.032096853470974573,0.032583854822865493,0.000487,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Av_tot_eff,n,4470,4419,51,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Placebo_1,estimate,.0096855140059514937,0.0091797869383835069,0.000506,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Placebo_1,se,.010577705297321004,0.010580907983477834,3.2e-06,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Placebo_1,lb_ci,-.011046407415876215,-0.011558411632965374,0.000512,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Placebo_1,ub_ci,.030417435427779201,0.029917985509732389,0.000499,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",Placebo_1,n,3469,3432,37,
+gentzkow_e2p1_bp3,values,FAIL,r,"0,1,2",p_joint_effects,estimate,.057111116452789212,0.048388627343804003,0.00872,
+gentzkow_e2p1_bp3,run,PASS,python,,,,,,,3 paths
+gentzkow_e2p1_bp3,paths,PASS,python,,,,,,,3 paths
+wagepan_e3p1_bp3,run,PASS,stata,,,,,,,3 paths
+wagepan_e3p1_bp3,run,PASS,r,,,,,,,3 paths
+wagepan_e3p1_bp3,paths,PASS,r,,,,,,,3 paths
+wagepan_e3p1_bp3,values,FAIL,r,"1,0,0,0",Placebo_1,n,263,0,263,
+wagepan_e3p1_bp3,run,PASS,python,,,,,,,3 paths
+wagepan_e3p1_bp3,paths,PASS,python,,,,,,,3 paths
+wagepan_e3p1_all,run,PASS,stata,,,,,,,8 paths
+wagepan_e3p1_all,run,FAIL,r,,,,,,,non-numeric matrix extent
+wagepan_e3p1_all,run,PASS,python,,,,,,,14 paths
+wagepan_e3p1_all,paths,FAIL,python,,,,,,,"extra (Stata does not enumerate): ['0,1,NA,NA', '1,0,NA,NA', '0,1,1,NA', '1,0,1,NA', '0,1,0,NA', '1,0,0,NA']"
+wagepan_e3p1_all,order,WARN,python,,,,,,,"stata: ['0,1,0,0', '0,1,0,1', '0,1,1,0', '0,1,1,1', '1,0,0,0', '1,0,0,1', '1,0,1,0', '1,0,1,1'] | python: ['1,0,0,0', '0,1,0,0', '0,1,1,1', '1,0,1,1', '0,1,0,1', '0,1,1,0', '1,0,1,0', '1,0,0,1', '0,1,NA,NA', '1,0,NA,NA', '0,1,1,NA', '1,0,1,NA', '0,1,0,NA', '1,0,0,NA']"
+wagepan_e2p1_bp99,run,PASS,stata,,,,,,,4 paths
+wagepan_e2p1_bp99,run,FAIL,r,,,,,,,too few arguments
+wagepan_e2p1_bp99,run,PASS,python,,,,,,,6 paths
+wagepan_e2p1_bp99,paths,FAIL,python,,,,,,,"extra (Stata does not enumerate): ['0,1,NA', '1,0,NA']"
+wagepan_e2p1_bp99,order,WARN,python,,,,,,,"stata: ['0,1,0', '0,1,1', '1,0,0', '1,0,1'] | python: ['0,1,0', '1,0,0', '0,1,1', '1,0,1', '0,1,NA', '1,0,NA']"
+wagepan_e3p1_bp3_controls,run,PASS,stata,,,,,,,3 paths
+wagepan_e3p1_bp3_controls,run,PASS,r,,,,,,,3 paths
+wagepan_e3p1_bp3_controls,paths,PASS,r,,,,,,,3 paths
+wagepan_e3p1_bp3_controls,values,FAIL,r,"1,0,0,0",Placebo_1,n,263,0,263,
+wagepan_e3p1_bp3_controls,run,PASS,python,,,,,,,3 paths
+wagepan_e3p1_bp3_controls,paths,PASS,python,,,,,,,3 paths
+wagepan_e3p1_bp3_weight,run,PASS,stata,,,,,,,3 paths
+wagepan_e3p1_bp3_weight,run,PASS,r,,,,,,,3 paths
+wagepan_e3p1_bp3_weight,paths,PASS,r,,,,,,,3 paths
+wagepan_e3p1_bp3_weight,values,FAIL,r,"1,0,0,0",Placebo_1,n,263,0,263,
+wagepan_e3p1_bp3_weight,run,PASS,python,,,,,,,3 paths
+wagepan_e3p1_bp3_weight,paths,PASS,python,,,,,,,3 paths
+gentzkow_e2p1_bp3_cluster,run,PASS,stata,,,,,,,3 paths
+gentzkow_e2p1_bp3_cluster,run,PASS,r,,,,,,,3 paths
+gentzkow_e2p1_bp3_cluster,paths,PASS,r,,,,,,,3 paths
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Effect_1,estimate,.013131771079226978,0.01325513923150959,0.000123,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Effect_1,se,.0077543123546499337,0.007749275989935551,5.04e-06,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Effect_1,lb_ci,-.0020664018607608713,-0.0019331626150250608,0.000133,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Effect_1,ub_ci,.028329944019214827,0.028443441078044241,0.000113,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Effect_1,n,4529,4479,50,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Effect_2,estimate,.0093570380096967155,0.010033105686818757,0.000676,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Effect_2,se,.01102679338091524,0.010859874912151618,0.000167,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Effect_2,lb_ci,-.01225507988186181,-0.011251858017608493,0.001,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Effect_2,ub_ci,.030969155901255242,0.031318069391246005,0.000349,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Effect_2,n,3713,3675,38,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Av_tot_eff,estimate,.011244404628409014,0.011644122459164174,0.0004,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Av_tot_eff,se,.00878976286100242,0.0087188698634501176,7.09e-05,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Av_tot_eff,lb_ci,-.0059832140118034702,-0.0054445484590897129,0.000539,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Av_tot_eff,ub_ci,.028472023268621499,0.028732793377418062,0.000261,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Av_tot_eff,n,4894,4843,51,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Placebo_1,estimate,.0035317057679086386,0.0028626624708018469,0.000669,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Placebo_1,se,.0074701399692396744,0.0072947010614885016,0.000175,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Placebo_1,lb_ci,-.011109499531274266,-0.011434688887701714,0.000325,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Placebo_1,ub_ci,.018172911067091544,0.017160013829305407,0.00101,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",Placebo_1,n,3663,3626,37,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,1",p_joint_effects,estimate,.19699109753803634,0.20018032837854272,0.00319,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Effect_1,estimate,.014498373055095276,0.014675198001901903,0.000177,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Effect_1,se,.0094886473536171523,0.0095516413996138017,6.3e-05,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Effect_1,lb_ci,-.0040990340199956333,-0.004045675134582899,5.34e-05,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Effect_1,ub_ci,.033095780130186186,0.033396071138386704,0.0003,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Effect_1,n,4373,4323,50,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Effect_2,estimate,.0082605163780797228,0.0092048152072957447,0.000944,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Effect_2,se,.0078986501708246653,0.0079982521233622293,9.96e-05,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Effect_2,lb_ci,-.0072205534832177638,-0.0064714708937652354,0.000749,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Effect_2,ub_ci,.023741586239377208,0.024881101308356725,0.00114,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Effect_2,n,3557,3519,38,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Av_tot_eff,estimate,.022758889700872288,0.023880013209197661,0.00112,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Av_tot_eff,se,.015550876081269566,0.015859964885145034,0.000309,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Av_tot_eff,lb_ci,-.0077202673464614249,-0.0072049467617565331,0.000515,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Av_tot_eff,ub_ci,.053238046748206001,0.054964973180151852,0.00173,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Av_tot_eff,n,4582,4531,51,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Placebo_1,estimate,-.010367347007768412,-0.010768196823821524,0.000401,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Placebo_1,se,.010759404876292481,0.010521911802314458,0.000237,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Placebo_1,lb_ci,-.031455393060386305,-0.031390765004864783,6.46e-05,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Placebo_1,ub_ci,.010720699044849484,0.0098543713572217372,0.000866,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",Placebo_1,n,3508,3471,37,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,0",p_joint_effects,estimate,.30685681978593493,0.29884935339654939,0.00801,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Effect_1,estimate,.021204504158926833,0.021708849671570336,0.000504,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Effect_1,se,.010139831823739634,0.010044671308142685,9.52e-05,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Effect_1,lb_ci,.0013307989751040611,0.0020216556710678478,0.000691,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Effect_1,ub_ci,.041078209342749604,0.041396043672072821,0.000318,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Effect_1,n,4317,4267,50,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Effect_2,estimate,.031447314396431045,0.032393703036177827,0.000946,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Effect_2,se,.013137428707751305,0.012861202931566784,0.000276,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Effect_2,lb_ci,.0056984272797759097,0.0071862084924459758,0.00149,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Effect_2,ub_ci,.05719620151308618,0.057601197579909683,0.000405,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Effect_2,n,3501,3463,38,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Av_tot_eff,estimate,.01755060624861423,0.018034184235916052,0.000484,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Av_tot_eff,se,.0074269940097822914,0.0073012976504882457,0.000126,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Av_tot_eff,lb_ci,.0029939654760462193,0.003723903800552179,0.00073,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Av_tot_eff,ub_ci,.032107247021182242,0.032344464671279924,0.000237,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Av_tot_eff,n,4470,4419,51,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Placebo_1,estimate,.0096855140059514937,0.0091797869383835034,0.000506,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Placebo_1,se,.010975992400737688,0.0108569311687994,0.000119,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Placebo_1,lb_ci,-.011827035794079696,-0.01209940713509367,0.000272,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Placebo_1,ub_ci,.031198063805982681,0.030458981011860675,0.000739,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",Placebo_1,n,3469,3432,37,
+gentzkow_e2p1_bp3_cluster,values,FAIL,r,"0,1,2",p_joint_effects,estimate,.055981770657381524,0.04149854149131238,0.0145,
+gentzkow_e2p1_bp3_cluster,run,PASS,python,,,,,,,3 paths
+gentzkow_e2p1_bp3_cluster,paths,PASS,python,,,,,,,3 paths
+wagepan_e3p1_bp3_normalized,run,PASS,stata,,,,,,,3 paths
+wagepan_e3p1_bp3_normalized,run,PASS,r,,,,,,,3 paths
+wagepan_e3p1_bp3_normalized,paths,PASS,r,,,,,,,3 paths
+wagepan_e3p1_bp3_normalized,values,FAIL,r,"1,0,0,0",Placebo_1,n,263,0,263,
+wagepan_e3p1_bp3_normalized,run,PASS,python,,,,,,,3 paths
+wagepan_e3p1_bp3_normalized,paths,PASS,python,,,,,,,3 paths
+wagepan_e3p1_bp3_swin,run,PASS,stata,,,,,,,2 paths
+wagepan_e3p1_bp3_swin,run,FAIL,r,,,,,,,"No treatment effect can be estimated.   This is because Design Restriction 1 in de Chaisemartin & D'Haultfoeuille (2024) is not satisfied in the data, given the options requested.   This may be due to the fact that groups' period-one treatment is continuous, or takes a large number of values, and you have not specified the continuous option.   If so, you can try to specify this option.   If the issue persists even with this option, this means that all groups experience their first treatment change at the same date.   In this situation, estimators of de Chaisemartin & D'Haultfoeuille (2024) cannot be used."
+wagepan_e3p1_bp3_swin,run,PASS,python,,,,,,,3 paths
+wagepan_e3p1_bp3_swin,paths,PASS,python,,,,,,,2 paths
+wagepan_e3p1_bp3_swout,run,PASS,stata,,,,,,,1 paths
+wagepan_e3p1_bp3_swout,run,FAIL,r,,,,,,,"No treatment effect can be estimated.   This is because Design Restriction 1 in de Chaisemartin & D'Haultfoeuille (2024) is not satisfied in the data, given the options requested.   This may be due to the fact that groups' period-one treatment is continuous, or takes a large number of values, and you have not specified the continuous option.   If so, you can try to specify this option.   If the issue persists even with this option, this means that all groups experience their first treatment change at the same date.   In this situation, estimators of de Chaisemartin & D'Haultfoeuille (2024) cannot be used."
+wagepan_e3p1_bp3_swout,run,PASS,python,,,,,,,3 paths
+wagepan_e3p1_bp3_swout,paths,PASS,python,,,,,,,1 paths
+wagepan_e3p1_bp3_onlynever,run,PASS,stata,,,,,,,3 paths
+wagepan_e3p1_bp3_onlynever,run,PASS,r,,,,,,,3 paths
+wagepan_e3p1_bp3_onlynever,paths,PASS,r,,,,,,,3 paths
+wagepan_e3p1_bp3_onlynever,values,FAIL,r,"1,0,0,0",Placebo_1,n,231,0,231,
+wagepan_e3p1_bp3_onlynever,run,PASS,python,,,,,,,3 paths
+wagepan_e3p1_bp3_onlynever,paths,PASS,python,,,,,,,3 paths
+wagepan_e3p1_bp3_onlynever,run,FAIL,python,"1,0,0,0",,,,,,"path error: unable to find column ""T_max_XX""; valid columns: [""group_XX"", ""time_XX"", ""outcome"", ""group"", ""time"", ""treatment"", ""weight_XX"", ""outcome_XX"", ""treatment_XX"", ""min_time_d_nonmiss_XX"", ""max_time_d_nonmiss_XX"", ""min_time_y_nonmiss_XX"", ""min_time_d_miss_aft_ynm_XX"", ""d_sq_XX"", ""diff_from_sq_XX"", ""ever_ch"
+wagepan_e3p1_bp3_onlynever,run,FAIL,python,"0,1,0,0",,,,,,"path error: unable to find column ""T_max_XX""; valid columns: [""group_XX"", ""time_XX"", ""outcome"", ""group"", ""time"", ""treatment"", ""weight_XX"", ""outcome_XX"", ""treatment_XX"", ""min_time_d_nonmiss_XX"", ""max_time_d_nonmiss_XX"", ""min_time_y_nonmiss_XX"", ""min_time_d_miss_aft_ynm_XX"", ""d_sq_XX"", ""diff_from_sq_XX"", ""ever_ch"
+wagepan_e3p1_bp3_onlynever,run,FAIL,python,"0,1,1,1",,,,,,"path error: unable to find column ""T_max_XX""; valid columns: [""group_XX"", ""time_XX"", ""outcome"", ""group"", ""time"", ""treatment"", ""weight_XX"", ""outcome_XX"", ""treatment_XX"", ""min_time_d_nonmiss_XX"", ""max_time_d_nonmiss_XX"", ""min_time_y_nonmiss_XX"", ""min_time_d_miss_aft_ynm_XX"", ""d_sq_XX"", ""diff_from_sq_XX"", ""ever_ch"
+favara_e8p3_bp2_cluster,run,PASS,stata,,,,,,,2 paths
+favara_e8p3_bp2_cluster,run,PASS,r,,,,,,,2 paths
+favara_e8p3_bp2_cluster,paths,PASS,r,,,,,,,2 paths
+favara_e8p3_bp2_cluster,values,FAIL,r,"0,1,1,1,1,1,1,1,1",p_joint_effects,estimate,.11011961299458228,0.11012063553791807,1.02e-06,"R and Python agree, only Stata differs"
+favara_e8p3_bp2_cluster,run,PASS,python,,,,,,,2 paths
+favara_e8p3_bp2_cluster,paths,PASS,python,,,,,,,2 paths
+favara_e8p3_bp2_cluster,values,FAIL,python,"0,1,1,1,1,1,1,1,1",p_joint_effects,estimate,.11011961299458228,0.11012063553792117,1.02e-06,"R and Python agree, only Stata differs"
+favara_e8p3_bp2_cluster,n_groups,FAIL,python,"0,4,4,4,4,4,4,4,4",,,198,225,,
+gentzkow_e1_all,run,PASS,stata,,,,,,,29 paths
+gentzkow_e1_all,run,FAIL,r,,,,,,,non-numeric matrix extent
+gentzkow_e1_all,run,PASS,python,,,,,,,42 paths
+gentzkow_e1_all,paths,FAIL,python,,,,,,,"extra (Stata does not enumerate): ['4,2', '11,15', '12,11', '16,20', '33,35', '6,4', '7,6', '7,8', '9,10', 'NA,1', 'NA,4', 'NA,2', 'NA,3']"
+gentzkow_e1_all,order,WARN,python,,,,,,,"stata: ['0,1', '0,2', '0,3', '0,4', '0,5', '1,0', '1,2', '1,3', '1,4', '2,0', '2,1', '2,3', '2,4', '2,5', '3,1', '3,2', '3,4', '3,5', '4,3', '4,5', '5,2', '5,4', '5,6', '5,7', '5,8', '6,5', '6,7', '6,8', '6,9'] | python: ['0,1', '0,2', '1,2', '2,3', '2,1', '1,0', '3,2', '0,3', '3,4', '4,3', '2,4', '1,3', '4,5', '2,0', '3,1', '3,5', '5,4', '5,6', '0,4', '2,5', '6,9', '4,2', '5,2', '5,7', '0,5', '1,4', '11,15', '12,11', '16,20', '33,35', '5,8', '6,4', '6,5', '6,7', '6,8', '7,6', '7,8', '9,10', 'NA,1', 'NA,4', 'NA,2', 'NA,3']"
+gentzkow_e1_all,run,FAIL,python,"3,1",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"3,2",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"3,4",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"3,5",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"4,3",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"4,5",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"5,2",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"5,4",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"5,6",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"5,7",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"5,8",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"6,5",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"6,7",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"6,8",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+gentzkow_e1_all,run,FAIL,python,"6,9",,,,,,path error: unsupported operand type(s) for +=: 'float' and 'NoneType'
+v_int2,validation,PASS,r,,,,accepted,accepted,,by_path='2' (num) with_by=0
+v_int2,validation,PASS,python,,,,accepted,accepted,,by_path='2' (num) with_by=0
+v_all,validation,FAIL,r,,,,accepted,rejected,,by_path='all' (str) with_by=0 non-numeric matrix extent
+v_all,validation,PASS,python,,,,accepted,accepted,,by_path='all' (str) with_by=0
+v_ALL,validation,PASS,r,,,,rejected,rejected,,by_path='ALL' (str) with_by=0 non-numeric matrix extent
+v_ALL,validation,FAIL,python,,,,rejected,accepted,,by_path='ALL' (str) with_by=0
+v_zero,validation,PASS,r,,,,rejected,rejected,,by_path='0' (num) with_by=0 Syntax error in by_path option. Positive integer  -1  or  all  required.
+v_zero,validation,PASS,python,,,,rejected,rejected,,"by_path='0' (num) with_by=0 ValueError: by_path must be positive, got 0"
+v_minus1,validation,FAIL,r,,,,rejected,accepted,,by_path='-1' (num) with_by=0
+v_minus1,validation,PASS,python,,,,rejected,rejected,,"by_path='-1' (num) with_by=0 ValueError: by_path must be positive, got -1"
+v_minus3,validation,PASS,r,,,,rejected,rejected,,by_path='-3' (num) with_by=0 Syntax error in by_path option. Positive integer  -1  or  all  required.
+v_minus3,validation,PASS,python,,,,rejected,rejected,,"by_path='-3' (num) with_by=0 ValueError: by_path must be positive, got -3"
+v_frac,validation,PASS,r,,,,rejected,rejected,,by_path='2.5' (num) with_by=0 Syntax error in by_path option. Positive integer  -1  or  all  required.
+v_frac,validation,PASS,python,,,,rejected,rejected,,"by_path='2.5' (num) with_by=0 ValueError: by_path must be 'all' or a positive integer, got <class 'float'>"
+v_abc,validation,PASS,r,,,,rejected,rejected,,by_path='abc' (str) with_by=0 Syntax error in by_path option. Positive integer  -1  or  all  required.
+v_abc,validation,PASS,python,,,,rejected,rejected,,"by_path='abc' (str) with_by=0 ValueError: by_path must be 'all' or a positive integer, got 'abc'"
+v_str_minus1,validation,PASS,r,,,,rejected,rejected,,by_path='-1' (str) with_by=0 Syntax error in by_path option. Positive integer  -1  or  all  required.
+v_str_minus1,validation,FAIL,python,,,,rejected,accepted,,by_path='-1' (str) with_by=0
+v_with_by,validation,PASS,r,,,,rejected,rejected,,by_path='2' (num) with_by=1 You cannot specify by and by_path options together.
+v_with_by,validation,PASS,python,,,,rejected,rejected,,"by_path='2' (num) with_by=1 ValueError: Cannot specify both 'by' and 'by_path' options. Use 'by' to stratify by a grouping variable, or 'by_path' to stratify by treatment paths."

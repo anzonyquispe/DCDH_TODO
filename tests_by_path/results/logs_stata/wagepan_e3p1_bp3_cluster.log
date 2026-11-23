@@ -1,0 +1,136 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  _bp
+       log:  C:\Users\eunic\OneDrive\Documents\GitHub\DCDH_TODO\tests_by_path/results/logs_stata/wagepan_e3p1_bp3_cluster.log
+  log type:  text
+ opened on:  19 Nov 2026, 14:39:04
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+                                Path (1, 0, 0, 0)
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 | -.0316754   .0359973  -.1022287   .0388779        387         61 
+    Effect_2 |  .0245634     .06382  -.1005216   .1496483        336         61 
+    Effect_3 |  .0105659   .0942784  -.1742164   .1953483        300         61 
+--------------------------------------------------------------------------------
+The F-test that all effects are equal to zero may not be reliable, because the variance of the effects is close to not being invertible (the ratio of its largest and smallest eigenvalues is larger than 1000). This can for instance happen when you compute 
+> many effects estimators, or when your effects are very strongly correlated. We recommend that you complement the F-test with a sup t-test, see FAQ section of the help file for more details.
+
+Test of joint nullity of the effects : p-value = 0
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+                                Path (1, 0, 0, 0)
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0011513   .0644117  -.1250934    .127396        583        183            
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+                                Path (1, 0, 0, 0)
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.1931538   .1179926   -.424415   .0381074        263         28 
+--------------------------------------------------------------------------------
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+                                Path (0, 1, 0, 0)
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .0372373   .0469346  -.0547528   .1292274       1627         51 
+    Effect_2 | -.0544257   .0820298  -.2152011   .1063497       1544         51 
+    Effect_3 | -.0130853   .0786383  -.1672135   .1410429       1485         51 
+--------------------------------------------------------------------------------
+The F-test that all effects are equal to zero may not be reliable, because the variance of the effects is close to not being invertible (the ratio of its largest and smallest eigenvalues is larger than 1000). This can for instance happen when you compute 
+> many effects estimators, or when your effects are very strongly correlated. We recommend that you complement the F-test with a sup t-test, see FAQ section of the help file for more details.
+
+Test of joint nullity of the effects : p-value = 0
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+                                Path (0, 1, 0, 0)
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff | -.0302737    .206248  -.4345124   .3739649       2274        153            
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+                                Path (0, 1, 0, 0)
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.1228225   .1659856  -.4481483   .2025034       1247         34 
+--------------------------------------------------------------------------------
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+                                Path (0, 1, 1, 1)
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 |  .1444152   .0922376  -.0363671   .3251975       1615         39 
+    Effect_2 |  .1689266   .0802041   .0117294   .3261238       1532         39 
+    Effect_3 |  .1399068   .0722554  -.0017112   .2815249       1473         39 
+--------------------------------------------------------------------------------
+The F-test that all effects are equal to zero may not be reliable, because the variance of the effects is close to not being invertible (the ratio of its largest and smallest eigenvalues is larger than 1000). This can for instance happen when you compute 
+> many effects estimators, or when your effects are very strongly correlated. We recommend that you complement the F-test with a sup t-test, see FAQ section of the help file for more details.
+
+Test of joint nullity of the effects : p-value = .07664627
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+                                Path (0, 1, 1, 1)
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .1510829   .0809374  -.0075516   .3097173       2238        117            
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+                                Path (0, 1, 1, 1)
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.0482284   .0497127  -.1456635   .0492067       1236         23 
+--------------------------------------------------------------------------------
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+      name:  _bp
+       log:  C:\Users\eunic\OneDrive\Documents\GitHub\DCDH_TODO\tests_by_path/results/logs_stata/wagepan_e3p1_bp3_cluster.log
+  log type:  text
+ closed on:  19 Nov 2026, 14:39:09
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

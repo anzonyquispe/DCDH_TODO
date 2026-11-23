@@ -1,0 +1,11 @@
+vcase_id,by_path,by_path_type,with_by,expected,note
+v_int2,2,num,0,accepted,valid positive integer
+v_all,all,str,0,accepted,valid keyword
+v_ALL,ALL,str,0,rejected,Stata only accepts lowercase all
+v_zero,0,num,0,rejected,zero is not a positive integer
+v_minus1,-1,num,0,rejected,negative integer (R documents -1 as an alias of all)
+v_minus3,-3,num,0,rejected,negative integer
+v_frac,2.5,num,0,rejected,non-integer number
+v_abc,abc,str,0,rejected,arbitrary string
+v_str_minus1,-1,str,0,rejected,negative number passed as text
+v_with_by,2,num,1,rejected,by() and by_path() cannot be combined

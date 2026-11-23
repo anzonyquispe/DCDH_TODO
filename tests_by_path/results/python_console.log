@@ -1,0 +1,58 @@
+Testing did_multiplegt_dyn from C:\Users\eunic\AppData\Local\Temp\claude\bba2f5c1e9335d8d\ff83d814-576d-4e0c-8f4b-c0cd92679022\scratchpad\py_bypath\src\did_multiplegt_dyn
+
+=== CASE wagepan_e5p2_bp4 (by_path = 4) ===
+  4 paths in 3.2s
+
+=== CASE gentzkow_e2_bp3 (by_path = 3) ===
+  3 paths in 1.1s
+
+=== CASE gentzkow_e2p1_bp3 (by_path = 3) ===
+  3 paths in 1.3s
+
+=== CASE wagepan_e3p1_bp3 (by_path = 3) ===
+  3 paths in 1.3s
+
+=== CASE wagepan_e3p1_all (by_path = all) ===
+  14 paths in 4.6s
+
+=== CASE wagepan_e2p1_bp99 (by_path = 99) ===
+  6 paths in 1.3s
+
+=== CASE wagepan_e3p1_bp3_controls (by_path = 3) ===
+  3 paths in 1.6s
+
+=== CASE wagepan_e3p1_bp3_weight (by_path = 3) ===
+  3 paths in 1.2s
+
+=== CASE gentzkow_e2p1_bp3_cluster (by_path = 3) ===
+  3 paths in 1.6s
+
+=== CASE wagepan_e3p1_bp3_normalized (by_path = 3) ===
+  3 paths in 1.4s
+
+=== CASE wagepan_e3p1_bp3_swin (by_path = 3) ===
+  3 paths in 1.1s
+
+=== CASE wagepan_e3p1_bp3_swout (by_path = 3) ===
+  3 paths in 0.5s
+
+=== CASE wagepan_e3p1_bp3_onlynever (by_path = 3) ===
+  3 paths in 0.2s
+
+=== CASE favara_e8p3_bp2_cluster (by_path = 2) ===
+  2 paths in 6.4s
+
+=== CASE gentzkow_e1_all (by_path = all) ===
+  42 paths in 3.1s
+VALIDATION v_int2 by_path=2 -> accepted
+VALIDATION v_all by_path='all' -> accepted
+VALIDATION v_ALL by_path='ALL' -> accepted
+VALIDATION v_zero by_path=0 -> rejected
+VALIDATION v_minus1 by_path=-1 -> rejected
+VALIDATION v_minus3 by_path=-3 -> rejected
+VALIDATION v_frac by_path=2.5 -> rejected
+VALIDATION v_abc by_path='abc' -> rejected
+VALIDATION v_str_minus1 by_path='-1' -> accepted
+VALIDATION v_with_by by_path=2 -> rejected
+
+Python by_path tests finished. Results in C:\Users\eunic\OneDrive\Documents\GitHub\DCDH_TODO\tests_by_path\results

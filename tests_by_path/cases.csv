@@ -1,0 +1,16 @@
+case_id,dataset,outcome,group,time,treatment,effects,placebo,by_path,controls,weight,cluster,normalized,switchers,only_never_switchers,stata_precise,source_note
+wagepan_e5p2_bp4,_data/wagepan.dta,lwage,nr,year,union,5,2,4,,,,0,,0,1,code/test_new_opts.do + logfiles/stat_2026-02-27.log + py notebook test_wagepan.ipynb
+gentzkow_e2_bp3,gentzkowetal_didtextbook.dta,prestout,cnty90,year,numdailies,2,0,3,,,,0,,0,1,did_book ch08 CQ#45b
+gentzkow_e2p1_bp3,gentzkowetal_didtextbook.dta,prestout,cnty90,year,numdailies,2,1,3,,,,0,,0,1,did_book ch08 CQ#45b with one placebo
+wagepan_e3p1_bp3,_data/wagepan.dta,lwage,nr,year,union,3,1,3,,,,0,,0,1,py tests/test_comprehensive.py::test_by_path_stratification
+wagepan_e3p1_all,_data/wagepan.dta,lwage,nr,year,union,3,1,all,,,,0,,0,0,py tests/test_comprehensive.py::test_by_path_all
+wagepan_e2p1_bp99,_data/wagepan.dta,lwage,nr,year,union,2,1,99,,,,0,,0,0,by_path larger than the number of paths (fallback to all paths)
+wagepan_e3p1_bp3_controls,_data/wagepan.dta,lwage,nr,year,union,3,1,3,hours,,,0,,0,1,by_path + controls
+wagepan_e3p1_bp3_weight,_data/wagepan.dta,lwage,nr,year,union,3,1,3,,educ,,0,,0,1,by_path + weight
+gentzkow_e2p1_bp3_cluster,gentzkowetal_didtextbook.dta,prestout,cnty90,year,numdailies,2,1,3,,,st,0,,0,1,by_path + cluster (counties clustered by state)
+wagepan_e3p1_bp3_normalized,_data/wagepan.dta,lwage,nr,year,union,3,1,3,,,,1,,0,1,by_path + normalized
+wagepan_e3p1_bp3_swin,_data/wagepan.dta,lwage,nr,year,union,3,1,3,,,,0,in,0,1,by_path + switchers(in)
+wagepan_e3p1_bp3_swout,_data/wagepan.dta,lwage,nr,year,union,3,1,3,,,,0,out,0,1,by_path + switchers(out)
+wagepan_e3p1_bp3_onlynever,_data/wagepan.dta,lwage,nr,year,union,3,1,3,,,,0,,1,1,by_path + only_never_switchers
+favara_e8p3_bp2_cluster,_data/favara_imbs.dta,Dl_hpi,county,year,inter_bra,8,3,2,,,state_n,0,,0,1,Stata help file example (non-binary treatment)
+gentzkow_e1_all,gentzkowetal_didtextbook.dta,prestout,cnty90,year,numdailies,1,0,all,,,,0,,0,0,all paths incl. baselines >= 10 (multi-digit treatment values)

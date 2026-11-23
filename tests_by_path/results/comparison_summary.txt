@@ -1,0 +1,97 @@
+====================================================================================================
+by_path cross-language comparison (reference: Stata)
+====================================================================================================
+  stata   June 9th, 2026         C:\Users\eunic\OneDrive\Documents\GitHub\DCDH_TODO\tests_by_path/../../did_multiplegt_dyn/Stata/did_multiplegt_dyn.ado
+  r       2.4.0                  C:/Users/eunic/AppData/Local/R/win-library/4.5/DIDmultiplegtDYN
+  python  0.1.8 (source)         C:\Users\eunic\AppData\Local\Temp\claude\bba2f5c1e9335d8d\ff83d814-576d-4e0c-8f4b-c0cd92679022\scratchpad\py_bypath\src\did_multiplegt_dyn
+  tolerance: |x - stata| <= 1e-07 + 1e-06*|stata|; N and switchers exact
+
+case                           lang    verdict  fail  warn  max rel diff  first problem
+----------------------------------------------------------------------------------------------------
+wagepan_e5p2_bp4               r       FAIL        2     0      7.29e-05  values (1,0,0,0,0,0) Placebo_1 n stata=143 r=0
+wagepan_e5p2_bp4               python  PASS        0     0      7.29e-05  
+gentzkow_e2_bp3                r       FAIL       47     0      4.99e-01  values (0,1,1) Effect_1 estimate stata=.013131771079226978 r=0.01325513923150959
+gentzkow_e2_bp3                python  PASS        0     0      1.66e-06  
+gentzkow_e2p1_bp3              r       FAIL       62     0      4.99e-01  values (0,1,1) Effect_1 estimate stata=.013131771079226978 r=0.01325513923150959
+gentzkow_e2p1_bp3              python  PASS        0     0      1.66e-06  
+wagepan_e3p1_bp3               r       FAIL        1     0      6.58e-06  values (1,0,0,0) Placebo_1 n stata=263 r=0
+wagepan_e3p1_bp3               python  PASS        0     0      4.75e-06  
+wagepan_e3p1_all               r       FAIL        1     0                run non-numeric matrix extent
+wagepan_e3p1_all               python  FAIL        1     1      3.71e-06  paths extra (Stata does not enumerate): ['0,1,NA,NA', '1,0,NA,NA', '0,1,1,NA', '1,0,1,NA', '0,1,0,NA', '1,0,0,NA']
+wagepan_e2p1_bp99              r       FAIL        1     0                run too few arguments
+wagepan_e2p1_bp99              python  FAIL        1     1      2.30e-04  paths extra (Stata does not enumerate): ['0,1,NA', '1,0,NA']
+wagepan_e3p1_bp3_controls      r       FAIL        1     0      1.56e-06  values (1,0,0,0) Placebo_1 n stata=263 r=0
+wagepan_e3p1_bp3_controls      python  PASS        0     0      2.29e-07  
+wagepan_e3p1_bp3_weight        r       FAIL        1     0      1.19e-06  values (1,0,0,0) Placebo_1 n stata=263 r=0
+wagepan_e3p1_bp3_weight        python  PASS        0     0      1.41e-06  
+gentzkow_e2p1_bp3_cluster      r       FAIL       63     0      5.19e-01  values (0,1,1) Effect_1 estimate stata=.013131771079226978 r=0.01325513923150959
+gentzkow_e2p1_bp3_cluster      python  PASS        0     0      7.95e-07  
+wagepan_e3p1_bp3_normalized    r       FAIL        1     0      6.58e-06  values (1,0,0,0) Placebo_1 n stata=263 r=0
+wagepan_e3p1_bp3_normalized    python  PASS        0     0      4.75e-06  
+wagepan_e3p1_bp3_swin          r       FAIL        1     0                run No treatment effect can be estimated.   This is because Design Restriction 1 in de Chaisemartin & D'Haultfoeuille (2024) is not satisfied in the d
+wagepan_e3p1_bp3_swin          python  PASS        0     0      4.48e-07  
+wagepan_e3p1_bp3_swout         r       FAIL        1     0                run No treatment effect can be estimated.   This is because Design Restriction 1 in de Chaisemartin & D'Haultfoeuille (2024) is not satisfied in the d
+wagepan_e3p1_bp3_swout         python  PASS        0     0      4.75e-06  
+wagepan_e3p1_bp3_onlynever     r       FAIL        1     0      9.04e-07  values (1,0,0,0) Placebo_1 n stata=231 r=0
+wagepan_e3p1_bp3_onlynever     python  FAIL        3     0                run (1,0,0,0) path error: unable to find column "T_max_XX"; valid columns: ["group_XX", "time_XX", "outcome", "group", "time", "treatment", "weight_XX
+favara_e8p3_bp2_cluster        r       FAIL        1     0      9.29e-06  values (0,1,1,1,1,1,1,1,1) p_joint_effects estimate stata=.11011961299458228 r=0.11012063553791807 R and Python agree, only Stata differs
+favara_e8p3_bp2_cluster        python  FAIL        2     0      9.29e-06  values (0,1,1,1,1,1,1,1,1) p_joint_effects estimate stata=.11011961299458228 python=0.11012063553792117 R and Python agree, only Stata differs
+gentzkow_e1_all                r       FAIL        1     0                run non-numeric matrix extent
+gentzkow_e1_all                python  FAIL       16     1      1.31e-05  paths extra (Stata does not enumerate): ['4,2', '11,15', '12,11', '16,20', '33,35', '6,4', '7,6', '7,8', '9,10', 'NA,1', 'NA,4', 'NA,2', 'NA,3']
+v_int2                         r       PASS        0     0                
+v_int2                         python  PASS        0     0                
+v_all                          r       FAIL        1     0                validation stata=accepted r=rejected by_path='all' (str) with_by=0 non-numeric matrix extent
+v_all                          python  PASS        0     0                
+v_ALL                          r       PASS        0     0                
+v_ALL                          python  FAIL        1     0                validation stata=rejected python=accepted by_path='ALL' (str) with_by=0
+v_zero                         r       PASS        0     0                
+v_zero                         python  PASS        0     0                
+v_minus1                       r       FAIL        1     0                validation stata=rejected r=accepted by_path='-1' (num) with_by=0
+v_minus1                       python  PASS        0     0                
+v_minus3                       r       PASS        0     0                
+v_minus3                       python  PASS        0     0                
+v_frac                         r       PASS        0     0                
+v_frac                         python  PASS        0     0                
+v_abc                          r       PASS        0     0                
+v_abc                          python  PASS        0     0                
+v_str_minus1                   r       PASS        0     0                
+v_str_minus1                   python  FAIL        1     0                validation stata=rejected python=accepted by_path='-1' (str) with_by=0
+v_with_by                      r       PASS        0     0                
+v_with_by                      python  PASS        0     0                
+----------------------------------------------------------------------------------------------------
+
+FAILURES grouped by kind (lang | check | row | field | detail -> count, cases)
+  r       values     Effect           estimate                                                                ->   18  gentzkow_e2_bp3, gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     Effect           lb_ci                                                                   ->   18  gentzkow_e2_bp3, gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     Effect           ub_ci                                                                   ->   18  gentzkow_e2_bp3, gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     Effect           n                                                                       ->   18  gentzkow_e2_bp3, gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     Effect           se                                                                      ->   16  gentzkow_e2_bp3, gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  python  run                                    path error: unsupported operand type(s) for +=: 'float' and  ->   15  gentzkow_e1_all
+  r       values     Placebo          n                                                                       ->   13  gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster, wagepan_e3p1_bp3, wagepan_e3p1_bp3_controls, wagepan_e3p1_bp3_normalized, 
+  r       values     Av               estimate                                                                ->    9  gentzkow_e2_bp3, gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     Av               se                                                                      ->    9  gentzkow_e2_bp3, gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     Av               lb_ci                                                                   ->    9  gentzkow_e2_bp3, gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     Av               ub_ci                                                                   ->    9  gentzkow_e2_bp3, gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     Av               n                                                                       ->    9  gentzkow_e2_bp3, gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     p                estimate                                                                ->    9  gentzkow_e2_bp3, gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     Placebo          estimate                                                                ->    6  gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     Placebo          se                                                                      ->    6  gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     Placebo          lb_ci                                                                   ->    6  gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  r       values     Placebo          ub_ci                                                                   ->    6  gentzkow_e2p1_bp3, gentzkow_e2p1_bp3_cluster
+  python  run                                    path error: unable to find column "T_max_XX"; valid columns: ->    3  wagepan_e3p1_bp3_onlynever
+  r       run                                    non-numeric matrix extent                                    ->    2  gentzkow_e1_all, wagepan_e3p1_all
+  r       run                                    No treatment effect can be estimated.   This is because Desi ->    2  wagepan_e3p1_bp3_swin, wagepan_e3p1_bp3_swout
+  python  paths                                  extra (Stata does not enumerate): ['0,1,NA,NA', '1,0,NA,NA', ->    1  wagepan_e3p1_all
+  r       run                                    too few arguments                                            ->    1  wagepan_e2p1_bp99
+  python  paths                                  extra (Stata does not enumerate): ['0,1,NA', '1,0,NA']       ->    1  wagepan_e2p1_bp99
+  r       values     p                estimate   R and Python agree                                           ->    1  favara_e8p3_bp2_cluster
+  python  values     p                estimate   R and Python agree                                           ->    1  favara_e8p3_bp2_cluster
+  python  n_groups                                                                                            ->    1  favara_e8p3_bp2_cluster
+  python  paths                                  extra (Stata does not enumerate): ['4,2', '11,15', '12,11',  ->    1  gentzkow_e1_all
+  r       validation                             by_path='all' (str) with_by=0 non-numeric matrix extent      ->    1  v_all
+  python  validation                             by_path='ALL' (str) with_by=0                                ->    1  v_ALL
+  r       validation                             by_path='-1' (num) with_by=0                                 ->    1  v_minus1
+  python  validation                             by_path='-1' (str) with_by=0                                 ->    1  v_str_minus1
+
+Details: C:\Users\eunic\OneDrive\Documents\GitHub\DCDH_TODO\tests_by_path\results\comparison_details.csv
+RESULT: 212 FAILED CHECKS

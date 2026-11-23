@@ -5,3 +5,4 @@ e_matrix,estimates,Stata compatibility vector; R/Python return the same numbers 
 e_matrix,variances,Stata compatibility vector (squared SEs); compared via the SE column of mat_res_XX
 e_matrix,didmgt_variances,Stata compatibility vector; compared via the SE column of mat_res_XX
 matrix,mat_res_avg_XX,internal Stata matrix
+e_matrix,b,not compared: the same numbers are compared one by one as Effect_# / Placebo_# / Av_tot_effect (and their se_*)

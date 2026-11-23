@@ -1,0 +1,62 @@
+Warning message:
+package 'polars' was built under R version 4.5.3 
+Warning message:
+package 'DIDmultiplegtDYN' was built under R version 4.5.3 
+Testing DIDmultiplegtDYN 2.4.0 from C:/Users/eunic/AppData/Local/R/win-library/4.5/DIDmultiplegtDYN
+
+=== CASE wagepan_e5p2_bp4 (by_path = 4) ===
+  4 paths in 36.1s
+
+=== CASE gentzkow_e2_bp3 (by_path = 3) ===
+  3 paths in 8.9s
+
+=== CASE gentzkow_e2p1_bp3 (by_path = 3) ===
+  3 paths in 11.3s
+
+=== CASE wagepan_e3p1_bp3 (by_path = 3) ===
+  3 paths in 12.4s
+
+=== CASE wagepan_e3p1_all (by_path = all) ===
+  ERROR: non-numeric matrix extent 
+
+=== CASE wagepan_e2p1_bp99 (by_path = 99) ===
+  ERROR: too few arguments 
+
+=== CASE wagepan_e3p1_bp3_controls (by_path = 3) ===
+  3 paths in 15.7s
+
+=== CASE wagepan_e3p1_bp3_weight (by_path = 3) ===
+  3 paths in 12.4s
+
+=== CASE gentzkow_e2p1_bp3_cluster (by_path = 3) ===
+  3 paths in 11.2s
+
+=== CASE wagepan_e3p1_bp3_normalized (by_path = 3) ===
+  3 paths in 12.7s
+
+=== CASE wagepan_e3p1_bp3_swin (by_path = 3) ===
+  ERROR: No treatment effect can be estimated.   This is because Design Restriction 1 in de Chaisemartin & D'Haultfoeuille (2024) is not satisfied in the data, given the options requested.   This may be due to the fact that groups' period-one treatment is continuous, or takes a large number of values, and you have not specified the continuous option.   If so, you can try to specify this option.   If the issue persists even with this option, this means that all groups experience their first treatment change at the same date.   In this situation, estimators of de Chaisemartin & D'Haultfoeuille (2024) cannot be used. 
+
+=== CASE wagepan_e3p1_bp3_swout (by_path = 3) ===
+  ERROR: No treatment effect can be estimated.   This is because Design Restriction 1 in de Chaisemartin & D'Haultfoeuille (2024) is not satisfied in the data, given the options requested.   This may be due to the fact that groups' period-one treatment is continuous, or takes a large number of values, and you have not specified the continuous option.   If so, you can try to specify this option.   If the issue persists even with this option, this means that all groups experience their first treatment change at the same date.   In this situation, estimators of de Chaisemartin & D'Haultfoeuille (2024) cannot be used. 
+
+=== CASE wagepan_e3p1_bp3_onlynever (by_path = 3) ===
+  3 paths in 12.0s
+
+=== CASE favara_e8p3_bp2_cluster (by_path = 2) ===
+  2 paths in 34.3s
+
+=== CASE gentzkow_e1_all (by_path = all) ===
+  ERROR: non-numeric matrix extent 
+VALIDATION v_int2 by_path=2 -> accepted
+VALIDATION v_all by_path=all -> rejected
+VALIDATION v_ALL by_path=ALL -> rejected
+VALIDATION v_zero by_path=0 -> rejected
+VALIDATION v_minus1 by_path=-1 -> accepted
+VALIDATION v_minus3 by_path=-3 -> rejected
+VALIDATION v_frac by_path=2.5 -> rejected
+VALIDATION v_abc by_path=abc -> rejected
+VALIDATION v_str_minus1 by_path=-1 -> rejected
+VALIDATION v_with_by by_path=2 -> rejected
+
+R by_path tests finished. Results in C:\Users\eunic\OneDrive\Documents\GitHub\DCDH_TODO\tests_by_path/results 
