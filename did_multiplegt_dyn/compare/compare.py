@@ -123,6 +123,11 @@ def norm(s: str) -> str:
     return re.sub(r"\s+", " ", (s or "").strip())
 
 
+AV = norm("Av_tot_eff")                  # label of the total-effect row/column of e(V)
+AV_V = ("matrix", "V", AV, AV)
+AV_SE = ("scalar", "se_avg_total_effect", "", "")
+
+
 def element_key(r: dict):
     """Language-independent key of one stored element."""
     kind, name = r["kind"], r["name"]
@@ -186,6 +191,14 @@ def load_lang(res: Path, lang: str):
         # full precision wins over display precision
         if prev is None or (prev[1] == "display" and r["precision"] != "display"):
             elems[(r["spec_id"], u)][k] = (r["value"], r["precision"], r["kind"])
+    if lang != "stata":
+        # Stata's e(V) has an Av_tot_eff row/column whose diagonal is se_avg_total_effect^2.
+        # R and Python keep the total effect in a separate table (results$ATE /
+        # result["did_multiplegt_dyn"]["ATE"]), not in their vcov: use its SE squared.
+        for e in elems.values():
+            s = e.get(AV_SE)
+            if s is not None and AV_V not in e and to_float(s[0]) is not None:
+                e[AV_V] = (repr(to_float(s[0]) ** 2), s[1], "e_matrix")
     return dict(units=units, elems=elems, enum=enum, other=other,
                 validation={r["vid"]: r for r in (read_csv(d / "validation.csv") or [])},
                 finished="finished_at" in read_meta(d / "meta.txt"),
@@ -299,22 +312,34 @@ def main() -> int:
                 if is_multi and u not in o_units:
                     continue
                 se, oe = S["elems"].get((sid, u), {}), O["elems"].get((sid, u), {})
+                used_w = set()   # language *_w scalars matched to Stata's N_* under weight()
                 for key, (sv, sprec, skind) in se.items():
                     cat, name, row, col = key
+                    # With weight(), Stata's e(N_*) scalars hold the WEIGHTED count (ado: total of the
+                    # weighted cell counts); its table (mat_res_XX) shows the unweighted one. R and
+                    # Python call the weighted count N_*_w and keep the unweighted one as N_*.
+                    weighted = ("weight" in opts and cat == "scalar" and name.startswith("N_")
+                                and not name.endswith("_w") and ("scalar", name + "_w", "", "") in oe)
+                    if weighted:
+                        used_w.add(("scalar", name + "_w", "", ""))
                     ename = name if not row and not col else f"{name}[{row},{col}]".replace("[,", "[").replace(",]", "]")
                     if stata_only_match(skind, name):
                         continue
+                    if name == "V" and AV in (row, col) and row != col:
+                        continue  # Stata fills these with 0; they are not estimated covariances
                     fr = flagged_output(lang, opts, name)
                     if fr:
                         rep.add(sid, lang, "element", "NOT_SUPPORTED", u, ename, sv, oe.get(key, ("",))[0], detail=fr)
                         continue
-                    if key not in oe:
+                    if key not in oe and not weighted:
                         if to_float(sv) is None and cat != "macro":
                             continue  # Stata stores a missing value; nothing to compare
                         rep.add(sid, lang, "element", "MISSING", u, ename, sv, "",
                                 detail="Stata stores it, this language does not return it")
                         continue
-                    ov = oe[key][0]
+                    ov = oe[("scalar", name + "_w", "", "")][0] if weighted else oe[key][0]
+                    if weighted:
+                        ename = f"{name} (vs {lang} {name}_w)"
                     if cat == "macro":
                         ok = norm(sv) == norm(ov)
                         rep.add(sid, lang, "element", "PASS" if ok else "FAIL", u, ename, sv, ov)
@@ -327,7 +352,7 @@ def main() -> int:
                                 detail="missing value in " + ("Stata" if x is None else lang))
                         continue
                     diff = abs(x - y)
-                    if is_count(key):
+                    if is_count(key) and not weighted:   # weighted counts are not whole numbers
                         ok = round(x) == round(y)
                     else:
                         tol = a.atol + a.rtol * abs(x) + (display_tol(sv) if sprec == "display" else 0.0)
@@ -342,7 +367,7 @@ def main() -> int:
                             "display-precision reference" if sprec == "display" and not ok else
                             ("this language returns a rounded value" if st == "ROUNDED" else ""))
                 for key, (ov, _, okind) in oe.items():
-                    if key in se:
+                    if key in se or key in used_w:
                         continue
                     if any(k2[1] == key[1] for k2 in se) or key[0] == "scalar":
                         # an element Stata does not store (e.g. *_w without weights)
