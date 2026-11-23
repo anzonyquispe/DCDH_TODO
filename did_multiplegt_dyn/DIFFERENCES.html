@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Package differences</title>
+<style>
+:root{--bg:#fff;--fg:#1d1d1f;--mut:#666;--code:#f3f3f5;--line:#ddd;--acc:#0b5cad;--ok:#1a7f37}
+@media (prefers-color-scheme:dark){:root{--bg:#161618;--fg:#e8e8ea;--mut:#9a9aa0;--code:#232327;--line:#333;--acc:#6aa8ff;--ok:#56c26a}}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,sans-serif;max-width:820px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.6em;margin:0 0 4px}h2{font-size:1.15em;margin:28px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+p.sub{color:var(--mut);margin:0 0 8px}
+code{background:var(--code);border-radius:4px;padding:1px 4px;font:14px ui-monospace,Consolas,monospace}
+.t{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:15px}
+th{text-align:left;color:var(--mut);font-weight:600}th,td{border-bottom:1px solid var(--line);padding:6px;vertical-align:top}
+td:first-child{white-space:nowrap}a{color:var(--acc)}.ok{color:var(--ok);font-weight:600}
+</style>
+</head>
+<body>
+<h1>Package differences</h1>
+<p class="sub">R and Python compared with Stata, element by element, over 121 specs and 14 input checks.
+Stata ado dated January 17th, 2026 (the reference), R <code>DIDmultiplegtDYN</code> 2.4.0, Python <code>py_did_multiplegt_dyn</code> from branch <code>fix_bypath_weights</code>. Updated 22 Nov 2026.
+How to rerun: <a href="TESTING.html">TESTING.html</a>. Full history: <a href="https://github.com/anzonyquispe/DCDH_TODO/blob/main/did_multiplegt_dyn/CHANGELOG.md">CHANGELOG.md</a>.</p>
+
+<div class="t"><table>
+<tr><th></th><th>Specs with a Stata reference</th><th>Pass</th><th>Fail</th><th>Crash</th></tr>
+<tr><td>Python</td><td>97</td><td>78</td><td>16</td><td>3</td></tr>
+<tr><td>R</td><td>97</td><td>1</td><td>85</td><td>11</td></tr>
+</table></div>
+
+<h2>Fixed</h2>
+<div class="t"><table>
+<tr><th>Where</th><th>Problem</th><th>Fix</th></tr>
+<tr><td>Python <code>by_path</code></td><td>Groups not observed just before their first switch were dropped as controls, because the baseline was the treatment at <code>F_g − 1</code>. D18: N 4477 instead of 4529, and effects off by up to 7%.</td><td><span class="ok">Fixed</span> on branch <code>fix_bypath_weights</code>: baseline = treatment at the first non-missing period, as in Stata. D18, F01 and F11 now match.</td></tr>
+<tr><td>Python <code>weight</code></td><td>The weighted count of the total effect was truncated (C08: 13708.967 → 13708) or overflowed with an integer weight (D11: 3,739,858,180 → −555,109,109).</td><td><span class="ok">Fixed</span> on branch <code>fix_bypath_weights</code>: the weight is cast to <code>Float64</code>, and the count is no longer converted with <code>int()</code>. All 8 weighted specs now match.</td></tr>
+<tr><td>Test suite</td><td>Weighted counts, the <code>Av_tot_eff</code> row of <code>e(V)</code> and <code>e(b)</code> were compared the wrong way.</td><td><span class="ok">Fixed</span> in <code>compare/compare.py</code>. See the rules on <a href="TESTING.html">TESTING.html</a>.</td></tr>
+</table></div>
+
+<h2>Python: still different</h2>
+<div class="t"><table>
+<tr><th>Specs</th><th>Difference</th><th>Example (Stata → Python)</th></tr>
+<tr><td>F03, F04, F15, F17, F21</td><td><code>by_path</code> returns incomplete paths, such as (0,1,NA), that Stata does not estimate; F21 misses one path. Python's path preparation still skips two Stata rules: dropping cells where the treatment goes both above and below its baseline, and setting <code>F_g = T+1</code> when the treatment is missing just before the switch.</td><td></td></tr>
+<tr><td>F13</td><td><code>by_path(all)</code> crashes: <code>unsupported operand type(s) for +=: 'float' and 'NoneType'</code>.</td><td></td></tr>
+<tr><td>F10, F29</td><td><code>only_never_switchers</code> + <code>by_path</code> crashes: <code>unable to find column "T_max_XX"</code>.</td><td></td></tr>
+<tr><td>A04, A20, D02</td><td>Standard errors differ with <code>controls(hours)</code> and <code>continuous(4)</code>; D02 (8 controls) has small differences in the effects.</td><td>A04 <code>se_effect_1</code>: 0.032059 → 0.032744</td></tr>
+<tr><td>A09, F24</td><td>With 2 clusters (<code>cluster(hisp)</code>), <code>p_jointeffects</code> differs.</td><td>A09: 0 → 0.90</td></tr>
+<tr><td>H03, H09</td><td><code>by_path("ALL")</code> and <code>by_path("-1")</code> are accepted; Stata rejects them.</td><td></td></tr>
+<tr><td>B05</td><td><code>date_first_switch</code> is printed but not returned.</td><td>NOT_SUPPORTED</td></tr>
+</table></div>
+
+<h2>R: still different</h2>
+<div class="t"><table>
+<tr><th>Specs</th><th>Difference</th><th>Example (Stata → R)</th></tr>
+<tr><td>nearly all</td><td>The off-diagonal cells of <code>coef$vcov</code> are wrong, often with the opposite sign. The diagonal is correct.</td><td>A01 <code>V[Effect_1,Effect_2]</code>: 0.000931 → −0.001068</td></tr>
+<tr><td>about 50 specs</td><td><code>N_placebo_#</code> is too small, and 0 for some by_path paths; this includes the weighted placebo counts.</td><td>A02 <code>N_placebo_1</code>: 2222 → 1856</td></tr>
+<tr><td>D18, F01, F11</td><td><code>by_path</code> on the Gentzkow data: N and effects differ. This is probably the same baseline problem that was fixed in Python (not checked in R yet).</td><td>D18 <code>N_effect_1</code>: 4529 → 4479</td></tr>
+<tr><td>F03, F13, F15, F17; H02</td><td><code>by_path(all)</code> crashes: "non-numeric matrix extent".</td><td></td></tr>
+<tr><td>F08, F09, F27, F28</td><td><code>by_path</code> + <code>switchers(in/out)</code> crashes: "No treatment effect can be estimated".</td><td></td></tr>
+<tr><td>F04</td><td><code>by_path(99)</code> crashes: "too few arguments".</td><td></td></tr>
+<tr><td>C04</td><td><code>controls(log_pop1969)</code>: the internal <code>feols</code> fails because no regressor is left.</td><td></td></tr>
+<tr><td>A20</td><td><code>continuous(4)</code>: polars runs out of memory, even when run alone.</td><td></td></tr>
+<tr><td>A09, F24</td><td>With 2 clusters, <code>p_jointeffects</code> / <code>p_jointplacebo</code> is missing.</td><td></td></tr>
+<tr><td>H05</td><td><code>by_path(-1)</code> is accepted; Stata rejects it.</td><td></td></tr>
+</table></div>
+
+<h2>R and Python agree, Stata differs</h2>
+<div class="t"><table>
+<tr><th>Specs</th><th>Difference</th><th>Example</th></tr>
+<tr><td>A06, C06</td><td><code>trends_lin</code>: switcher counts differ from Stata; on deryugina (C06) the effects and SEs also differ slightly.</td><td>A06 <code>N_switchers_effect_1</code>: 155 → 134</td></tr>
+<tr><td>A09, F24</td><td>With 2 clusters, Stata's <code>e(V)</code> is all zeros although its standard errors are correct.</td><td><code>V[Effect_1,Effect_1]</code>: 0 → 0.000816</td></tr>
+<tr><td>F21</td><td><code>trends_lin</code> + <code>by_path</code>: Stata prints N and switchers for the total effect, which is not computed with <code>trends_lin</code>.</td><td></td></tr>
+<tr><td>F12</td><td><code>p_jointeffects</code> differs at the 6th digit.</td><td>0.1101196 → 0.1101206</td></tr>
+</table></div>
+
+<h2>Not package differences</h2>
+<ul>
+<li><b>G07–G10, saved Stata results:</b> live Stata, R and Python agree with each other but not with the files in <code>data/reference_stata/</code>. The files need to be regenerated.</li>
+<li><b>Block G (<code>reset</code>, <code>avg_time_periods</code>):</b> the installed ado doesn't have these options, so there is no Stata reference. The ado dated June 9th, 2026 has them.</li>
+<li><b>B04, E03:</b> Stata adds rows for the <code>predict_het</code> / <code>by()</code> covariates to <code>e(V)</code>, filled with 0, as it does for <code>Av_tot_eff</code>. These are not estimates.</li>
+</ul>
+</body>
+</html>
