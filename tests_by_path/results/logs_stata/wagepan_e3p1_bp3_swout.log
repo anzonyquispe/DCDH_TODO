@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  _bp
+       log:  C:\Users\eunic\OneDrive\Documents\GitHub\DCDH_TODO\tests_by_path/results/logs_stata/wagepan_e3p1_bp3_swout.log
+  log type:  text
+ opened on:  19 Nov 2026, 14:47:29
+
+
+--------------------------------------------------------------------------------
+             Estimation of treatment effects: Event-study effects
+                                Path (1, 0, 0, 0)
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+    Effect_1 | -.0316754   .0558562  -.1411516   .0778008        387         61 
+    Effect_2 |  .0245634   .0800016  -.1322369   .1813636        336         61 
+    Effect_3 |  .0105659   .0787363  -.1437544   .1648862        300         61 
+--------------------------------------------------------------------------------
+Test of joint nullity of the effects : p-value = .74372276
+
+
+--------------------------------------------------------------------------------
+               Average cumulative (total) effect per treatment unit
+                                Path (1, 0, 0, 0)
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N     Switch  x Periods 
+-------------+----------------------------------------------------------------------------
+  Av_tot_eff |  .0011513   .0641237  -.1245289   .1268315        583        183            
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+          Testing the parallel trends and no anticipation assumptions
+                                Path (1, 0, 0, 0)
+--------------------------------------------------------------------------------
+
+             |  Estimate         SE      LB CI      UB CI          N  Switchers 
+-------------+-----------------------------------------------------------------
+   Placebo_1 | -.1931538   .0791352  -.3482559  -.0380517        263         28 
+--------------------------------------------------------------------------------
+
+
+The development of this package was funded by the European Union (ERC, REALLYCREDIBLE,GA N°101043899).
+
+No treatment effect can be estimated. This is because Design Restriction 1 in de Chaisemartin & D'Haultfoeuille (2024) is not satisfied in the data, given the options requested. This may be due to the fact that groups' period-one treatment is continuous, 
+> or takes a large number of values, and you have not specified the continuous option. If so, you can try to specify this option. If the issue persists even with this option, this means that all groups experience their first treatment change at the same d
+> ate, a situation where the estimators of de Chaisemartin & D'Haultfoeuille (2024) cannot be used.
+
+No treatment effect can be estimated. This is because Design Restriction 1 in de Chaisemartin & D'Haultfoeuille (2024) is not satisfied in the data, given the options requested. This may be due to the fact that groups' period-one treatment is continuous, 
+> or takes a large number of values, and you have not specified the continuous option. If so, you can try to specify this option. If the issue persists even with this option, this means that all groups experience their first treatment change at the same d
+> ate, a situation where the estimators of de Chaisemartin & D'Haultfoeuille (2024) cannot be used.
+      name:  _bp
+       log:  C:\Users\eunic\OneDrive\Documents\GitHub\DCDH_TODO\tests_by_path/results/logs_stata/wagepan_e3p1_bp3_swout.log
+  log type:  text
+ closed on:  19 Nov 2026, 14:47:32
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

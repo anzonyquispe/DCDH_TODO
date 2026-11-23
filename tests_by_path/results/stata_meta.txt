@@ -1,0 +1,6 @@
+language=stata
+stata_version=18 MP
+package_file=C:\Users\eunic\OneDrive\Documents\GitHub\DCDH_TODO\tests_by_path/../../did_multiplegt_dyn/Stata/did_multiplegt_dyn.ado
+package_version=June 9th, 2026
+run_at=19 Nov 2026 14:44:05
+finished_at=19 Nov 2026 14:49:14

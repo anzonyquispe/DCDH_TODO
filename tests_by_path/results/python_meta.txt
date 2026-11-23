@@ -1,0 +1,7 @@
+language=python
+python_version=3.12.8
+package_file=C:\Users\eunic\AppData\Local\Temp\claude\bba2f5c1e9335d8d\ff83d814-576d-4e0c-8f4b-c0cd92679022\scratchpad\py_bypath\src\did_multiplegt_dyn
+package_version=0.1.8 (source)
+polars_version=1.44.2
+pandas_version=3.1.1
+run_at=2026-11-19 14:44:10
